@@ -4,52 +4,28 @@ import { NextApiRequest, NextApiResponse } from 'next'
 // Initialize Gemini AI client
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
 
-// Enhanced system prompt based on the example format
+// Simplified system prompt focused on concise, actionable feedback
 const SYSTEM_PROMPT = `Je bent een ervaren HBO-docent management in de zorg met 20+ jaar ervaring in het begeleiden van studenten bij interne analyses volgens het 7S-model van McKinsey.
 
 JOUW EXPERTISE:
 - HBO-niveau beoordeling volgens strikte inhoudelijke criteria
 - Praktijkervaring in zorgmanagement en organisatieanalyse
 - Kennis van McKinsey 7S-model toepassing in zorginstellingen
-- Ervaring met constructieve, leergerichte feedback
 - Focus op inhoudelijke kwaliteit en zakelijk schrijven
 
 BEOORDELINGSCRITERIA (HBO-NIVEAU):
-
-**VOLDOENDE (14-21 pnt):**
-- Op basis van een model is de feitelijke situatie juist beschreven en onderbouwd aan de hand van concrete voorbeelden en cijfers
-- Daarbij is aangegeven of de uitvoering is zoals door de organisatie gewenst: in hoeverre sluiten beleid en praktijk op elkaar aan?
-- Waar mogelijk wordt de koppeling gemaakt naar de theorie
-
-**GOED (22-25 pnt):**
-- Als voldoende met daarbij:
-- Verbanden tussen de verschillende onderdelen uit het gebruikte model zijn beschreven
-- (Meerjarige) trends en ontwikkelingen zijn beschreven
-- De analyses zijn kritisch en genuanceerd
-
-RANDVOORWAARDEN:
-- Zakelijke taal met logische zinsopbouw
-- Stellingen onderbouwd met betrouwbare bronnen, interviews en/of enquête
-- Correcte spelling en grammatica
-- Bronvermelding volgens APA-richtlijnen
-
-7S-ELEMENTEN FOCUS:
-1. Strategy (Strategie) - strategische plannen en acties voor concurrentievoordeel
-2. Structure (Structuur) - organisatiestructuur en rapportagelijnen  
-3. Systems (Systemen) - processen en procedures die het werk ondersteunen
-4. Shared Values (Gedeelde Waarden) - kernwaarden en cultuur van de organisatie
-5. Skills (Vaardigheden) - kerncompetenties en capabilities van de organisatie
-6. Style (Stijl) - leiderschapsstijl en managementaanpak
-7. Staff (Personeel) - mensen en hun vaardigheden in de organisatie
+1. **Beoogde vs feitelijke situatie** - Is er een heldere schets van beide situaties?
+2. **Onderbouwing** - Concrete voorbeelden, cijfers, interview/enquête resultaten?
+3. **Genuanceerde analyse** - Kritisch en genuanceerd geschreven?
+4. **Sterktes en zwaktes** - Evenwichtige beoordeling gegeven?
+5. **Zakelijke schrijfstijl** - Professioneel taalgebruik?
 
 FEEDBACK AANPAK:
-- Begin met oprecht compliment over sterke punten (wat gaat goed)
-- Geef diepgaande inhoudelijke analyse met concrete verbeterpunten
-- Wees specifiek over wat ontbreekt en waarom dat belangrijk is
-- Eindig met 3 concrete, genummerde actiepunten
-- Gebruik voorbeelden uit de tekst
-- Verwijs naar HBO-beoordelingscriteria
-- Wees constructief maar kritisch waar nodig`
+- Wees kort en to-the-point (max 400 woorden totaal)
+- Focus op de belangrijkste punten, niet alle criteria
+- Geef concrete voorbeelden uit de tekst
+- Wees constructief en actionable
+- Geen herhalingen of uitweidingen`
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Only allow POST requests
@@ -98,102 +74,81 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })
     }
 
-    // Map stapId to Dutch names and descriptions for context
+    // Map stapId to Dutch names and focus areas
     const stapDetails = {
       strategy: {
         naam: 'Strategy (Strategie)',
-        focus: 'strategische plannen, doelstellingen en acties voor concurrentievoordeel',
-        kernvragen: 'Wat zijn de strategische doelen? Hoe worden deze bereikt? Sluiten beleid en praktijk aan?'
+        focus: 'strategische plannen, doelstellingen en acties'
       },
       structure: {
         naam: 'Structure (Structuur)', 
-        focus: 'organisatiestructuur, hiërarchie en rapportagelijnen',
-        kernvragen: 'Hoe is de organisatie gestructureerd? Zijn rollen en verantwoordelijkheden helder?'
+        focus: 'organisatiestructuur, hiërarchie en rapportagelijnen'
       },
       systems: {
         naam: 'Systems (Systemen)',
-        focus: 'processen, procedures en systemen die het dagelijkse werk ondersteunen',
-        kernvragen: 'Welke systemen ondersteunen de organisatie? Hoe effectief zijn deze?'
+        focus: 'processen, procedures en ondersteunende systemen'
       },
       sharedValues: {
         naam: 'Shared Values (Gedeelde Waarden)',
-        focus: 'kernwaarden, cultuur en fundamentele overtuigingen',
-        kernvragen: 'Wat zijn de kernwaarden? Worden deze geleefd in de praktijk?'
+        focus: 'kernwaarden, cultuur en organisatie-identiteit'
       },
       skills: {
         naam: 'Skills (Vaardigheden)',
-        focus: 'kerncompetenties, capabilities en vaardigheden van de organisatie',
-        kernvragen: 'Welke vaardigheden heeft de organisatie? Sluiten deze aan bij de strategie?'
+        focus: 'kerncompetenties en organisatiecapabilities'
       },
       style: {
         naam: 'Style (Stijl)',
-        focus: 'leiderschapsstijl, managementaanpak en besluitvormingsprocessen',
-        kernvragen: 'Hoe wordt er geleid? Past de leiderschapsstijl bij de organisatie?'
+        focus: 'leiderschapsstijl en managementaanpak'
       },
       staff: {
         naam: 'Staff (Personeel)',
-        focus: 'mensen, hun rollen, verantwoordelijkheden en ontwikkeling',
-        kernvragen: 'Wie werken er? Hebben zij de juiste vaardigheden en motivatie?'
+        focus: 'mensen, rollen en personeelsontwikkeling'
       },
       financial: {
         naam: 'Financiële Analyse',
-        focus: 'financiële prestaties, ratio\'s en trends',
-        kernvragen: 'Hoe presteert de organisatie financieel? Wat zeggen de cijfers?'
+        focus: 'financiële prestaties, ratio\'s en trends'
       }
     }
 
     const stapInfo = stapDetails[stapId as keyof typeof stapDetails]
 
-    // Initialize Gemini model with temperature 0.2 for consistent, detailed feedback
+    // Initialize Gemini model
     const model = genAI.getGenerativeModel({ 
       model: 'gemini-2.5-flash',
       generationConfig: {
-        temperature: 0.2,
+        temperature: 0.3,
         topP: 0.8,
         topK: 40,
-        maxOutputTokens: 1200, // More tokens for detailed feedback
+        maxOutputTokens: 800, // Shorter responses
       }
     })
 
-    // Create comprehensive coaching prompt based on the example format
+    // Create concise coaching prompt
     const prompt = `${SYSTEM_PROMPT}
 
 ANALYSE ELEMENT: ${stapInfo.naam}
-FOCUS GEBIED: ${stapInfo.focus}
-KERNVRAGEN: ${stapInfo.kernvragen}
+FOCUS: ${stapInfo.focus}
 
-STUDENT TEKST VOOR BEOORDELING:
+STUDENT TEKST:
 "${tekst}"
 
-Geef professionele HBO-docent feedback volgens dit EXACTE format (gebaseerd op het voorbeeldformat):
+Geef korte, gerichte feedback volgens dit EXACTE format:
 
-**Coach Feedback**
+## 👍 Wat gaat er goed
+[Benoem 2-3 concrete sterke punten uit de tekst. Wees specifiek over wat goed gedaan is en waarom dit waardevol is voor de analyse. Gebruik voorbeelden uit de tekst.]
 
-[Begin met een compliment over wat goed gaat - wees specifiek over sterke punten in de tekst]
+## 📊 Wat kan er beter
+[Geef een logisch opgebouwde, samenhangende tekst over de belangrijkste verbeterpunten. Focus op de 2-3 meest kritieke aspecten die de analyse naar HBO-niveau tillen. Leg uit wat ontbreekt, waarom dat belangrijk is, en geef concrete suggesties voor verbetering. Gebruik voorbeelden uit de tekst.]
 
-Echter, [geef een uitgebreide inhoudelijke analyse waarin je de volgende punten integreert]:
+INSTRUCTIES:
+- Maximaal 400 woorden totaal
+- Geen herhalingen of uitweidingen
+- Focus op de belangrijkste punten, niet alle criteria
+- Wees specifiek en actionable
+- Gebruik concrete voorbeelden uit de tekst
+- Geef praktische verbetervoorstellen`
 
-- **Diepgang en onderbouwing**: Wat ontbreekt er aan concrete bewijzen, cijfers, voorbeelden? Welke indicatoren zouden de analyse sterker maken?
-- **Kritische analyse**: Hoe kan de analyse kritischer en genuanceerder? Welke vragen worden niet gesteld?
-- **Verbanden en samenhang**: Welke verbanden tussen verschillende aspecten ontbreken?
-- **Brongebruik en onderbouwing**: Hoe kunnen stellingen beter onderbouwd worden?
-- **Zakelijk taalgebruik**: Eventuele verbeterpunten in schrijfstijl
-
-[Wees specifiek over wat er ontbreekt en waarom dat belangrijk is voor HBO-niveau. Gebruik concrete voorbeelden uit de tekst.]
-
-1. [Eerste concrete, actionable verbeterpunt met uitleg hoe dit te realiseren - wees zeer specifiek]
-2. [Tweede concrete, actionable verbeterpunt met uitleg hoe dit te realiseren - wees zeer specifiek]  
-3. [Derde concrete, actionable verbeterpunt met uitleg hoe dit te realiseren - wees zeer specifiek]
-
-BELANGRIJKE INSTRUCTIES:
-- Wees specifiek en verwijs naar concrete passages uit de tekst
-- Geef praktische voorbeelden van hoe verbeteringen gerealiseerd kunnen worden
-- Focus op HBO-niveau kwaliteitseisen
-- Wees constructief maar kritisch waar nodig
-- Gebruik professioneel, zakelijk taalgebruik
-- Maak de feedback actionable en leerrijk`
-
-    console.log('🤖 Sending enhanced coach request to Gemini API...', {
+    console.log('🤖 Sending concise coach request to Gemini API...', {
       stapId,
       stapNaam: stapInfo.naam,
       textLength: tekst.length
@@ -204,28 +159,24 @@ BELANGRIJKE INSTRUCTIES:
     const response = await result.response
     const feedback = response.text()
 
-    console.log('✅ Enhanced coach feedback generated:', {
+    console.log('✅ Concise coach feedback generated:', {
       feedbackLength: feedback?.length || 0,
       stapId,
       success: true
     })
 
     // Validate that we got meaningful feedback
-    if (!feedback || feedback.trim().length < 200) {
+    if (!feedback || feedback.trim().length < 100) {
       console.warn('⚠️ Short feedback received, generating fallback...')
       
-      // Generate fallback feedback if the main response is too short
-      const fallbackFeedback = `**Coach Feedback**
+      // Generate concise fallback feedback
+      const fallbackFeedback = `## 👍 Wat gaat er goed
+Je hebt een duidelijke start gemaakt met de ${stapInfo.naam} analyse en toont begrip van het onderwerp. De tekst is goed leesbaar en bevat relevante punten die aansluiten bij het 7S-model.
 
-Je hebt een goede start gemaakt met de ${stapInfo.naam} analyse en toont begrip van het onderwerp. De tekst is leesbaar en bevat enkele relevante punten.
+## 📊 Wat kan er beter
+De analyse mist de diepgang die vereist is voor HBO-niveau. Je beschrijft wel enkele aspecten, maar onderbouwt deze niet met concrete voorbeelden uit je organisatie. Voor een sterke analyse is het essentieel om zowel de beoogde als de feitelijke situatie helder te schetsen en het verschil expliciet te benoemen. Daarnaast ontbreken verwijzingen naar je interview- en enquêteresultaten, terwijl deze juist krachtige onderbouwing kunnen bieden. 
 
-Echter, de analyse mist de diepgang die vereist is voor HBO-niveau. Je stelt wel enkele punten, maar onderbouwt deze niet met concrete bewijzen uit je organisatie. Voor een voldoende beoordeling is het essentieel om zowel de beoogde als de feitelijke situatie helder te beschrijven en het verschil expliciet te benoemen. Daarnaast ontbreken concrete voorbeelden, cijfers en verwijzingen naar je interview- en enquêteresultaten. De analyse kan kritischer en genuanceerder door verschillende perspectieven te belichten en dieper in te gaan op oorzaken en gevolgen.
-
-1. **Voeg concrete organisatievoorbeelden toe**: Onderbouw elke stelling met specifieke situaties uit je organisatie. In plaats van algemene uitspraken, gebruik voorbeelden zoals "uit interviews met 5 teamleiders blijkt dat..." of "de cijfers van het laatste kwartaal tonen aan dat...".
-
-2. **Integreer je onderzoeksresultaten**: Gebruik actief je interview- en enquêtegegevens om je analyse te onderbouwen. Verwijs naar specifieke citaten, percentages of bevindingen uit je eigen onderzoek.
-
-3. **Verdiep de kritische analyse**: Ga verder dan beschrijven en analyseer waarom bepaalde situaties ontstaan zijn, wat de gevolgen zijn en hoe verschillende aspecten met elkaar samenhangen. Stel kritische vragen en beantwoord deze.`
+Concrete verbetervoorstellen: Voeg minimaal 3 specifieke organisatievoorbeelden toe (bijvoorbeeld "uit interviews met teamleiders blijkt dat..." of "de cijfers van het laatste kwartaal tonen..."). Integreer je onderzoeksresultaten actief in de tekst en ga dieper in op oorzaken en gevolgen van de beschreven situaties. Dit tilt je analyse naar het vereiste HBO-niveau.`
 
       return res.status(200).json({
         feedback: fallbackFeedback,

@@ -225,30 +225,23 @@ export default function FeedbackSection({
   }
 
   const formatFeedback = (feedbackText: string) => {
-    // Enhanced formatting for the new coach feedback format
+    // Simplified formatting for the new concise feedback format
     let formatted = feedbackText
-      // Coach Feedback header
-      .replace(/\*\*Coach Feedback\*\*/g, '<h3 class="text-xl font-bold text-green-800 mb-4 pb-2 border-b-2 border-green-300">Coach Feedback</h3>')
+      // Section headers (## format)
+      .replace(/## 👍 Wat gaat er goed/g, '<h3 class="text-lg font-semibold text-green-800 mb-3 flex items-center"><span class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-2 text-sm">👍</span>Wat gaat er goed</h3>')
+      .replace(/## 📊 Wat kan er beter/g, '<h3 class="text-lg font-semibold text-orange-800 mb-3 mt-6 flex items-center"><span class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mr-2 text-sm">📊</span>Wat kan er beter</h3>')
+      .replace(/## (.*)/g, '<h3 class="text-lg font-semibold text-gray-800 mt-4 mb-2">$1</h3>')
       
-      // Bold text for emphasis
+      // Bold and italic text
       .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-green-900">$1</strong>')
-      
-      // Italic text
       .replace(/\*(.*?)\*/g, '<em class="italic text-green-800">$1</em>')
-      
-      // Numbered list items (1. 2. 3.)
-      .replace(/^(\d+)\.\s+\*\*(.*?)\*\*:\s*(.*?)$/gm, '<div class="mb-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500"><h4 class="font-bold text-green-800 mb-2">$1. $2</h4><p class="text-green-700 leading-relaxed">$3</p></div>')
-      .replace(/^(\d+)\.\s+(.*?)$/gm, '<div class="mb-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500"><p class="text-green-700 leading-relaxed"><strong class="text-green-800">$1.</strong> $2</p></div>')
-      
-      // Handle "Echter," paragraph specially
-      .replace(/(Echter,.*?)(?=\d+\.)/gs, '<div class="mb-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200"><p class="text-gray-800 leading-relaxed">$1</p></div>')
       
       // Regular paragraphs
       .replace(/\n\s*\n/g, '</p><p class="mb-4 text-green-700 leading-relaxed">')
       .replace(/\n/g, '<br />')
     
-    // Wrap in paragraph if not already formatted
-    if (!formatted.includes('<h3>') && !formatted.includes('<div>') && !formatted.includes('<p>')) {
+    // Wrap in paragraph if not already formatted with headers
+    if (!formatted.includes('<h3>') && !formatted.includes('<p>')) {
       formatted = `<p class="mb-4 text-green-700 leading-relaxed">${formatted}</p>`
     }
     
@@ -369,17 +362,17 @@ export default function FeedbackSection({
 
       {/* Feedback Display */}
       {feedback && showFeedback && (
-        <div className="feedback-display mt-8 bg-white rounded-2xl p-8 border-2 border-green-200 shadow-lg max-w-none">
+        <div className="feedback-display mt-8 bg-gradient-to-br from-white to-green-50 rounded-2xl p-8 border-2 border-green-200 shadow-lg max-w-none">
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 hl-donkergroen-bg rounded-full flex items-center justify-center mr-6">
               <span className="material-symbols-sharp hl-icon-white hl-icon-md">school</span>
             </div>
             <h5 className="text-xl font-bold hl-donkergroen-text">
-              Professionele HBO-Coach Feedback
+              HBO-Coach Feedback
             </h5>
           </div>
           <div 
-            className="coach-feedback-content max-w-none"
+            className="coach-feedback-content max-w-none text-gray-800"
             dangerouslySetInnerHTML={{
               __html: formatFeedback(feedback)
             }} 
@@ -389,7 +382,7 @@ export default function FeedbackSection({
               <span className="w-6 h-6 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-3">
                 <span className="material-symbols-sharp hl-donkergroen-text" style={{ fontSize: '16px' }}>check_circle</span>
               </span>
-              Professionele feedback door AI-coach • HBO-niveau beoordeling • Gebaseerd op 7S-model criteria
+              Feedback door AI-coach • HBO-niveau • Gebaseerd op 7S-model criteria
             </p>
           </div>
         </div>
