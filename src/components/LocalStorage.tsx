@@ -153,7 +153,7 @@ export default function LocalStorage({ elementId, elementName, colorScheme }: Lo
     <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200">
       <div className="flex items-center space-x-3">
         <button
-          <span className="material-symbols-sharp text-yellow-600 hl-icon-sm">storage</span>
+          onClick={saveToLocalStorage}
           disabled={isSaving}
           className={getButtonClass()}
           title="Sla je huidige invoer lokaal op in je browser"
