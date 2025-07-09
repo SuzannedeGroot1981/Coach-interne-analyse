@@ -102,6 +102,14 @@ export default function FeedbackSection({
       const data = await response.json()
       setFeedback(data.feedback)
       setShowFeedback(true)
+      
+      // Scroll to feedback section after a short delay
+      setTimeout(() => {
+        const feedbackElement = document.querySelector(`[data-section="${element}"] .feedback-display`)
+        if (feedbackElement) {
+          feedbackElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
     } catch (error) {
       console.error('Feedback error:', error)
       alert('Fout bij het ophalen van feedback: ' + (error instanceof Error ? error.message : 'Onbekende fout'))
@@ -145,6 +153,14 @@ export default function FeedbackSection({
       const data = await response.json()
       setApaFeedback(data.apaFeedback)
       setShowApaFeedback(true)
+      
+      // Scroll to APA feedback section after a short delay
+      setTimeout(() => {
+        const apaElement = document.querySelector(`[data-section="${element}"] .apa-feedback-display`)
+        if (apaElement) {
+          apaElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
     } catch (error) {
       console.error('APA check error:', error)
       alert('Fout bij APA-controle: ' + (error instanceof Error ? error.message : 'Onbekende fout'))
@@ -156,11 +172,16 @@ export default function FeedbackSection({
   const formatFeedback = (feedbackText: string) => {
     // Convert markdown-like formatting to HTML
     return feedbackText
-      .replace(/## (.*)/g, '<h3 class="text-xl font-semibold hl-donkergroen-text mt-6 mb-3">$1</h3>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
-      .replace(/\n\n/g, '</p><p class="mb-3">')
+      .replace(/## (.*)/g, '<h3 class="text-xl font-bold text-green-800 mt-6 mb-4 border-b-2 border-green-200 pb-2">$1</h3>')
+      .replace(/### (.*)/g, '<h4 class="text-lg font-semibold text-green-700 mt-4 mb-3">$1</h4>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-green-900">$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em class="italic text-green-800">$1</em>')
+      .replace(/- (.*?)(?=\n|$)/g, '<li class="ml-4 mb-2 text-green-700">• $1</li>')
+      .replace(/(\n|^)([A-Z][^:\n]*:)/g, '$1<strong class="font-semibold text-green-800">$2</strong>')
+      .replace(/\n\n/g, '</p><p class="mb-4 text-green-700 leading-relaxed">')
       .replace(/\n/g, '<br />')
+      .replace(/^/, '<p class="mb-4 text-green-700 leading-relaxed">')
+      .replace(/$/, '</p>')
   }
 
   return (
@@ -249,7 +270,7 @@ export default function FeedbackSection({
 
       {/* APA Feedback Display */}
       {showApaFeedback && apaFeedback && (
-        <div className="mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8 border-2 border-purple-200">
+        <div className="apa-feedback-display mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8 border-2 border-purple-200">
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mr-6">
               <span className="material-symbols-sharp hl-icon-white hl-icon-md">library_books</span>
@@ -277,7 +298,7 @@ export default function FeedbackSection({
 
       {/* Feedback Display */}
       {showFeedback && feedback && (
-        <div className="mt-8 bg-white rounded-2xl p-8 border-2 border-green-200">
+        <div className="feedback-display mt-8 bg-white rounded-2xl p-8 border-2 border-green-200 shadow-lg">
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 hl-donkergroen-bg rounded-full flex items-center justify-center mr-6">
               <span className="material-symbols-sharp hl-icon-white hl-icon-md">school</span>
@@ -289,7 +310,7 @@ export default function FeedbackSection({
           <div 
             className="prose prose-lg max-w-none hl-donkerpaars-text"
             dangerouslySetInnerHTML={{ 
-              __html: `<p class="mb-3">${formatFeedback(feedback)}</p>` 
+              __html: formatFeedback(feedback)
             }}
           />
           <div className="mt-6 pt-6 border-t hl-zand-border">
