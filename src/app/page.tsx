@@ -163,7 +163,7 @@ export default function Home() {
               
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
                 {/* Interviewresultaten */}
-                <div className="bg-white rounded-2xl p-8 hl-zand-border border-2">
+                <div className="bg-white rounded-2xl p-8">
                   <h4 className="text-xl font-bold hl-donkergroen-text mb-6 flex items-center">
                     <span className="w-10 h-10 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-4 text-lg">💬</span>
                     <span className="w-10 h-10 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-4">
@@ -187,7 +187,7 @@ export default function Home() {
                 </div>
 
                 {/* Enquêteresultaten */}
-                <div className="bg-white rounded-2xl p-8 hl-zand-border border-2">
+                <div className="bg-white rounded-2xl p-8">
                   <h4 className="text-xl font-bold hl-donkergroen-text mb-6 flex items-center">
                     <span className="w-10 h-10 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-4">
                       <span className="material-symbols-sharp hl-icon-primary hl-icon-md">bar_chart</span>
@@ -313,7 +313,7 @@ export default function Home() {
                 Voer hier de financiële cijfers in over rentabiliteit, liquiditeit en solvabiliteit. De coach gebruikt deze gegevens voor een complete interne analyse.
               </p>
               
-              <div className="bg-white rounded-2xl p-8 hl-zand-border border-2">
+              <div className="bg-white rounded-2xl p-8">
                 <h4 className="text-xl font-bold hl-donkergroen-text mb-6 flex items-center">
                   <span className="w-10 h-10 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-4">
                     <span className="material-symbols-sharp hl-icon-primary hl-icon-md">monitoring</span>
@@ -401,7 +401,7 @@ export default function Home() {
                   <div className="flex items-center space-x-4">
                     <button
                       id="financial-save-button"
-                      className="px-6 py-3 hl-lichtgroen-bg hover:bg-emerald-200 hl-donkergroen-text hl-lichtgroen-border border-2 rounded-xl text-lg font-medium transition-all duration-200"
+                      className="px-6 py-3 hl-lichtgroen-bg hover:bg-emerald-200 hl-donkergroen-text rounded-xl text-lg font-medium transition-all duration-200"
                       title="Sla je financiële analyse lokaal op in je browser"
                     >
                       <span className="material-symbols-sharp hl-icon-primary hl-icon-sm mr-2">save</span>

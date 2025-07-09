@@ -119,7 +119,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Form Elements */
 .hl-input {
-  border: 2px solid var(--hl-zand);
+  border: none;
   border-radius: 12px;
   padding: 16px 20px;
   font-size: 16px;
@@ -129,12 +129,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .hl-input:focus {
   outline: none;
-  border-color: var(--hl-donkergroen);
   box-shadow: 0 0 0 3px var(--hl-donkergroen-light);
 }
 
 .hl-textarea {
-  border: 2px solid var(--hl-zand);
+  border: none;
   border-radius: 12px;
   padding: 20px;
   font-size: 16px;
@@ -146,7 +145,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .hl-textarea:focus {
   outline: none;
-  border-color: var(--hl-donkergroen);
   box-shadow: 0 0 0 3px var(--hl-donkergroen-light);
 }
 

@@ -44,20 +44,20 @@ export default function FeedbackSection({
   const colors = {
     green: {
       bg: 'hl-lichtgroen-bg',
-      border: 'hl-lichtgroen-border border-2',
+      border: '',
       text: 'hl-donkergroen-text',
       textSecondary: 'hl-donkerpaars-text',
       numberBg: 'hl-donkergroen-bg',
-      inputBorder: 'hl-lichtgroen-border border-2',
+      inputBorder: '',
       inputFocus: 'focus:border-hl-donkergroen'
     },
     purple: {
       bg: 'hl-zand-bg',
-      border: 'hl-zand-border border-2',
+      border: '',
       text: 'hl-donkerpaars-text',
       textSecondary: 'hl-donkergroen-text',
       numberBg: 'hl-donkerpaars-bg',
-      inputBorder: 'hl-zand-border border-2',
+      inputBorder: '',
       inputFocus: 'focus:border-hl-donkerpaars'
     }
   }
@@ -248,7 +248,7 @@ export default function FeedbackSection({
 
       {/* APA Feedback Display */}
       {showApaFeedback && apaFeedback && (
-        <div className="mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl border-2 border-purple-200 p-8 hl-card">
+        <div className="mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8 hl-card">
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mr-6">
               <span className="material-symbols-sharp hl-icon-white hl-icon-md">library_books</span>
@@ -276,7 +276,7 @@ export default function FeedbackSection({
 
       {/* Feedback Display */}
       {showFeedback && feedback && (
-        <div className="mt-8 bg-white rounded-2xl border-2 hl-zand-border p-8 hl-card">
+        <div className="mt-8 bg-white rounded-2xl p-8 hl-card">
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 hl-donkergroen-bg rounded-full flex items-center justify-center mr-6">
               <span className="material-symbols-sharp hl-icon-white hl-icon-md">school</span>
