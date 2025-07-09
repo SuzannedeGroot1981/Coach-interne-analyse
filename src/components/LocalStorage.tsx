@@ -115,10 +115,30 @@ export default function LocalStorage({ elementId, elementName, colorScheme }: Lo
   }
 
   const getButtonText = () => {
-    if (isSaving) return '💾 Opslaan...'
-    if (saveStatus === 'success') return '✅ Opgeslagen!'
-    if (saveStatus === 'error') return '❌ Fout'
-    return '💾 Sla concept op'
+    if (isSaving) return (
+      <>
+        <span className="material-symbols-sharp hl-icon-sm mr-2">save</span>
+        Opslaan...
+      </>
+    )
+    if (saveStatus === 'success') return (
+      <>
+        <span className="material-symbols-sharp hl-icon-sm mr-2">check_circle</span>
+        Opgeslagen!
+      </>
+    )
+    if (saveStatus === 'error') return (
+      <>
+        <span className="material-symbols-sharp hl-icon-sm mr-2">error</span>
+        Fout
+      </>
+    )
+    return (
+      <>
+        <span className="material-symbols-sharp hl-icon-sm mr-2">save</span>
+        Sla concept op
+      </>
+    )
   }
 
   const getButtonClass = () => {
@@ -133,7 +153,7 @@ export default function LocalStorage({ elementId, elementName, colorScheme }: Lo
     <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200">
       <div className="flex items-center space-x-3">
         <button
-          onClick={saveToLocalStorage}
+          <span className="material-symbols-sharp text-yellow-600 hl-icon-sm">storage</span>
           disabled={isSaving}
           className={getButtonClass()}
           title="Sla je huidige invoer lokaal op in je browser"
@@ -252,7 +272,17 @@ export function LoadSavedData() {
             disabled={isLoading}
             className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
           >
-            {isLoading ? '⏳ Laden...' : '📂 Laad concept'}
+            {isLoading ? (
+              <>
+                <span className="material-symbols-sharp hl-icon-white hl-icon-sm mr-2">hourglass_empty</span>
+                Laden...
+              </>
+            ) : (
+              <>
+                <span className="material-symbols-sharp hl-icon-white hl-icon-sm mr-2">folder_open</span>
+                Laad concept
+              </>
+            )}
           </button>
           
           <button
@@ -260,7 +290,7 @@ export function LoadSavedData() {
             className="px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg text-sm transition-colors"
             title="Verwijder opgeslagen gegevens"
           >
-            🗑️
+            <span className="material-symbols-sharp hl-icon-sm">delete</span>
           </button>
         </div>
       </div>

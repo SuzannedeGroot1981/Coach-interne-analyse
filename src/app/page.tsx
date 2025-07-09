@@ -48,21 +48,21 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
               <div className="text-center bg-white rounded-xl p-6 hl-card">
                 <div className="w-20 h-20 hl-lichtgroen-bg rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">✍️</span>
+                  <span className="material-symbols-sharp hl-icon-xl hl-icon-primary">edit</span>
                 </div>
                 <p className="font-bold text-xl hl-donkergroen-text mb-3">1. Schrijf je analyse</p>
                 <p className="hl-donkerpaars-text">Vul de 7S-secties in met je onderzoek</p>
               </div>
               <div className="text-center bg-white rounded-xl p-6 hl-card">
                 <div className="w-20 h-20 hl-zand-bg rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">🤖</span>
+                  <span className="material-symbols-sharp hl-icon-xl hl-icon-secondary">psychology</span>
                 </div>
                 <p className="font-bold text-xl hl-donkerpaars-text mb-3">2. Vraag AI-feedback</p>
                 <p className="hl-donkergroen-text">Krijg direct professionele feedback</p>
               </div>
               <div className="text-center bg-white rounded-xl p-6 hl-card">
                 <div className="w-20 h-20 hl-geel-bg rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">📄</span>
+                  <span className="material-symbols-sharp hl-icon-xl hl-icon-primary">description</span>
                 </div>
                 <p className="font-bold text-xl hl-donkergroen-text mb-3">3. Exporteer naar Word</p>
                 <p className="hl-donkerpaars-text">Download je complete analyse</p>
@@ -79,7 +79,7 @@ export default function Home() {
           <div className="hl-card p-10 mb-10">
             <h2 className="text-4xl font-bold hl-section-header mb-10 flex items-center">
               <span className="w-12 h-12 hl-donkergroen-bg text-white rounded-xl flex items-center justify-center mr-6">
-                📊
+                <span className="material-symbols-sharp hl-icon-white hl-icon-lg">analytics</span>
               </span>
               Het 7S-model van McKinsey
             </h2>
@@ -89,7 +89,7 @@ export default function Home() {
               <div className="hl-lichtgroen-bg rounded-2xl p-8 hl-lichtgroen-border border-2">
                 <h3 className="text-2xl font-bold hl-donkergroen-text mb-8 flex items-center">
                   <span className="w-10 h-10 hl-donkergroen-bg text-white rounded-xl flex items-center justify-center mr-4">
-                    🔧
+                    <span className="material-symbols-sharp hl-icon-white hl-icon-md">build</span>
                   </span>
                   Harde S'en (Hard Elements)
                 </h3>
@@ -122,7 +122,7 @@ export default function Home() {
               <div className="hl-zand-bg rounded-2xl p-8 hl-zand-border border-2">
                 <h3 className="text-2xl font-bold hl-donkerpaars-text mb-8 flex items-center">
                   <span className="w-10 h-10 hl-donkerpaars-bg text-white rounded-xl flex items-center justify-center mr-4">
-                    💡
+                    <span className="material-symbols-sharp hl-icon-white hl-icon-md">lightbulb</span>
                   </span>
                   Zachte S'en (Soft Elements)
                 </h3>
@@ -163,7 +163,7 @@ export default function Home() {
             <div className="hl-warning rounded-2xl p-8 mb-12">
               <h3 className="text-3xl font-bold hl-donkergroen-text mb-8 flex items-center">
                 <span className="w-12 h-12 hl-geel-bg hl-donkergroen-text rounded-xl flex items-center justify-center mr-6">
-                  🔍
+                  <span className="material-symbols-sharp hl-icon-primary hl-icon-lg">search</span>
                 </span>
                 Onderzoeksgegevens
               </h3>
@@ -176,6 +176,9 @@ export default function Home() {
                 <div className="bg-white rounded-2xl p-8 hl-zand-border border-2">
                   <h4 className="text-xl font-bold hl-donkergroen-text mb-6 flex items-center">
                     <span className="w-10 h-10 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-4 text-lg">💬</span>
+                    <span className="w-10 h-10 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-4">
+                      <span className="material-symbols-sharp hl-icon-primary hl-icon-md">chat</span>
+                    </span>
                     Interviewresultaten
                   </h4>
                   <p className="hl-donkerpaars-text mb-6">
@@ -196,7 +199,9 @@ export default function Home() {
                 {/* Enquêteresultaten */}
                 <div className="bg-white rounded-2xl p-8 hl-zand-border border-2">
                   <h4 className="text-xl font-bold hl-donkergroen-text mb-6 flex items-center">
-                    <span className="w-10 h-10 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-4 text-lg">📊</span>
+                    <span className="w-10 h-10 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-4">
+                      <span className="material-symbols-sharp hl-icon-primary hl-icon-md">bar_chart</span>
+                    </span>
                     Resultaten enquête
                   </h4>
                   <p className="hl-donkerpaars-text mb-6">
@@ -217,7 +222,9 @@ export default function Home() {
               
               <div className="mt-8 p-6 hl-lichtgroen-bg rounded-xl">
                 <p className="hl-donkergroen-text flex items-start">
-                  <span className="w-8 h-8 hl-geel-bg rounded-full flex items-center justify-center mr-4 mt-1 text-lg">💡</span>
+                  <span className="w-8 h-8 hl-geel-bg rounded-full flex items-center justify-center mr-4 mt-1">
+                    <span className="material-symbols-sharp hl-icon-primary hl-icon-sm">tips_and_updates</span>
+                  </span>
                   <span className="text-lg">
                     <strong>Tip:</strong> Hoe meer concrete gegevens je invoert, hoe specifieker en waardevoller de feedback van de coach wordt. 
                     Denk aan citaten, percentages, scores en kwalitatieve observaties.
@@ -308,7 +315,7 @@ export default function Home() {
             <div className="hl-geel-bg rounded-2xl p-8 hl-geel-border border-2 mt-12">
               <h3 className="text-3xl font-bold hl-donkergroen-text mb-8 flex items-center">
                 <span className="w-12 h-12 hl-donkergroen-bg text-white rounded-xl flex items-center justify-center mr-6">
-                  💰
+                  <span className="material-symbols-sharp hl-icon-white hl-icon-lg">payments</span>
                 </span>
                 Financiële Analyse
               </h3>
@@ -318,7 +325,9 @@ export default function Home() {
               
               <div className="bg-white rounded-2xl p-8 hl-zand-border border-2">
                 <h4 className="text-xl font-bold hl-donkergroen-text mb-6 flex items-center">
-                  <span className="w-10 h-10 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-4 text-lg">📊</span>
+                  <span className="w-10 h-10 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-4">
+                    <span className="material-symbols-sharp hl-icon-primary hl-icon-md">monitoring</span>
+                  </span>
                   Financiële Cijfers & Ratio's
                 </h4>
                 <p className="hl-donkerpaars-text mb-6">
@@ -341,7 +350,7 @@ export default function Home() {
                       id="financial-feedback-button"
                       className="hl-button-primary flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <span>💬</span>
+                      <span className="material-symbols-sharp hl-icon-white hl-icon-sm">forum</span>
                       <span>Vraag feedback aan de coach</span>
                     </button>
                     
@@ -349,7 +358,7 @@ export default function Home() {
                       id="financial-apa-button"
                       className="hl-button-secondary flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <span>📚</span>
+                      <span className="material-symbols-sharp hl-icon-white hl-icon-sm">menu_book</span>
                       <span>Self-check APA</span>
                     </button>
                   </div>
@@ -359,7 +368,7 @@ export default function Home() {
                 <div id="financial-feedback" className="hidden mt-8 hl-info rounded-xl p-8">
                   <div className="flex items-center mb-6">
                     <div className="w-12 h-12 hl-donkerpaars-bg text-white rounded-full flex items-center justify-center mr-6">
-                      <span className="text-lg">🎓</span>
+                      <span className="material-symbols-sharp hl-icon-white hl-icon-md">school</span>
                     </div>
                     <h5 className="text-xl font-bold hl-donkerpaars-text">
                       Feedback van je Coach
@@ -380,7 +389,7 @@ export default function Home() {
                 <div id="financial-apa-feedback" className="hidden mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl border-2 border-purple-200 p-8">
                   <div className="flex items-center mb-6">
                     <div className="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center mr-6">
-                      <span className="text-lg">📚</span>
+                      <span className="material-symbols-sharp hl-icon-white hl-icon-md">library_books</span>
                     </div>
                     <h5 className="text-xl font-bold text-purple-800">
                       APA-stijl Controle - Financiële Analyse
@@ -405,7 +414,8 @@ export default function Home() {
                       className="px-6 py-3 hl-lichtgroen-bg hover:bg-emerald-200 hl-donkergroen-text hl-lichtgroen-border border-2 rounded-xl text-lg font-medium transition-all duration-200"
                       title="Sla je financiële analyse lokaal op in je browser"
                     >
-                      💾 Sla concept op
+                      <span className="material-symbols-sharp hl-icon-primary hl-icon-sm mr-2">save</span>
+                      Sla concept op
                     </button>
                   </div>
                   
@@ -417,7 +427,9 @@ export default function Home() {
               
               <div className="mt-8 p-6 hl-lichtgroen-bg rounded-xl">
                 <p className="hl-donkergroen-text flex items-start text-lg">
-                  <span className="w-8 h-8 hl-geel-bg rounded-full flex items-center justify-center mr-4 mt-1 text-lg">💡</span>
+                  <span className="w-8 h-8 hl-geel-bg rounded-full flex items-center justify-center mr-4 mt-1">
+                    <span className="material-symbols-sharp hl-icon-primary hl-icon-sm">tips_and_updates</span>
+                  </span>
                   <span>
                     <strong>Tip:</strong> Voer concrete cijfers en percentages in. Hoe specifieker je bent, hoe beter de AI-coach je kan helpen 
                     de financiële begrippen uit te leggen in de context van jouw organisatie.
@@ -431,9 +443,9 @@ export default function Home() {
           <div className="text-center mt-16">
             <div className="hl-card p-10 max-w-4xl mx-auto">
               <div className="inline-flex items-center space-x-6 hl-donkergroen-text mb-6">
-                <span className="text-3xl">🎓</span>
+                <span className="material-symbols-sharp hl-icon-xl hl-icon-primary">school</span>
                 <span className="font-bold text-2xl">Interne Analyse Coach voor Studenten</span>
-                <span className="text-3xl">🎓</span>
+                <span className="material-symbols-sharp hl-icon-xl hl-icon-primary">school</span>
               </div>
               <p className="hl-donkerpaars-text mb-6 text-lg">
                 Deze tool is volledig gratis en openbaar beschikbaar voor alle studenten. 
@@ -441,15 +453,21 @@ export default function Home() {
               </p>
               <div className="flex items-center justify-center space-x-10 text-lg hl-donkergroen-text">
                 <span className="flex items-center">
-                  <span className="w-8 h-8 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-3">🔒</span>
+                  <span className="w-8 h-8 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-3">
+                    <span className="material-symbols-sharp hl-icon-primary hl-icon-sm">lock</span>
+                  </span>
                   Privacy-vriendelijk
                 </span>
                 <span className="flex items-center">
-                  <span className="w-8 h-8 hl-zand-bg rounded-full flex items-center justify-center mr-3">💾</span>
+                  <span className="w-8 h-8 hl-zand-bg rounded-full flex items-center justify-center mr-3">
+                    <span className="material-symbols-sharp hl-icon-primary hl-icon-sm">storage</span>
+                  </span>
                   Lokaal opslaan
                 </span>
                 <span className="flex items-center">
-                  <span className="w-8 h-8 hl-geel-bg rounded-full flex items-center justify-center mr-3">🌐</span>
+                  <span className="w-8 h-8 hl-geel-bg rounded-full flex items-center justify-center mr-3">
+                    <span className="material-symbols-sharp hl-icon-primary hl-icon-sm">public</span>
+                  </span>
                   Altijd toegankelijk
                 </span>
               </div>

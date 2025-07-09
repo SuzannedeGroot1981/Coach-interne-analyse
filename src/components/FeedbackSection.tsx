@@ -197,7 +197,7 @@ export default function FeedbackSection({
             </>
           ) : (
             <>
-              <span>💬</span>
+              <span className="material-symbols-sharp hl-icon-white hl-icon-sm">forum</span>
               <span>Vraag feedback aan coach</span>
             </>
           )}
@@ -215,7 +215,7 @@ export default function FeedbackSection({
             </>
           ) : (
             <>
-              <span>📚</span>
+              <span className="material-symbols-sharp hl-icon-white hl-icon-sm">menu_book</span>
               <span>Self-check APA</span>
             </>
           )}
@@ -226,7 +226,10 @@ export default function FeedbackSection({
             onClick={() => setShowFeedback(!showFeedback)}
             className="px-6 py-3 bg-hl-gray-100 text-hl-gray-700 rounded-xl hover:bg-hl-gray-200 transition-colors font-medium"
           >
-            {showFeedback ? '👁️ Verberg feedback' : '👁️ Toon feedback'}
+            <span className="material-symbols-sharp hl-icon-sm mr-2">
+              {showFeedback ? 'visibility_off' : 'visibility'}
+            </span>
+            {showFeedback ? 'Verberg feedback' : 'Toon feedback'}
           </button>
         )}
         
@@ -235,7 +238,10 @@ export default function FeedbackSection({
             onClick={() => setShowApaFeedback(!showApaFeedback)}
             className="px-6 py-3 bg-purple-100 text-purple-700 rounded-xl hover:bg-purple-200 transition-colors font-medium"
           >
-            {showApaFeedback ? '👁️ Verberg APA-check' : '👁️ Toon APA-check'}
+            <span className="material-symbols-sharp hl-icon-sm mr-2">
+              {showApaFeedback ? 'visibility_off' : 'visibility'}
+            </span>
+            {showApaFeedback ? 'Verberg APA-check' : 'Toon APA-check'}
           </button>
         )}
       </div>
@@ -245,7 +251,7 @@ export default function FeedbackSection({
         <div className="mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl border-2 border-purple-200 p-8 hl-card">
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mr-6">
-              <span className="text-white text-lg">📚</span>
+              <span className="material-symbols-sharp hl-icon-white hl-icon-md">library_books</span>
             </div>
             <h5 className="text-xl font-bold text-purple-800">
               APA-stijl Controle
@@ -260,7 +266,7 @@ export default function FeedbackSection({
           <div className="mt-6 pt-6 border-t border-purple-200">
             <p className="text-sm text-purple-600 flex items-center">
               <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-3">
-                <span className="text-purple-600 text-sm">📚</span>
+                <span className="material-symbols-sharp text-purple-600" style="font-size: 16px;">check_circle</span>
               </span>
               APA-controle door AI • Gratis voor studenten • Gebaseerd op APA 7e editie richtlijnen
             </p>
@@ -273,7 +279,7 @@ export default function FeedbackSection({
         <div className="mt-8 bg-white rounded-2xl border-2 hl-zand-border p-8 hl-card">
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 hl-donkergroen-bg rounded-full flex items-center justify-center mr-6">
-              <span className="text-white text-lg">🎓</span>
+              <span className="material-symbols-sharp hl-icon-white hl-icon-md">school</span>
             </div>
             <h5 className="text-xl font-bold hl-donkergroen-text">
               Feedback van je Coach
@@ -288,7 +294,7 @@ export default function FeedbackSection({
           <div className="mt-6 pt-6 border-t hl-zand-border">
             <p className="text-sm hl-donkergroen-text flex items-center">
               <span className="w-6 h-6 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-3">
-                <span className="hl-donkergroen-text text-sm">✓</span>
+                <span className="material-symbols-sharp hl-donkergroen-text" style="font-size: 16px;">check_circle</span>
               </span>
               Feedback gegenereerd door AI-coach • Gratis voor alle studenten • Gebaseerd op HBO-beoordelingscriteria
             </p>

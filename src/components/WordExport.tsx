@@ -479,7 +479,7 @@ export default function WordExport() {
     <div className="hl-card p-12 mt-12">
       <div className="text-center">
         <div className="w-24 h-24 hl-geel-bg rounded-full flex items-center justify-center mx-auto mb-8">
-          <span className="text-4xl">📄</span>
+          <span className="material-symbols-sharp hl-icon-primary" style="font-size: 48px;">description</span>
         </div>
         
         <h3 className="text-4xl font-bold hl-donkergroen-text mb-8">
