@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     })
 
     // Create the APA checking prompt
-    const systemPrompt = `Je bent een expert in APA-stijl (7e editie) voor HBO-niveau. Analyseer de ingediende tekst op correcte toepassing van APA-richtlijnen en geef concrete, praktische verbeterpunten.
+    const systemPrompt = `Je bent een expert in APA-stijl (7e editie) voor HBO-niveau. Analyseer de ingediende tekst op correcte toepassing van APA-richtlijnen en zakelijk taalgebruik. Geef concrete, praktische verbeterpunten.
 
 FOCUS OP DEZE APA-ASPECTEN:
 1. **In-text citaties**: (Auteur, jaar) of (Auteur, jaar, p. X)
@@ -69,10 +69,12 @@ FOCUS OP DEZE APA-ASPECTEN:
 8. **Webpagina's**: Auteur/organisatie, jaar, titel, URL
 9. **Rapporten**: Correcte format voor organisatierapporten
 10. **Tijdschriftartikelen**: Volume, nummer, pagina's
+11. **Zakelijk taalgebruik**: Professioneel, formeel, geen spreektaal
+12. **Nederlandse spelling en grammatica**: Correcte toepassing
 
 GEEF ALLEEN FEEDBACK OP WAT ER DAADWERKELIJK IN DE TEKST STAAT.
 Verzin geen bronnen die er niet zijn.
-Focus op concrete verbeteringen van bestaande verwijzingen.`
+Focus op concrete verbeteringen van bestaande verwijzingen en taalgebruik.`
 
     const prompt = `${systemPrompt}
 
@@ -82,6 +84,9 @@ STUDENT TEKST VOOR APA-CONTROLE:
 "${text}"
 
 Analyseer deze tekst en geef feedback volgens dit format:
+
+## 📝 Zakelijk Taalgebruik
+[Beoordeel professionaliteit, formaliteit, vermijd spreektaal]
 
 ## ✅ Correcte APA-elementen
 [Benoem wat goed gedaan is, indien aanwezig]
@@ -98,7 +103,7 @@ Analyseer deze tekst en geef feedback volgens dit format:
 ## 📊 APA-score
 **Algemene beoordeling:** [Goed/Voldoende/Onvoldoende] + korte toelichting
 
-Wees specifiek en constructief. Geef alleen feedback op daadwerkelijk aanwezige tekst.`
+Wees specifiek en constructief. Geef alleen feedback op daadwerkelijk aanwezige tekst. Let extra op zakelijk taalgebruik.`
 
     // Generate APA feedback
     const result = await model.generateContent(prompt)
