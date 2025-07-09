@@ -9,7 +9,6 @@ interface TabNavigationProps {
 }
 
 const TABS = [
-  { id: 'onderzoek', label: 'Onderzoek', icon: 'search' },
   { id: 'harde-s', label: 'Harde S\'en (1-3)', icon: 'build' },
   { id: 'zachte-s', label: 'Zachte S\'en (4-7)', icon: 'lightbulb' },
   { id: 'financieel', label: 'Financiële Analyse', icon: 'payments' },

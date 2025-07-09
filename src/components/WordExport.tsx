@@ -4,8 +4,6 @@ import { useState } from 'react'
 import { Document, Paragraph, TextRun, HeadingLevel, AlignmentType } from 'docx'
 
 interface ExportData {
-  interviewResults: string
-  surveyResults: string
   financialAnalysis: string
   sections: {
     [key: string]: string
@@ -28,8 +26,6 @@ export default function WordExport() {
 
   const collectFormData = (): ExportData => {
     return {
-      interviewResults: (document.getElementById('interview-results') as HTMLTextAreaElement)?.value || '',
-      surveyResults: (document.getElementById('survey-results') as HTMLTextAreaElement)?.value || '',
       financialAnalysis: (document.getElementById('financial-analysis') as HTMLTextAreaElement)?.value || '',
       sections: {
         strategy: (document.querySelector('[data-section="strategy"] textarea') as HTMLTextAreaElement)?.value || '',
@@ -121,17 +117,16 @@ export default function WordExport() {
 
     const tocItems = [
       "1. Inleiding",
-      "2. Onderzoeksmethodologie",
-      "3. Het 7S-Model Analyse",
-      "3.1 Strategy (Strategie)",
-      "3.2 Structure (Structuur)",
-      "3.3 Systems (Systemen)",
-      "3.4 Shared Values (Gedeelde Waarden)",
-      "3.5 Skills (Vaardigheden)",
-      "3.6 Style (Stijl)",
-      "3.7 Staff (Personeel)",
-      "4. Financiële Analyse",
-      "5. Bronnenlijst"
+      "2. Het 7S-Model Analyse",
+      "2.1 Strategy (Strategie)",
+      "2.2 Structure (Structuur)",
+      "2.3 Systems (Systemen)",
+      "2.4 Shared Values (Gedeelde Waarden)",
+      "2.5 Skills (Vaardigheden)",
+      "2.6 Style (Stijl)",
+      "2.7 Staff (Personeel)",
+      "3. Financiële Analyse",
+      "4. Bronnenlijst"
     ]
 
     tocItems.forEach(item => {
@@ -185,66 +180,13 @@ export default function WordExport() {
       })
     )
 
-    // 2. Onderzoeksmethodologie
-    if (data.interviewResults || data.surveyResults) {
-      children.push(
-        new Paragraph({
-          children: [
-            new TextRun({
-              text: "2. ONDERZOEKSMETHODOLOGIE",
-              bold: true,
-              size: 32,
-              color: "004D46" // HL Donkergroen
-            })
-          ],
-          heading: HeadingLevel.HEADING_1,
-          spacing: { after: 400 }
-        })
-      )
 
-      if (data.interviewResults) {
-        children.push(
-          new Paragraph({
-            children: [
-              new TextRun({
-                text: "2.1 Interviews",
-                bold: true,
-                size: 28,
-                color: "280F4B" // HL Donkerpaars
-              })
-            ],
-            heading: HeadingLevel.HEADING_2,
-            spacing: { after: 240 }
-          }),
-          ...createParagraphsFromText(data.interviewResults)
-        )
-      }
-
-      if (data.surveyResults) {
-        children.push(
-          new Paragraph({
-            children: [
-              new TextRun({
-                text: "2.2 Enquête",
-                bold: true,
-                size: 28,
-                color: "280F4B" // HL Donkerpaars
-              })
-            ],
-            heading: HeadingLevel.HEADING_2,
-            spacing: { after: 240 }
-          }),
-          ...createParagraphsFromText(data.surveyResults)
-        )
-      }
-    }
-
-    // 3. 7S-Model Analyse
+    // 2. 7S-Model Analyse
     children.push(
       new Paragraph({
         children: [
           new TextRun({
-            text: "3. HET 7S-MODEL ANALYSE",
+            text: "2. HET 7S-MODEL ANALYSE",
             bold: true,
             size: 32,
             color: "004D46" // HL Donkergroen
@@ -265,7 +207,7 @@ export default function WordExport() {
           new Paragraph({
             children: [
               new TextRun({
-                text: `3.${index + 1} ${SECTION_TITLES[sectionKey as keyof typeof SECTION_TITLES]}`,
+                text: `2.${index + 1} ${SECTION_TITLES[sectionKey as keyof typeof SECTION_TITLES]}`,
                 bold: true,
                 size: 28,
                 color: "280F4B" // HL Donkerpaars
@@ -279,13 +221,13 @@ export default function WordExport() {
       }
     })
 
-    // 4. Financiële Analyse
+    // 3. Financiële Analyse
     if (data.financialAnalysis && data.financialAnalysis.trim()) {
       children.push(
         new Paragraph({
           children: [
             new TextRun({
-              text: "4. FINANCIËLE ANALYSE",
+              text: "3. FINANCIËLE ANALYSE",
               bold: true,
               size: 32,
               color: "004D46" // HL Donkergroen
@@ -299,12 +241,12 @@ export default function WordExport() {
       )
     }
 
-    // 5. Bronnenlijst (APA Style)
+    // 4. Bronnenlijst (APA Style)
     children.push(
       new Paragraph({
         children: [
           new TextRun({
-            text: "5. BRONNENLIJST",
+            text: "4. BRONNENLIJST",
             bold: true,
             size: 32,
             color: "004D46" // HL Donkergroen
@@ -403,9 +345,7 @@ export default function WordExport() {
       const formData = collectFormData()
       
       // Check if there's any content to export
-      const hasContent = formData.interviewResults || 
-                        formData.surveyResults || 
-                        formData.financialAnalysis ||
+      const hasContent = formData.financialAnalysis ||
                         Object.values(formData.sections).some(section => section.trim().length > 0)
 
       if (!hasContent) {

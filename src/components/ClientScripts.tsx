@@ -117,35 +117,8 @@ export default function ClientScripts() {
     }
 
     // Setup file uploads
-    setupFileUpload(
-      'interview-file-input',
-      'interview-results', 
-      'interview-file-info',
-      'interview-file-name',
-      'interview-file-size',
-      'interview-remove-file',
-      'interview-content',
-      'interview-processed-text',
-      'interview-word-count',
-      'interview-char-count'
-    )
-
-    setupFileUpload(
-      'survey-file-input',
-      'survey-results',
-      'survey-file-info', 
-      'survey-file-name',
-      'survey-file-size',
-      'survey-remove-file',
-      'survey-content',
-      'survey-processed-text',
-      'survey-word-count',
-      'survey-char-count'
-    )
 
     // Keep existing functionality for financial section
-    const interviewTextarea = document.getElementById('interview-results') as HTMLTextAreaElement
-    const surveyTextarea = document.getElementById('survey-results') as HTMLTextAreaElement
     const financialTextarea = document.getElementById('financial-analysis') as HTMLTextAreaElement
     const financialCounter = document.getElementById('financial-count')
     const feedbackButton = document.getElementById('financial-feedback-button')
@@ -157,8 +130,6 @@ export default function ClientScripts() {
     
     // Debug logging
     console.log('ClientScripts loaded, checking elements:', {
-      interviewTextarea: !!interviewTextarea,
-      surveyTextarea: !!surveyTextarea,
       financialTextarea: !!financialTextarea,
       feedbackButton: !!feedbackButton,
       apaCheckButton: !!apaCheckButton
@@ -328,8 +299,6 @@ export default function ClientScripts() {
           // Get current data from all form elements
           const currentData = {
             timestamp: new Date().toLocaleString('nl-NL'),
-            interviewResults: (document.getElementById('interview-results') as HTMLTextAreaElement)?.value || '',
-            surveyResults: (document.getElementById('survey-results') as HTMLTextAreaElement)?.value || '',
             financialAnalysis: (document.getElementById('financial-analysis') as HTMLTextAreaElement)?.value || '',
             sections: {} as Record<string, string>
           }

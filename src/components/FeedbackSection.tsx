@@ -29,17 +29,6 @@ export default function FeedbackSection({
   const [showApaFeedback, setShowApaFeedback] = useState(false)
   
   // Function to get research data from the page
-  const getResearchData = () => {
-    const interviewResults = (document.getElementById('interview-results') as HTMLTextAreaElement)?.value || ''
-    const surveyResults = (document.getElementById('survey-results') as HTMLTextAreaElement)?.value || ''
-    const financialAnalysis = (document.getElementById('financial-analysis') as HTMLTextAreaElement)?.value || ''
-    
-    return {
-      interviews: interviewResults.trim(),
-      survey: surveyResults.trim(),
-      financial: financialAnalysis.trim()
-    }
-  }
 
   const colors = {
     green: {
@@ -78,16 +67,12 @@ export default function FeedbackSection({
     console.log('🚀 Starting feedback request:', {
       element,
       textLength: text.length,
-      hasResearchData: Object.values(getResearchData()).some(data => data.length > 0)
     })
 
     setIsLoading(true)
     setShowFeedback(false)
     setFeedback('') // Clear previous feedback
 
-    // Get research data to include in feedback
-    const researchData = getResearchData()
-    
     try {
       // Try new coach API first, fallback to old feedback API
       let response
@@ -127,8 +112,7 @@ export default function FeedbackSection({
           },
           body: JSON.stringify({
             text: text.trim(),
-            element: element,
-            researchData: researchData
+            element: element
           }),
         })
         

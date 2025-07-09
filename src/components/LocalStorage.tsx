@@ -6,8 +6,6 @@ import { useState, useEffect } from 'react'
 
 interface SavedData {
   timestamp: string
-  interviewResults: string
-  surveyResults: string
   financialAnalysis: string
   sections: {
     [key: string]: string
@@ -75,8 +73,6 @@ export default function LocalStorage({ elementId, elementName, colorScheme }: Lo
       // Get current data from all form elements
       const currentData: SavedData = {
         timestamp: new Date().toLocaleString('nl-NL'),
-        interviewResults: (document.getElementById('interview-results') as HTMLTextAreaElement)?.value || '',
-        surveyResults: (document.getElementById('survey-results') as HTMLTextAreaElement)?.value || '',
         financialAnalysis: (document.getElementById('financial-analysis') as HTMLTextAreaElement)?.value || '',
         sections: {}
       }
@@ -202,13 +198,8 @@ export function LoadSavedData() {
 
       const parsed: SavedData = JSON.parse(savedData)
       
-      // Load research data
-      const interviewTextarea = document.getElementById('interview-results') as HTMLTextAreaElement
-      const surveyTextarea = document.getElementById('survey-results') as HTMLTextAreaElement
       const financialTextarea = document.getElementById('financial-analysis') as HTMLTextAreaElement
       
-      if (interviewTextarea) interviewTextarea.value = parsed.interviewResults || ''
-      if (surveyTextarea) surveyTextarea.value = parsed.surveyResults || ''
       if (financialTextarea) financialTextarea.value = parsed.financialAnalysis || ''
 
       // Load 7S sections data
@@ -221,9 +212,6 @@ export function LoadSavedData() {
         }
       })
 
-      // Update character counters for research sections
-      if (interviewTextarea) interviewTextarea.dispatchEvent(new Event('input', { bubbles: true }))
-      if (surveyTextarea) surveyTextarea.dispatchEvent(new Event('input', { bubbles: true }))
       if (financialTextarea) financialTextarea.dispatchEvent(new Event('input', { bubbles: true }))
 
       alert(`Gegevens geladen van ${parsed.timestamp}`)
