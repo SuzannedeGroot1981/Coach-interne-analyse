@@ -412,25 +412,77 @@ Geef gestructureerde feedback volgens dit format:
 Houd de feedback constructief, zakelijk en gericht op leerresultaten. Focus ALLEEN op interne aspecten.`
 
     console.log('🤖 Sending request to Gemini API...')
-    // Generate feedback
-    const result = await model.generateContent(prompt)
-    const response = await result.response
-    const feedback = response.text()
-    
-    console.log('✅ Gemini API response received:', {
-      feedbackLength: feedback?.length || 0,
-      hasContent: !!feedback
+    console.log('📝 Full prompt being sent:', {
+      promptLength: prompt.length,
+      promptPreview: prompt.substring(0, 200) + '...',
+      textLength: text.length,
+      element: element
     })
+    
+    // Generate feedback
+    let result, response, feedback
+    
+    try {
+      result = await model.generateContent(prompt)
+      console.log('📡 Gemini API call completed')
+      
+      response = await result.response
+      console.log('📥 Response object received:', {
+        hasResponse: !!response,
+        candidates: response.candidates?.length || 0
+      })
+      
+      feedback = response.text()
+      console.log('📄 Text extracted from response:', {
+        feedbackLength: feedback?.length || 0,
+        feedbackPreview: feedback ? feedback.substring(0, 100) + '...' : 'NO CONTENT'
+      })
+    } catch (apiError) {
+      console.error('❌ Gemini API call failed:', {
+        error: apiError instanceof Error ? apiError.message : 'Unknown API error',
+        stack: apiError instanceof Error ? apiError.stack : undefined
+      })
+      const simplePrompt = `Geef feedback op deze ${element} tekst voor een HBO interne analyse:
 
-    if (!feedback) {
-     console.warn('⚠️ Empty feedback received from Gemini API')
+      try {
+        result = await model.generateContent(simplePrompt)
+        response = await result.response
+        feedback = response.text()
+        console.log('✅ Simplified prompt worked, feedback length:', feedback?.length || 0)
+      } catch (fallbackError) {
+        console.error('❌ Even simplified prompt failed:', fallbackError)
+        throw new Error('Gemini API is momenteel niet beschikbaar. Probeer het later opnieuw.')
+      }
+    console.log('✅ Gemini API response received:', {
+    })
      return NextResponse.json({ 
-       feedback: 'De AI kon geen feedback genereren voor deze tekst. Probeer het opnieuw met een andere tekst of neem contact op met de docent.',
+       feedback: `## 🤖 AI Feedback Tijdelijk Niet Beschikbaar
        element,
-       success: false,
+       success: true, // Still return success so the UI shows the message
        warning: 'Geen feedback ontvangen van AI',
        timestamp: new Date().toISOString()
      })
+    }
+    
+    // Validate that we have meaningful feedback
+    if (feedback.trim().length < 10) {
+      console.warn('⚠️ Very short feedback received:', feedback)
+      return NextResponse.json({ 
+        feedback: `## ⚠️ Beperkte Feedback Ontvangen
+
+De AI-coach heeft een zeer korte response gegeven: "${feedback}"
+
+**Probeer het volgende:**
+- Maak je tekst iets uitgebreider
+- Voeg meer specifieke details toe
+- Probeer het over een paar minuten opnieuw
+
+**Of gebruik de APA-check** voor alternatieve feedback op je tekst.`,
+        element,
+        success: true,
+        warning: 'Zeer korte feedback ontvangen',
+        timestamp: new Date().toISOString()
+      })
     }
     
     return NextResponse.json({ 
@@ -444,14 +496,26 @@ Houd de feedback constructief, zakelijk en gericht op leerresultaten. Focus ALLE
     console.error('❌ Feedback API error:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      errorType: error?.constructor?.name || 'Unknown'
     })
     
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     
+    // Provide more helpful error messages
+    let userFriendlyMessage = 'Er is een technische fout opgetreden bij het genereren van feedback.'
+    
+    if (errorMessage.includes('API key')) {
+      userFriendlyMessage = 'Er is een probleem met de API configuratie. Neem contact op met de beheerder.'
+    } else if (errorMessage.includes('quota') || errorMessage.includes('limit')) {
+      userFriendlyMessage = 'De AI-service heeft zijn limiet bereikt. Probeer het later opnieuw.'
+    } else if (errorMessage.includes('network') || errorMessage.includes('fetch')) {
+      userFriendlyMessage = 'Netwerkprobleem. Controleer je internetverbinding en probeer opnieuw.'
+    }
+    
     return NextResponse.json(
       { 
-        error: 'Er is een fout opgetreden bij het genereren van feedback',
+        error: userFriendlyMessage,
         details: errorMessage,
         timestamp: new Date().toISOString()
       },
