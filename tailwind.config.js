@@ -47,31 +47,20 @@ module.exports = {
         }
       },
       fontFamily: {
-        // Hogeschool Leiden Lettertypen
-        'sans': ['Gantari', 'system-ui', 'sans-serif'], // Default voor lopende tekst
-        'heading': ['Gantari', 'system-ui', 'sans-serif'], // Voor koppen en titels
-        'body': ['Gantari', 'system-ui', 'sans-serif'], // Voor body tekst
-        'gantari': ['Gantari', 'system-ui', 'sans-serif'], // Expliciet Gantari
-        'arial': ['Arial', 'Helvetica', 'sans-serif'], // Voor Word export
+        'sans': ['Source Sans Pro', 'system-ui', 'sans-serif'],
+        'heading': ['Source Sans Pro', 'system-ui', 'sans-serif'],
       },
       fontSize: {
-        'xs': ['0.75rem', { lineHeight: '1rem', fontWeight: '400' }],
-        'sm': ['0.875rem', { lineHeight: '1.25rem', fontWeight: '400' }],
-        'base': ['1rem', { lineHeight: '1.5rem', fontWeight: '400' }],
-        'lg': ['1.125rem', { lineHeight: '1.75rem', fontWeight: '500' }],
-        'xl': ['1.25rem', { lineHeight: '1.75rem', fontWeight: '500' }],
-        '2xl': ['1.5rem', { lineHeight: '2rem', fontWeight: '600' }],
-        '3xl': ['1.875rem', { lineHeight: '2.25rem', fontWeight: '700' }],
-        '4xl': ['2.25rem', { lineHeight: '2.5rem', fontWeight: '700' }],
-        '5xl': ['3rem', { lineHeight: '1.2', fontWeight: '700' }],
-        '6xl': ['3.75rem', { lineHeight: '1.1', fontWeight: '700' }],
-      },
-      fontWeight: {
-        'light': '300',
-        'normal': '400',
-        'medium': '500',
-        'semibold': '600',
-        'bold': '700',
+        'xs': ['0.75rem', { lineHeight: '1rem' }],
+        'sm': ['0.875rem', { lineHeight: '1.25rem' }],
+        'base': ['1rem', { lineHeight: '1.5rem' }],
+        'lg': ['1.125rem', { lineHeight: '1.75rem' }],
+        'xl': ['1.25rem', { lineHeight: '1.75rem' }],
+        '2xl': ['1.5rem', { lineHeight: '2rem' }],
+        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+        '5xl': ['3rem', { lineHeight: '1.2' }],
+        '6xl': ['3.75rem', { lineHeight: '1.1' }],
       },
       spacing: {
         '18': '4.5rem',

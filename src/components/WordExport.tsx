@@ -486,14 +486,14 @@ export default function WordExport() {
           Gratis Export naar Word Document
         </h3>
         
-        <p className="hl-intro-text text-hl-gray-600 mb-8 max-w-3xl mx-auto">
+        <p className="text-hl-gray-600 mb-8 max-w-3xl mx-auto text-lg">
           Exporteer je complete interne analyse gratis naar een professioneel Word document met Hogeschool Leiden opmaak:
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 text-sm text-hl-gray-700">
           <div className="bg-hl-blue-50 rounded-xl p-6 border border-hl-blue-200">
-            <h4 className="hl-subtitle text-lg text-hl-blue-700 mb-4">📊 Inhoud</h4>
-            <ul className="space-y-2 text-left hl-feature-text text-hl-gray-700">
+            <h4 className="font-bold text-hl-blue-700 mb-4 text-lg">📊 Inhoud</h4>
+            <ul className="space-y-2 text-left">
               <li>• Alle ingevulde 7S-secties</li>
               <li>• Onderzoeksgegevens (interviews & enquête)</li>
               <li>• Financiële analyse</li>
@@ -502,8 +502,8 @@ export default function WordExport() {
           </div>
           
           <div className="bg-hl-green-50 rounded-xl p-6 border border-hl-green-200">
-            <h4 className="hl-subtitle text-lg text-hl-green-700 mb-4">📝 Opmaak</h4>
-            <ul className="space-y-2 text-left hl-feature-text text-hl-gray-700">
+            <h4 className="font-bold text-hl-green-700 mb-4 text-lg">📝 Opmaak</h4>
+            <ul className="space-y-2 text-left">
               <li>• Hogeschool Leiden huisstijl</li>
               <li>• Professionele APA-stijl layout</li>
               <li>• Inhoudsopgave</li>
