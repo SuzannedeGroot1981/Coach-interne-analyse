@@ -1,5 +1,7 @@
 'use client'
 
+'use client'
+
 import { useState, useEffect } from 'react'
 
 interface SavedData {
@@ -45,18 +47,22 @@ export default function LocalStorage({ elementId, elementName, colorScheme }: Lo
 
   // Check for existing saved data on component mount
   useEffect(() => {
-    const savedData = localStorage.getItem('interne-analyse-concept')
-    if (savedData) {
-      try {
-        const parsed: SavedData = JSON.parse(savedData)
-        setLastSaved(parsed.timestamp)
-      } catch (error) {
-        console.error('Error parsing saved data:', error)
+    if (typeof window !== 'undefined') {
+      const savedData = localStorage.getItem('interne-analyse-concept')
+      if (savedData) {
+        try {
+          const parsed: SavedData = JSON.parse(savedData)
+          setLastSaved(parsed.timestamp)
+        } catch (error) {
+          console.error('Error parsing saved data:', error)
+        }
       }
     }
   }, [])
 
   const saveToLocalStorage = () => {
+    if (typeof window === 'undefined') return
+    
     setIsSaving(true)
     setSaveStatus('idle')
 
@@ -150,11 +156,16 @@ export function LoadSavedData() {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const savedData = localStorage.getItem('interne-analyse-concept')
-    setHasData(!!savedData)
+    // Check for saved data on client side only
+    if (typeof window !== 'undefined') {
+      const savedData = localStorage.getItem('interne-analyse-concept')
+      setHasData(!!savedData)
+    }
   }, [])
 
   const loadSavedData = () => {
+    if (typeof window === 'undefined') return
+    
     setIsLoading(true)
     
     try {
@@ -201,6 +212,8 @@ export function LoadSavedData() {
   }
 
   const clearSavedData = () => {
+    if (typeof window === 'undefined') return
+    
     if (confirm('Weet je zeker dat je alle opgeslagen gegevens wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')) {
       localStorage.removeItem('interne-analyse-concept')
       setHasData(false)
