@@ -13,6 +13,9 @@ export default function ClientScripts() {
     const feedbackButton = document.getElementById('financial-feedback-button')
     const feedbackDiv = document.getElementById('financial-feedback')
     const feedbackContent = document.getElementById('financial-feedback-content')
+    const apaCheckButton = document.getElementById('financial-apa-button')
+    const apaFeedbackDiv = document.getElementById('financial-apa-feedback')
+    const apaFeedbackContent = document.getElementById('financial-apa-feedback-content')
     
     // Character counters
     if (interviewTextarea && interviewCounter) {
@@ -102,6 +105,72 @@ export default function ClientScripts() {
       }
       
       feedbackButton.addEventListener('click', handleFeedbackClick)
+    }
+    
+    // Financial APA check functionality
+    if (apaCheckButton && financialTextarea && apaFeedbackDiv && apaFeedbackContent) {
+      const handleApaCheckClick = async () => {
+        const financialData = financialTextarea.value.trim()
+        
+        if (!financialData) {
+          alert('Voer eerst financiële gegevens in voordat je APA-controle vraagt.')
+          return
+        }
+        
+        if (financialData.length < 20) {
+          alert('Voer minimaal 20 karakters aan financiële gegevens in voor APA-controle.')
+          return
+        }
+        
+        // Loading state
+        apaCheckButton.disabled = true
+        apaCheckButton.innerHTML = '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>APA controleren...'
+        
+        try {
+          const response = await fetch('/api/apa-check', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              text: financialData,
+              element: 'financial',
+              sectionTitle: 'Financiële Analyse'
+            }),
+          })
+          
+          if (!response.ok) {
+            const errorData = await response.json()
+            throw new Error(errorData.error || 'Er is een fout opgetreden')
+          }
+          
+          const data = await response.json()
+          
+          // Format and display APA feedback
+          const formattedFeedback = data.apaFeedback
+            .replace(/## (.*)/g, '<h3 class="text-lg font-semibold text-gray-800 mt-4 mb-2">$1</h3>')
+            .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+            .replace(/\n\n/g, '</p><p class="mb-2">')
+            .replace(/\n/g, '<br />')
+          
+          apaFeedbackContent.innerHTML = '<p class="mb-2">' + formattedFeedback + '</p>'
+          apaFeedbackDiv.classList.remove('hidden')
+          
+          // Scroll to APA feedback
+          apaFeedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          
+        } catch (error) {
+          console.error('Financial APA check error:', error)
+          alert('Fout bij APA-controle: ' + (error as Error).message)
+        } finally {
+          // Reset button
+          apaCheckButton.disabled = false
+          apaCheckButton.innerHTML = '<span>📚</span><span>Self-check APA</span>'
+        }
+      }
+      
+      apaCheckButton.addEventListener('click', handleApaCheckClick)
     }
     
     // Financial save functionality

@@ -292,13 +292,23 @@ export default function Home() {
                 
                 {/* Financiële Begrippen Uitleg Knop */}
                 <div className="mt-4">
-                  <button
-                    id="financial-feedback-button"
-                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors font-medium flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <span>💬</span>
-                    <span>Vraag feedback aan de coach</span>
-                  </button>
+                  <div className="flex items-center flex-wrap gap-3">
+                    <button
+                      id="financial-feedback-button"
+                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors font-medium flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <span>💬</span>
+                      <span>Vraag feedback aan de coach</span>
+                    </button>
+                    
+                    <button
+                      id="financial-apa-button"
+                      className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <span>📚</span>
+                      <span>Self-check APA</span>
+                    </button>
+                  </div>
                 </div>
                 
                 {/* Financiële Uitleg Display */}
@@ -320,6 +330,29 @@ export default function Home() {
                         <span className="text-green-600 text-xs">✓</span>
                       </span>
                       Feedback gegenereerd door AI-coach • Gebaseerd op HBO-beoordelingscriteria
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Financiële APA Feedback Display */}
+                <div id="financial-apa-feedback" className="hidden mt-6 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border border-purple-200 p-6">
+                  <div className="flex items-center mb-4">
+                    <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mr-3">
+                      <span className="text-white text-sm">📚</span>
+                    </div>
+                    <h5 className="text-lg font-semibold text-purple-800">
+                      APA-stijl Controle - Financiële Analyse
+                    </h5>
+                  </div>
+                  <div id="financial-apa-feedback-content" className="prose prose-sm max-w-none text-gray-700">
+                    {/* AI-gegenereerde APA feedback komt hier */}
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-purple-200">
+                    <p className="text-xs text-gray-500 flex items-center">
+                      <span className="w-4 h-4 bg-purple-100 rounded-full flex items-center justify-center mr-2">
+                        <span className="text-purple-600 text-xs">📚</span>
+                      </span>
+                      APA-controle door AI • Gebaseerd op APA 7e editie richtlijnen
                     </p>
                   </div>
                 </div>
