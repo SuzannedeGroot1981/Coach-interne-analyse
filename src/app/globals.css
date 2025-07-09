@@ -12,6 +12,7 @@
   --hl-lichtgroen: #C9F0E6;       /* HL Lichtgroen - Light accent */
   --hl-zand: #DEDCCE;             /* HL Zand - Neutral */
   --hl-geel: #FFEB73;             /* HL Geel - Accent */
+  --hl-lichtpaars: #E2D4FF;       /* HL Lichtpaars - Light purple accent */
   
   /* Afgeleide tinten voor UI */
   --hl-donkergroen-light: rgba(0, 77, 70, 0.1);
@@ -201,6 +202,10 @@ h1, h2, h3, h4, h5, h6 {
 .hl-geel-bg { background-color: var(--hl-geel); }
 .hl-geel-text { color: var(--hl-donkergroen); }
 .hl-geel-border { border-color: var(--hl-geel); }
+
+.hl-lichtpaars-bg { background-color: var(--hl-lichtpaars); }
+.hl-lichtpaars-text { color: var(--hl-donkerpaars); }
+.hl-lichtpaars-border { border-color: var(--hl-lichtpaars); }
 
 /* Responsive Design */
 @media (max-width: 768px) {
