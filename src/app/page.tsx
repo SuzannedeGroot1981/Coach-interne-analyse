@@ -31,16 +31,6 @@ export default function Home() {
             Gratis AI-coach voor studenten bij het schrijven van interne analyses volgens het 7S-model van McKinsey
           </p>
           
-          <div className="hl-success rounded-2xl p-8 mb-8 max-w-3xl mx-auto hl-slide-up">
-            <div className="flex items-center justify-center space-x-4 hl-donkergroen-text">
-              <span className="text-4xl hl-bounce-subtle">🎓</span>
-              <div className="text-center">
-                <p className="font-bold text-2xl">Volledig Gratis & Openbaar</p>
-                <p className="text-lg hl-donkerpaars-text">Geen inlog vereist • Direct gebruiken • Voor alle studenten</p>
-              </div>
-            </div>
-          </div>
-          
           <div className="hl-warning rounded-2xl p-8 mb-8 max-w-5xl mx-auto hl-slide-up">
             <h3 className="text-2xl font-bold hl-donkergroen-text mb-6 text-center">
               🚀 Hoe werkt het?
