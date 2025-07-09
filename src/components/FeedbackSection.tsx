@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import LocalStorage from './LocalStorage'
 
 interface FeedbackSectionProps {
   element: string
@@ -118,7 +119,7 @@ export default function FeedbackSection({
   }
 
   return (
-    <div className={`${color.bg} rounded-lg p-6 border ${color.border}`}>
+    <div className={`${color.bg} rounded-lg p-6 border ${color.border}`} data-section={element}>
       <h4 className={`text-xl font-semibold ${color.text} mb-3 flex items-center`}>
         <span className={`w-8 h-8 ${color.numberBg} text-white rounded-full flex items-center justify-center mr-3 text-sm`}>
           {number}
@@ -194,6 +195,13 @@ export default function FeedbackSection({
           </div>
         </div>
       )}
+      
+      {/* Local Storage Component */}
+      <LocalStorage 
+        elementId={element}
+        elementName={title}
+        colorScheme={colorScheme}
+      />
     </div>
   )
 }
