@@ -110,156 +110,79 @@ export default function Home() {
               </div>
             </div>
 
+            {/* Onderzoeksinput Sectie */}
+            <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-6 border border-yellow-200 mb-8">
+              <h3 className="text-xl font-bold text-orange-800 mb-6 flex items-center">
+                <span className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
+                  🔍
+                </span>
+                Onderzoeksgegevens
+              </h3>
+              <p className="text-orange-700 text-sm mb-6">
+                Deze gegevens worden door de coach meegenomen in de feedback op alle 7S-elementen voor een meer onderbouwde analyse.
+              </p>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Interviewresultaten */}
+                <div className="bg-white rounded-lg p-4 border border-orange-200">
+                  <h4 className="text-lg font-semibold text-orange-800 mb-3 flex items-center">
+                    <span className="w-6 h-6 bg-orange-200 rounded-full flex items-center justify-center mr-2 text-sm">💬</span>
+                    Interviewresultaten
+                  </h4>
+                  <p className="text-orange-600 text-sm mb-3">
+                    Plak hier citaten of samenvattingen uit de gevoerde gesprekken met medewerkers, managers of andere stakeholders.
+                  </p>
+                  <textarea
+                    id="interview-results"
+                    className="w-full p-3 border border-orange-300 rounded-lg focus:ring-orange-500 focus:border-transparent resize-none"
+                    rows={6}
+                    placeholder="Bijvoorbeeld:&#10;&#10;Interview Manager A: 'De communicatie tussen afdelingen verloopt moeizaam...'&#10;&#10;Interview Medewerker B: 'We missen duidelijke procedures voor...'&#10;&#10;Samenvatting interviews: Uit 8 interviews blijkt dat..."
+                    maxLength={15000}
+                  />
+                  <div className="mt-2 text-xs text-gray-500 text-right">
+                    <span id="interview-count">0</span>/15000 karakters
+                  </div>
+                </div>
+
+                {/* Enquêteresultaten */}
+                <div className="bg-white rounded-lg p-4 border border-orange-200">
+                  <h4 className="text-lg font-semibold text-orange-800 mb-3 flex items-center">
+                    <span className="w-6 h-6 bg-orange-200 rounded-full flex items-center justify-center mr-2 text-sm">📊</span>
+                    Resultaten enquête
+                  </h4>
+                  <p className="text-orange-600 text-sm mb-3">
+                    Voer hier de geanalyseerde uitkomsten van je enquête in, inclusief percentages, scores en belangrijke bevindingen.
+                  </p>
+                  <textarea
+                    id="survey-results"
+                    className="w-full p-3 border border-orange-300 rounded-lg focus:ring-orange-500 focus:border-transparent resize-none"
+                    rows={6}
+                    placeholder="Bijvoorbeeld:&#10;&#10;Medewerkerstevredenheid: 7.2/10 (n=45)&#10;Communicatie effectiviteit: 6.1/10&#10;Leiderschapsstijl waardering: 78% positief&#10;&#10;Belangrijkste bevindingen:&#10;- 65% vindt de organisatiestructuur onduidelijk&#10;- 82% is tevreden met de werksfeer..."
+                    maxLength={15000}
+                  />
+                  <div className="mt-2 text-xs text-gray-500 text-right">
+                    <span id="survey-count">0</span>/15000 karakters
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-4 p-3 bg-orange-100 rounded-lg">
+                <p className="text-orange-800 text-sm flex items-start">
+                  <span className="w-5 h-5 bg-orange-200 rounded-full flex items-center justify-center mr-2 mt-0.5 text-xs">💡</span>
+                  <span>
+                    <strong>Tip:</strong> Hoe meer concrete gegevens je invoert, hoe specifieker en waardevoller de feedback van de coach wordt. 
+                    Denk aan citaten, percentages, scores en kwalitatieve observaties.
+                  </span>
+                </p>
+              </div>
+            </div>
+
             {/* 7S-model Invoersecties */}
             <div className="space-y-8">
               <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
                 📝 Jouw Interne Analyse
               </h3>
               
-              {/* Onderzoeksinput Sectie */}
-              <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-6 border border-yellow-200 mb-8">
-                <h3 className="text-xl font-bold text-orange-800 mb-6 flex items-center">
-                  <span className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
-                    🔍
-                  </span>
-                  Onderzoeksgegevens
-                </h3>
-                <p className="text-orange-700 text-sm mb-6">
-                  Deze gegevens worden door de coach meegenomen in de feedback op alle 7S-elementen voor een meer onderbouwde analyse.
-                </p>
-                
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Interviewresultaten */}
-                  <div className="bg-white rounded-lg p-4 border border-orange-200">
-                    <h4 className="text-lg font-semibold text-orange-800 mb-3 flex items-center">
-                      <span className="w-6 h-6 bg-orange-200 rounded-full flex items-center justify-center mr-2 text-sm">💬</span>
-                      Interviewresultaten
-                    </h4>
-                    <p className="text-orange-600 text-sm mb-3">
-                      Plak hier citaten of samenvattingen uit de gevoerde gesprekken met medewerkers, managers of andere stakeholders.
-                    </p>
-                    <textarea
-                      id="interview-results"
-                      className="w-full p-3 border border-orange-300 rounded-lg focus:ring-orange-500 focus:border-transparent resize-none"
-                      rows={6}
-                      placeholder="Bijvoorbeeld:&#10;&#10;Interview Manager A: 'De communicatie tussen afdelingen verloopt moeizaam...'&#10;&#10;Interview Medewerker B: 'We missen duidelijke procedures voor...'&#10;&#10;Samenvatting interviews: Uit 8 interviews blijkt dat..."
-                      maxLength={15000}
-                    />
-                    <div className="mt-2 text-xs text-gray-500 text-right">
-                      <span id="interview-count">0</span>/15000 karakters
-                    </div>
-                  </div>
-
-                  {/* Enquêteresultaten */}
-                  <div className="bg-white rounded-lg p-4 border border-orange-200">
-                    <h4 className="text-lg font-semibold text-orange-800 mb-3 flex items-center">
-                      <span className="w-6 h-6 bg-orange-200 rounded-full flex items-center justify-center mr-2 text-sm">📊</span>
-                      Resultaten enquête
-                    </h4>
-                    <p className="text-orange-600 text-sm mb-3">
-                      Voer hier de geanalyseerde uitkomsten van je enquête in, inclusief percentages, scores en belangrijke bevindingen.
-                    </p>
-                    <textarea
-                      id="survey-results"
-                      className="w-full p-3 border border-orange-300 rounded-lg focus:ring-orange-500 focus:border-transparent resize-none"
-                      rows={6}
-                      placeholder="Bijvoorbeeld:&#10;&#10;Medewerkerstevredenheid: 7.2/10 (n=45)&#10;Communicatie effectiviteit: 6.1/10&#10;Leiderschapsstijl waardering: 78% positief&#10;&#10;Belangrijkste bevindingen:&#10;- 65% vindt de organisatiestructuur onduidelijk&#10;- 82% is tevreden met de werksfeer..."
-                      maxLength={15000}
-                    />
-                    <div className="mt-2 text-xs text-gray-500 text-right">
-                      <span id="survey-count">0</span>/15000 karakters
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="mt-4 p-3 bg-orange-100 rounded-lg">
-                  <p className="text-orange-800 text-sm flex items-start">
-                    <span className="w-5 h-5 bg-orange-200 rounded-full flex items-center justify-center mr-2 mt-0.5 text-xs">💡</span>
-                    <span>
-                      <strong>Tip:</strong> Hoe meer concrete gegevens je invoert, hoe specifieker en waardevoller de feedback van de coach wordt. 
-                      Denk aan citaten, percentages, scores en kwalitatieve observaties.
-                    </span>
-                  </p>
-                </div>
-              </div>
-
-              {/* Financiële Analyse Sectie */}
-              <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 mb-8">
-                <h3 className="text-xl font-bold text-emerald-800 mb-6 flex items-center">
-                  <span className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center mr-3">
-                    💰
-                  </span>
-                  Financiële Analyse
-                </h3>
-                <p className="text-emerald-700 text-sm mb-6">
-                  Voer hier de financiële cijfers in over rentabiliteit, liquiditeit en solvabiliteit. De coach gebruikt deze gegevens voor een complete interne analyse.
-                </p>
-                
-                <div className="bg-white rounded-lg p-4 border border-emerald-200">
-                  <h4 className="text-lg font-semibold text-emerald-800 mb-3 flex items-center">
-                    <span className="w-6 h-6 bg-emerald-200 rounded-full flex items-center justify-center mr-2 text-sm">📊</span>
-                    Financiële Cijfers & Ratio's
-                  </h4>
-                  <p className="text-emerald-600 text-sm mb-3">
-                    Voer concrete cijfers in over rentabiliteit (ROI, ROE, winstmarge), liquiditeit (current ratio, quick ratio) en solvabiliteit (debt-to-equity, equity ratio).
-                  </p>
-                  <textarea
-                    id="financial-analysis"
-                    className="w-full p-3 border border-emerald-300 rounded-lg focus:ring-emerald-500 focus:border-transparent resize-none"
-                    rows={8}
-                    placeholder="Bijvoorbeeld:&#10;&#10;RENTABILITEIT:&#10;- ROI (Return on Investment): 12,5%&#10;- ROE (Return on Equity): 18,2%&#10;- Netto winstmarge: 8,7%&#10;- Bruto winstmarge: 35,4%&#10;&#10;LIQUIDITEIT:&#10;- Current ratio: 1,8&#10;- Quick ratio: 1,2&#10;- Cash ratio: 0,4&#10;&#10;SOLVABILITEIT:&#10;- Debt-to-equity ratio: 0,6&#10;- Equity ratio: 62,5%&#10;- Interest coverage ratio: 4,2&#10;&#10;OVERIGE FINANCIËLE INDICATOREN:&#10;- Omzetgroei: +7,3% (YoY)&#10;- EBITDA marge: 15,8%"
-                    maxLength={15000}
-                  />
-                  <div className="mt-2 text-xs text-gray-500 text-right">
-                    <span id="financial-count">0</span>/15000 karakters
-                  </div>
-                  
-                  {/* Financiële Begrippen Uitleg Knop */}
-                  <div className="mt-4">
-                    <button
-                      id="explain-financial-terms"
-                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors font-medium flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <span>🧠</span>
-                      <span>Leg financiële begrippen uit</span>
-                    </button>
-                  </div>
-                  
-                  {/* Financiële Uitleg Display */}
-                  <div id="financial-explanation" className="hidden mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200 p-6">
-                    <div className="flex items-center mb-4">
-                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-3">
-                        <span className="text-white text-sm">💡</span>
-                      </div>
-                      <h5 className="text-lg font-semibold text-blue-800">
-                        Uitleg Financiële Begrippen
-                      </h5>
-                    </div>
-                    <div id="financial-explanation-content" className="prose prose-sm max-w-none text-gray-700">
-                      {/* AI-gegenereerde uitleg komt hier */}
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-blue-200">
-                      <p className="text-xs text-gray-500 flex items-center">
-                        <span className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center mr-2">
-                          <span className="text-blue-600 text-xs">🤖</span>
-                        </span>
-                        Uitleg gegenereerd door AI-coach • Gebaseerd op jouw ingevoerde cijfers
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="mt-4 p-3 bg-emerald-100 rounded-lg">
-                  <p className="text-emerald-800 text-sm flex items-start">
-                    <span className="w-5 h-5 bg-emerald-200 rounded-full flex items-center justify-center mr-2 mt-0.5 text-xs">💡</span>
-                    <span>
-                      <strong>Tip:</strong> Voer concrete cijfers en percentages in. Hoe specifieker je bent, hoe beter de AI-coach je kan helpen 
-                      de financiële begrippen uit te leggen in de context van jouw organisatie.
-                    </span>
-                  </p>
-                </div>
-              </div>
-
               {/* Strategy */}
               <FeedbackSection
                 element="strategy"
@@ -330,6 +253,83 @@ export default function Home() {
                 number={7}
               />
 
+            </div>
+
+            {/* Financiële Analyse Sectie - Nu onderaan */}
+            <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 mt-8">
+              <h3 className="text-xl font-bold text-emerald-800 mb-6 flex items-center">
+                <span className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center mr-3">
+                  💰
+                </span>
+                Financiële Analyse
+              </h3>
+              <p className="text-emerald-700 text-sm mb-6">
+                Voer hier de financiële cijfers in over rentabiliteit, liquiditeit en solvabiliteit. De coach gebruikt deze gegevens voor een complete interne analyse.
+              </p>
+              
+              <div className="bg-white rounded-lg p-4 border border-emerald-200">
+                <h4 className="text-lg font-semibold text-emerald-800 mb-3 flex items-center">
+                  <span className="w-6 h-6 bg-emerald-200 rounded-full flex items-center justify-center mr-2 text-sm">📊</span>
+                  Financiële Cijfers & Ratio's
+                </h4>
+                <p className="text-emerald-600 text-sm mb-3">
+                  Voer concrete cijfers in over rentabiliteit (ROI, ROE, winstmarge), liquiditeit (current ratio, quick ratio) en solvabiliteit (debt-to-equity, equity ratio).
+                </p>
+                <textarea
+                  id="financial-analysis"
+                  className="w-full p-3 border border-emerald-300 rounded-lg focus:ring-emerald-500 focus:border-transparent resize-none"
+                  rows={8}
+                  placeholder="Bijvoorbeeld:&#10;&#10;RENTABILITEIT:&#10;- ROI (Return on Investment): 12,5%&#10;- ROE (Return on Equity): 18,2%&#10;- Netto winstmarge: 8,7%&#10;- Bruto winstmarge: 35,4%&#10;&#10;LIQUIDITEIT:&#10;- Current ratio: 1,8&#10;- Quick ratio: 1,2&#10;- Cash ratio: 0,4&#10;&#10;SOLVABILITEIT:&#10;- Debt-to-equity ratio: 0,6&#10;- Equity ratio: 62,5%&#10;- Interest coverage ratio: 4,2&#10;&#10;OVERIGE FINANCIËLE INDICATOREN:&#10;- Omzetgroei: +7,3% (YoY)&#10;- EBITDA marge: 15,8%"
+                  maxLength={15000}
+                />
+                <div className="mt-2 text-xs text-gray-500 text-right">
+                  <span id="financial-count">0</span>/15000 karakters
+                </div>
+                
+                {/* Financiële Begrippen Uitleg Knop */}
+                <div className="mt-4">
+                  <button
+                    id="explain-financial-terms"
+                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors font-medium flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <span>🧠</span>
+                    <span>Leg financiële begrippen uit</span>
+                  </button>
+                </div>
+                
+                {/* Financiële Uitleg Display */}
+                <div id="financial-explanation" className="hidden mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200 p-6">
+                  <div className="flex items-center mb-4">
+                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-3">
+                      <span className="text-white text-sm">💡</span>
+                    </div>
+                    <h5 className="text-lg font-semibold text-blue-800">
+                      Uitleg Financiële Begrippen
+                    </h5>
+                  </div>
+                  <div id="financial-explanation-content" className="prose prose-sm max-w-none text-gray-700">
+                    {/* AI-gegenereerde uitleg komt hier */}
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-blue-200">
+                    <p className="text-xs text-gray-500 flex items-center">
+                      <span className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center mr-2">
+                        <span className="text-blue-600 text-xs">🤖</span>
+                      </span>
+                      Uitleg gegenereerd door AI-coach • Gebaseerd op jouw ingevoerde cijfers
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-4 p-3 bg-emerald-100 rounded-lg">
+                <p className="text-emerald-800 text-sm flex items-start">
+                  <span className="w-5 h-5 bg-emerald-200 rounded-full flex items-center justify-center mr-2 mt-0.5 text-xs">💡</span>
+                  <span>
+                    <strong>Tip:</strong> Voer concrete cijfers en percentages in. Hoe specifieker je bent, hoe beter de AI-coach je kan helpen 
+                    de financiële begrippen uit te leggen in de context van jouw organisatie.
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
 
