@@ -423,8 +423,16 @@ Houd de feedback constructief, zakelijk en gericht op leerresultaten. Focus ALLE
     })
 
     if (!feedback) {
-      throw new Error('Geen feedback ontvangen van Gemini API')
+     console.warn('⚠️ Empty feedback received from Gemini API')
+     return NextResponse.json({ 
+       feedback: 'De AI kon geen feedback genereren voor deze tekst. Probeer het opnieuw met een andere tekst of neem contact op met de docent.',
+       element,
+       success: false,
+       warning: 'Geen feedback ontvangen van AI',
+       timestamp: new Date().toISOString()
+     })
     }
+    
     return NextResponse.json({ 
       feedback,
       element,
