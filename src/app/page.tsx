@@ -24,7 +24,7 @@ export default function Home() {
           </h1>
           
           <p className="text-xl text-blue-700 font-medium mb-8 max-w-3xl mx-auto">
-            Deze app begeleidt studenten bij het schrijven van een interne analyse volgens het 7S-model van McKinsey.
+            Jouw AI-gestuurde begeleiding bij het schrijven van interne analyses
           </p>
         </div>
 
