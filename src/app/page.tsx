@@ -225,7 +225,7 @@ export default function Home() {
             {/* 7S-model Invoersecties */}
             <div className="space-y-10">
               <h3 className="text-4xl font-bold hl-section-header text-center mb-10">
-                📝 Jouw Interne Analyse
+                Jouw Interne Analyse
               </h3>
               
               {/* Strategy */}
