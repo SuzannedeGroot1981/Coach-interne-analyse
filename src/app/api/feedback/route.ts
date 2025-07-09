@@ -62,13 +62,7 @@ Focus specifiek op:
 
   staff: `Gedraag je als ervaren hbo-docent met expertise in management in de zorg. Geef concrete en genuanceerde feedback op de ingediende tekst over STAFF (Personeel). Beperk je tot de interne analyse. Externe factoren laat je buiten beschouwing. Gebruik APA-stijl bij bronverwijzingen. Koppel feedback aan beoordelingscriteria: feitelijke beschrijving, onderbouwing met voorbeelden/cijfers, wenselijke versus feitelijke situatie, verbanden en kritische analyse.
 
-Focus specifiek op:
-- Personeelssamenstelling en -kenmerken
-- Rollen en verantwoordelijkheden
-- Competenties en ontwikkeling
-- Motivatie en betrokkenheid
-- HR-beleid en -praktijken`,
-
+  financial: `Gedraag je als ervaren hbo-docent met expertise in financieel management in de zorg. Geef concrete en genuanceerde feedback op de ingediende financiële analyse. Beperk je tot de interne analyse. Externe factoren laat je buiten beschouwing. Gebruik APA-stijl bij bronverwijzingen. Koppel feedback aan beoordelingscriteria: feitelijke beschrijving, onderbouwing met voorbeelden/cijfers, wenselijke versus feitelijke situatie, verbanden en kritische analyse.
   summary: `Gedraag je als ervaren hbo-docent met expertise in management in de zorg. Geef concrete en genuanceerde feedback op de ingediende samenvatting van de 7S-analyse. Beperk je tot de interne analyse. Externe factoren laat je buiten beschouwing. Gebruik APA-stijl bij bronverwijzingen. Koppel feedback aan beoordelingscriteria: feitelijke beschrijving, onderbouwing met voorbeelden/cijfers, wenselijke versus feitelijke situatie, verbanden en kritische analyse.
 
 Focus specifiek op:
@@ -105,7 +99,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate element
-    const validElements = ['strategy', 'structure', 'systems', 'sharedValues', 'skills', 'style', 'staff', 'summary']
+    const validElements = ['strategy', 'structure', 'systems', 'sharedValues', 'skills', 'style', 'staff', 'summary', 'financial']
     if (!validElements.includes(element)) {
       return NextResponse.json(
         { error: 'Ongeldig element. Gebruik: ' + validElements.join(', ') },

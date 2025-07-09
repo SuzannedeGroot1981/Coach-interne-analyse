@@ -273,7 +273,7 @@ export default function Home() {
                   Financiële Cijfers & Ratio's
                 </h4>
                 <p className="text-emerald-600 text-sm mb-3">
-                  Voer concrete cijfers in over rentabiliteit (ROI, ROE, winstmarge), liquiditeit (current ratio, quick ratio) en solvabiliteit (debt-to-equity, equity ratio).
+                  Voer je financiële analyse in inclusief cijfers over rentabiliteit, liquiditeit en solvabiliteit.
                 </p>
                 <textarea
                   id="financial-analysis"
@@ -289,33 +289,33 @@ export default function Home() {
                 {/* Financiële Begrippen Uitleg Knop */}
                 <div className="mt-4">
                   <button
-                    id="explain-financial-terms"
+                    id="financial-feedback-button"
                     className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors font-medium flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <span>🧠</span>
-                    <span>Leg financiële begrippen uit</span>
+                    <span>💬</span>
+                    <span>Vraag feedback aan de coach</span>
                   </button>
                 </div>
                 
                 {/* Financiële Uitleg Display */}
-                <div id="financial-explanation" className="hidden mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200 p-6">
+                <div id="financial-feedback" className="hidden mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200 p-6">
                   <div className="flex items-center mb-4">
-                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-3">
-                      <span className="text-white text-sm">💡</span>
+                    <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mr-3">
+                      <span className="text-white text-sm">🎓</span>
                     </div>
                     <h5 className="text-lg font-semibold text-blue-800">
-                      Uitleg Financiële Begrippen
+                      Feedback van je Coach
                     </h5>
                   </div>
-                  <div id="financial-explanation-content" className="prose prose-sm max-w-none text-gray-700">
-                    {/* AI-gegenereerde uitleg komt hier */}
+                  <div id="financial-feedback-content" className="prose prose-sm max-w-none text-gray-700">
+                    {/* AI-gegenereerde feedback komt hier */}
                   </div>
                   <div className="mt-4 pt-4 border-t border-blue-200">
                     <p className="text-xs text-gray-500 flex items-center">
-                      <span className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center mr-2">
-                        <span className="text-blue-600 text-xs">🤖</span>
+                      <span className="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center mr-2">
+                        <span className="text-green-600 text-xs">✓</span>
                       </span>
-                      Uitleg gegenereerd door AI-coach • Gebaseerd op jouw ingevoerde cijfers
+                      Feedback gegenereerd door AI-coach • Gebaseerd op HBO-beoordelingscriteria
                     </p>
                   </div>
                 </div>
@@ -357,9 +357,9 @@ export default function Home() {
             const interviewCounter = document.getElementById('interview-count');
             const surveyCounter = document.getElementById('survey-count');
             const financialCounter = document.getElementById('financial-count');
-            const explainButton = document.getElementById('explain-financial-terms');
-            const explanationDiv = document.getElementById('financial-explanation');
-            const explanationContent = document.getElementById('financial-explanation-content');
+            const feedbackButton = document.getElementById('financial-feedback-button');
+            const feedbackDiv = document.getElementById('financial-feedback');
+            const feedbackContent = document.getElementById('financial-feedback-content');
             
             if (interviewTextarea && interviewCounter) {
               interviewTextarea.addEventListener('input', function() {
@@ -379,33 +379,34 @@ export default function Home() {
               });
             }
             
-            // Financiële begrippen uitleg functionaliteit
-            if (explainButton && financialTextarea && explanationDiv && explanationContent) {
-              explainButton.addEventListener('click', async function() {
+            // Financiële feedback functionaliteit
+            if (feedbackButton && financialTextarea && feedbackDiv && feedbackContent) {
+              feedbackButton.addEventListener('click', async function() {
                 const financialData = financialTextarea.value.trim();
                 
                 if (!financialData) {
-                  alert('Voer eerst financiële gegevens in voordat je uitleg vraagt.');
+                  alert('Voer eerst financiële gegevens in voordat je feedback vraagt.');
                   return;
                 }
                 
                 if (financialData.length < 50) {
-                  alert('Voer minimaal 50 karakters aan financiële gegevens in voor zinvolle uitleg.');
+                  alert('Voer minimaal 50 karakters aan financiële gegevens in voor zinvolle feedback.');
                   return;
                 }
                 
                 // Loading state
-                explainButton.disabled = true;
-                explainButton.innerHTML = '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>AI analyseert...';
+                feedbackButton.disabled = true;
+                feedbackButton.innerHTML = '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>Coach analyseert...';
                 
                 try {
-                  const response = await fetch('/api/financial-explanation', {
+                  const response = await fetch('/api/feedback', {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                      financialData: financialData
+                      text: financialData,
+                      element: 'financial'
                     }),
                   });
                   
@@ -416,27 +417,27 @@ export default function Home() {
                   
                   const data = await response.json();
                   
-                  // Format and display explanation
-                  const formattedExplanation = data.explanation
+                  // Format and display feedback
+                  const formattedFeedback = data.feedback
                     .replace(/## (.*)/g, '<h3 class="text-lg font-semibold text-gray-800 mt-4 mb-2">$1</h3>')
                     .replace(/\\*\\*(.*?)\\*\\*/g, '<strong class="font-semibold">$1</strong>')
                     .replace(/\\*(.*?)\\*/g, '<em class="italic">$1</em>')
                     .replace(/\\n\\n/g, '</p><p class="mb-2">')
                     .replace(/\\n/g, '<br />');
                   
-                  explanationContent.innerHTML = '<p class="mb-2">' + formattedExplanation + '</p>';
-                  explanationDiv.classList.remove('hidden');
+                  feedbackContent.innerHTML = '<p class="mb-2">' + formattedFeedback + '</p>';
+                  feedbackDiv.classList.remove('hidden');
                   
-                  // Scroll to explanation
-                  explanationDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  // Scroll to feedback
+                  feedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   
                 } catch (error) {
-                  console.error('Financial explanation error:', error);
-                  alert('Fout bij het ophalen van uitleg: ' + error.message);
+                  console.error('Financial feedback error:', error);
+                  alert('Fout bij het ophalen van feedback: ' + error.message);
                 } finally {
                   // Reset button
-                  explainButton.disabled = false;
-                  explainButton.innerHTML = '<span>🧠</span><span>Leg financiële begrippen uit</span>';
+                  feedbackButton.disabled = false;
+                  feedbackButton.innerHTML = '<span>💬</span><span>Vraag feedback aan de coach</span>';
                 }
               });
             }
