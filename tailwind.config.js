@@ -89,8 +89,10 @@ module.exports = {
         }
       },
       fontFamily: {
-        'sans': ['Source Sans Pro', 'system-ui', 'sans-serif'],
-        'heading': ['Source Sans Pro', 'system-ui', 'sans-serif'],
+        'sans': ['Gantari', 'Source Sans Pro', 'system-ui', 'sans-serif'],
+        'heading': ['Gantari', 'Source Sans Pro', 'system-ui', 'sans-serif'],
+        'gantari': ['Gantari', 'sans-serif'],
+        'source': ['Source Sans Pro', 'sans-serif'],
       },
       fontSize: {
         'xs': ['0.75rem', { lineHeight: '1rem' }],
@@ -142,8 +144,5 @@ module.exports = {
       }
     },
   },
-      'sans': ['Gantari', 'Source Sans Pro', 'system-ui', 'sans-serif'],
-      'heading': ['Gantari', 'Source Sans Pro', 'system-ui', 'sans-serif'],
-      'gantari': ['Gantari', 'sans-serif'],
-      'source': ['Source Sans Pro', 'sans-serif'],
+  plugins: []
 }
