@@ -32,18 +32,74 @@ export default function TabContent({ activeTab }: TabContentProps) {
                   Interviewresultaten
                 </h4>
                 <p className="hl-donkergroen-text mb-6">
-                  Plak hier citaten of samenvattingen uit de gevoerde gesprekken met medewerkers, managers of andere stakeholders.
+                  Upload een bestand met citaten of samenvattingen uit de gevoerde gesprekken met medewerkers, managers of andere stakeholders.
                 </p>
+                
+                {/* File Upload Area */}
+                <div className="border-2 border-dashed hl-lichtgroen-border rounded-xl p-8 text-center">
+                  <input
+                    type="file"
+                    id="interview-file-input"
+                    accept=".docx,.pdf,.txt,.csv"
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor="interview-file-input"
+                    className="cursor-pointer block"
+                  >
+                    <div className="w-16 h-16 hl-lichtgroen-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span className="material-symbols-sharp hl-icon-primary" style={{ fontSize: '32px' }}>upload_file</span>
+                    </div>
+                    <p className="text-lg font-medium hl-donkergroen-text mb-2">
+                      Klik om bestand te uploaden
+                    </p>
+                    <p className="text-sm hl-donkerpaars-text mb-4">
+                      Ondersteunde formaten: DOCX, PDF, TXT, CSV (max 10MB)
+                    </p>
+                    <div className="hl-button-primary inline-flex items-center space-x-2">
+                      <span className="material-symbols-sharp hl-icon-white hl-icon-sm">folder_open</span>
+                      <span>Selecteer bestand</span>
+                    </div>
+                  </label>
+                </div>
+                
+                {/* File Info Display */}
+                <div id="interview-file-info" className="hidden mt-4 hl-lichtgroen-bg rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <span className="material-symbols-sharp hl-icon-primary hl-icon-md">description</span>
+                      <div>
+                        <p id="interview-file-name" className="font-medium hl-donkergroen-text"></p>
+                        <p id="interview-file-size" className="text-sm hl-donkerpaars-text"></p>
+                      </div>
+                    </div>
+                    <button
+                      id="interview-remove-file"
+                      className="px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg text-sm transition-colors"
+                      title="Verwijder bestand"
+                    >
+                      <span className="material-symbols-sharp" style={{ fontSize: '18px' }}>delete</span>
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Processed Content Display */}
+                <div id="interview-content" className="hidden mt-4">
+                  <h5 className="font-medium hl-donkergroen-text mb-3">Verwerkte inhoud:</h5>
+                  <div className="hl-textarea bg-gray-50 p-4 rounded-lg max-h-60 overflow-y-auto">
+                    <div id="interview-processed-text" className="text-sm hl-donkerpaars-text whitespace-pre-wrap"></div>
+                  </div>
+                  <div className="mt-2 text-xs text-hl-gray-500 text-right">
+                    <span id="interview-word-count">0</span> woorden • <span id="interview-char-count">0</span> karakters
+                  </div>
+                </div>
+                
+                {/* Hidden textarea for compatibility */}
                 <textarea
                   id="interview-results"
-                  className="hl-textarea w-full"
-                  rows={8}
-                  placeholder="Bijvoorbeeld:&#10;&#10;Interview Manager A: 'De communicatie tussen afdelingen verloopt moeizaam...'&#10;&#10;Interview Medewerker B: 'We missen duidelijke procedures voor...'&#10;&#10;Samenvatting interviews: Uit 8 interviews blijkt dat..."
+                  className="hidden"
                   maxLength={15000}
                 />
-                <div className="mt-3 text-sm text-hl-gray-500 text-right">
-                  <span id="interview-count">0</span>/15000 karakters
-                </div>
               </div>
 
               {/* Enquêteresultaten */}
@@ -55,18 +111,74 @@ export default function TabContent({ activeTab }: TabContentProps) {
                   Resultaten enquête
                 </h4>
                 <p className="hl-donkergroen-text mb-6">
-                  Voer hier de geanalyseerde uitkomsten van je enquête in, inclusief percentages, scores en belangrijke bevindingen.
+                  Upload een bestand met de geanalyseerde uitkomsten van je enquête, inclusief percentages, scores en belangrijke bevindingen.
                 </p>
+                
+                {/* File Upload Area */}
+                <div className="border-2 border-dashed hl-lichtgroen-border rounded-xl p-8 text-center">
+                  <input
+                    type="file"
+                    id="survey-file-input"
+                    accept=".docx,.pdf,.txt,.csv"
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor="survey-file-input"
+                    className="cursor-pointer block"
+                  >
+                    <div className="w-16 h-16 hl-lichtgroen-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span className="material-symbols-sharp hl-icon-primary" style={{ fontSize: '32px' }}>upload_file</span>
+                    </div>
+                    <p className="text-lg font-medium hl-donkergroen-text mb-2">
+                      Klik om bestand te uploaden
+                    </p>
+                    <p className="text-sm hl-donkerpaars-text mb-4">
+                      Ondersteunde formaten: DOCX, PDF, TXT, CSV (max 10MB)
+                    </p>
+                    <div className="hl-button-primary inline-flex items-center space-x-2">
+                      <span className="material-symbols-sharp hl-icon-white hl-icon-sm">folder_open</span>
+                      <span>Selecteer bestand</span>
+                    </div>
+                  </label>
+                </div>
+                
+                {/* File Info Display */}
+                <div id="survey-file-info" className="hidden mt-4 hl-lichtgroen-bg rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <span className="material-symbols-sharp hl-icon-primary hl-icon-md">description</span>
+                      <div>
+                        <p id="survey-file-name" className="font-medium hl-donkergroen-text"></p>
+                        <p id="survey-file-size" className="text-sm hl-donkerpaars-text"></p>
+                      </div>
+                    </div>
+                    <button
+                      id="survey-remove-file"
+                      className="px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg text-sm transition-colors"
+                      title="Verwijder bestand"
+                    >
+                      <span className="material-symbols-sharp" style={{ fontSize: '18px' }}>delete</span>
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Processed Content Display */}
+                <div id="survey-content" className="hidden mt-4">
+                  <h5 className="font-medium hl-donkergroen-text mb-3">Verwerkte inhoud:</h5>
+                  <div className="hl-textarea bg-gray-50 p-4 rounded-lg max-h-60 overflow-y-auto">
+                    <div id="survey-processed-text" className="text-sm hl-donkerpaars-text whitespace-pre-wrap"></div>
+                  </div>
+                  <div className="mt-2 text-xs text-hl-gray-500 text-right">
+                    <span id="survey-word-count">0</span> woorden • <span id="survey-char-count">0</span> karakters
+                  </div>
+                </div>
+                
+                {/* Hidden textarea for compatibility */}
                 <textarea
                   id="survey-results"
-                  className="hl-textarea w-full"
-                  rows={8}
-                  placeholder="Bijvoorbeeld:&#10;&#10;Medewerkerstevredenheid: 7.2/10 (n=45)&#10;Communicatie effectiviteit: 6.1/10&#10;Leiderschapsstijl waardering: 78% positief&#10;&#10;Belangrijkste bevindingen:&#10;- 65% vindt de organisatiestructuur onduidelijk&#10;- 82% is tevreden met de werksfeer..."
+                  className="hidden"
                   maxLength={15000}
                 />
-                <div className="mt-3 text-sm text-hl-gray-500 text-right">
-                  <span id="survey-count">0</span>/15000 karakters
-                </div>
               </div>
             </div>
 
@@ -76,8 +188,8 @@ export default function TabContent({ activeTab }: TabContentProps) {
                   <span className="material-symbols-sharp hl-icon-primary hl-icon-sm">tips_and_updates</span>
                 </span>
                 <span>
-                  <strong>Tip:</strong> Hoe meer concrete gegevens je invoert, hoe specifieker en waardevoller de feedback van de coach wordt. 
-                  Denk aan citaten, percentages, scores en kwalitatieve observaties.
+                  <strong>Tip:</strong> Upload bestanden met concrete gegevens voor de beste feedback van de coach. 
+                  Ondersteunde formaten zijn Word documenten (.docx), PDF's (.pdf), tekstbestanden (.txt) en CSV-bestanden (.csv).
                 </span>
               </p>
             </div>
