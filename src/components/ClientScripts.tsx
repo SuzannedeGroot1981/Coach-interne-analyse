@@ -213,7 +213,7 @@ export default function ClientScripts() {
           // Reset after 3 seconds
           setTimeout(() => {
             financialSaveButton.innerHTML = '💾 Sla concept op'
-            financialSaveButton.className = 'px-3 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 border border-emerald-300 rounded-lg text-sm font-medium transition-all duration-200'
+            financialSaveButton.className = 'px-3 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 border border-hl-donkergroen rounded-lg text-sm font-medium transition-all duration-200'
             ;(financialSaveButton as HTMLButtonElement).disabled = false
             isSaving = false
           }, 3000)
@@ -226,7 +226,7 @@ export default function ClientScripts() {
           // Reset after 3 seconds
           setTimeout(() => {
             financialSaveButton.innerHTML = '💾 Sla concept op'
-            financialSaveButton.className = 'px-3 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 border border-emerald-300 rounded-lg text-sm font-medium transition-all duration-200'
+            financialSaveButton.className = 'px-3 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 border border-hl-donkergroen rounded-lg text-sm font-medium transition-all duration-200'
             ;(financialSaveButton as HTMLButtonElement).disabled = false
             isSaving = false
           }, 3000)

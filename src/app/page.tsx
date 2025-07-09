@@ -400,7 +400,7 @@ export default function Home() {
                   <div className="flex items-center space-x-4">
                     <button
                       id="financial-save-button"
-                      className="px-6 py-3 hl-lichtgroen-bg hover:bg-emerald-200 hl-donkergroen-text rounded-xl text-lg font-medium transition-all duration-200"
+                      className="px-6 py-3 hl-lichtgroen-bg hover:bg-emerald-200 hl-donkergroen-text border-2 border-hl-donkergroen rounded-xl text-lg font-medium transition-all duration-200"
                       title="Sla je financiële analyse lokaal op in je browser"
                     >
                       <span className="material-symbols-sharp hl-icon-primary hl-icon-sm mr-2">save</span>
