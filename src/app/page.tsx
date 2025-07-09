@@ -118,28 +118,28 @@ export default function Home() {
                 </h3>
                 <ul className="space-y-6">
                   <li className="flex items-start">
-                    <span className="w-10 h-10 hl-lichtpaars-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">4</span>
+                    <span className="w-10 h-10 hl-geel-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">4</span>
                     <div>
                       <strong className="hl-donkerpaars-text text-xl">Shared Values (Gedeelde Waarden)</strong>
                       <p className="hl-donkerpaars-text mt-2">De kernwaarden en cultuur van de organisatie</p>
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <span className="w-10 h-10 hl-lichtpaars-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">5</span>
+                    <span className="w-10 h-10 hl-geel-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">5</span>
                     <div>
                       <strong className="hl-donkerpaars-text text-xl">Style (Stijl)</strong>
                       <p className="hl-donkerpaars-text mt-2">De leiderschapsstijl en managementaanpak</p>
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <span className="w-10 h-10 hl-lichtpaars-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">6</span>
+                    <span className="w-10 h-10 hl-geel-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">6</span>
                     <div>
                       <strong className="hl-donkerpaars-text text-xl">Staff (Personeel)</strong>
                       <p className="hl-donkerpaars-text mt-2">De mensen en hun vaardigheden in de organisatie</p>
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <span className="w-10 h-10 hl-lichtpaars-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">7</span>
+                    <span className="w-10 h-10 hl-geel-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">7</span>
                     <div>
                       <strong className="hl-donkerpaars-text text-xl">Skills (Vaardigheden)</strong>
                       <p className="hl-donkerpaars-text mt-2">De kerncompetenties en capabilities</p>

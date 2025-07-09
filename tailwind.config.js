@@ -74,19 +74,6 @@ module.exports = {
           800: '#806800',
           900: '#4D3D00',
         },
-        'hl-lichtpaars': {
-          DEFAULT: '#E2D4FF',
-          50: '#F8F5FF',
-          100: '#E2D4FF', // Primary
-          200: '#D4C2FF',
-          300: '#C6B0FF',
-          400: '#B89EFF',
-          500: '#AA8CFF',
-          600: '#9C7AFF',
-          700: '#8E68FF',
-          800: '#8056FF',
-          900: '#7244FF',
-        },
         // Grijstinten voor UI
         'hl-gray': {
           50: '#F9F9F9',
