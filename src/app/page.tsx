@@ -165,7 +165,6 @@ export default function Home() {
                 {/* Interviewresultaten */}
                 <div className="bg-white rounded-2xl p-8">
                   <h4 className="text-xl font-bold hl-donkergroen-text mb-6 flex items-center">
-                    <span className="w-10 h-10 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-4 text-lg">💬</span>
                     <span className="w-10 h-10 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-4">
                       <span className="material-symbols-sharp hl-icon-primary hl-icon-md">chat</span>
                     </span>
