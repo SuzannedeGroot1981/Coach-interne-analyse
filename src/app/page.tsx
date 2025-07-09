@@ -2,6 +2,7 @@ import Image from 'next/image'
 import FeedbackSection from '@/components/FeedbackSection'
 import { LoadSavedData } from '@/components/LocalStorage'
 import ClientScripts from '@/components/ClientScripts'
+import WordExport from '@/components/WordExport'
 
 export default function Home() {
   return (
@@ -364,6 +365,13 @@ export default function Home() {
               Powered by AI • Gebaseerd op het 7S-model van McKinsey
             </p>
           </div>
+        </div>
+      </div>
+      
+      {/* Word Export Section */}
+      <div className="container mx-auto px-4 pb-16">
+        <div className="max-w-4xl mx-auto">
+          <WordExport />
         </div>
       </div>
       
