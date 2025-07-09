@@ -117,7 +117,7 @@ export default function FeedbackSection({
       
       // Scroll to feedback section after a short delay
       setTimeout(() => {
-        const feedbackElement = document.querySelector(`[data-section="${element}"]`)?.querySelector('.feedback-display')
+        const feedbackElement = document.querySelector(`[data-section="${element}"] .feedback-display`)
         if (feedbackElement) {
           console.log('📍 Scrolling to feedback element')
           feedbackElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -186,7 +186,7 @@ export default function FeedbackSection({
 
   const formatFeedback = (feedbackText: string) => {
     // Convert markdown-like formatting to HTML
-    return feedbackText
+    let formatted = feedbackText
       .replace(/## (.*?)$/gm, '<h3 class="text-xl font-bold text-green-800 mt-6 mb-4 border-b-2 border-green-200 pb-2">$1</h3>')
       .replace(/### (.*?)$/gm, '<h4 class="text-lg font-semibold text-green-700 mt-4 mb-3">$1</h4>')
       .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-green-900">$1</strong>')
@@ -197,8 +197,9 @@ export default function FeedbackSection({
       .replace(/\n/g, '<br />')
     
     // Wrap in paragraph tags if not already wrapped
-    let formatted = feedbackText.includes('<h3>') || feedbackText.includes('<p>') ? 
-      feedbackText : `<p class="mb-4 text-green-700 leading-relaxed">${feedbackText}</p>`
+    if (!formatted.includes('<h3>') && !formatted.includes('<p>')) {
+      formatted = `<p class="mb-4 text-green-700 leading-relaxed">${formatted}</p>`
+    }
     
     // Wrap list items in ul tags
     formatted = formatted.replace(/((?:<li[^>]*>.*?<\/li>\s*)+)/g, '<ul class="mb-4">$1</ul>')
@@ -304,7 +305,7 @@ export default function FeedbackSection({
           <div 
             className="prose prose-lg max-w-none text-purple-700"
             dangerouslySetInnerHTML={{
-              __html: `<p class="mb-3">${formatFeedback(apaFeedback)}</p>` 
+              __html: formatFeedback(apaFeedback)
             }}
           />
           <div className="mt-6 pt-6 border-t border-purple-200">
@@ -330,7 +331,7 @@ export default function FeedbackSection({
             </h5>
           </div>
           <div 
-            className="prose prose-lg max-w-none hl-donkerpaars-text"
+            className="prose prose-lg max-w-none"
             dangerouslySetInnerHTML={{
               __html: formatFeedback(feedback)
             }} 
