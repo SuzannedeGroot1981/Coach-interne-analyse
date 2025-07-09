@@ -251,9 +251,6 @@ export function LoadSavedData() {
     <div className="bg-yellow-50 rounded-lg p-4 mb-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-            <span className="text-yellow-600 text-sm">💾</span>
-          </div>
           <div>
             <h4 className="text-yellow-800 font-medium">Opgeslagen concept gevonden</h4>
             <p className="text-yellow-700 text-sm">Je hebt eerder gegevens opgeslagen in je browser.</p>
