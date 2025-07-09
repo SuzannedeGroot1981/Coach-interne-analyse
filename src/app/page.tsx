@@ -181,6 +181,83 @@ export default function Home() {
                 </div>
               </div>
 
+              {/* Financiële Analyse Sectie */}
+              <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 mb-8">
+                <h3 className="text-xl font-bold text-emerald-800 mb-6 flex items-center">
+                  <span className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center mr-3">
+                    💰
+                  </span>
+                  Financiële Analyse
+                </h3>
+                <p className="text-emerald-700 text-sm mb-6">
+                  Voer hier de financiële cijfers in over rentabiliteit, liquiditeit en solvabiliteit. De coach gebruikt deze gegevens voor een complete interne analyse.
+                </p>
+                
+                <div className="bg-white rounded-lg p-4 border border-emerald-200">
+                  <h4 className="text-lg font-semibold text-emerald-800 mb-3 flex items-center">
+                    <span className="w-6 h-6 bg-emerald-200 rounded-full flex items-center justify-center mr-2 text-sm">📊</span>
+                    Financiële Cijfers & Ratio's
+                  </h4>
+                  <p className="text-emerald-600 text-sm mb-3">
+                    Voer concrete cijfers in over rentabiliteit (ROI, ROE, winstmarge), liquiditeit (current ratio, quick ratio) en solvabiliteit (debt-to-equity, equity ratio).
+                  </p>
+                  <textarea
+                    id="financial-analysis"
+                    className="w-full p-3 border border-emerald-300 rounded-lg focus:ring-emerald-500 focus:border-transparent resize-none"
+                    rows={8}
+                    placeholder="Bijvoorbeeld:&#10;&#10;RENTABILITEIT:&#10;- ROI (Return on Investment): 12,5%&#10;- ROE (Return on Equity): 18,2%&#10;- Netto winstmarge: 8,7%&#10;- Bruto winstmarge: 35,4%&#10;&#10;LIQUIDITEIT:&#10;- Current ratio: 1,8&#10;- Quick ratio: 1,2&#10;- Cash ratio: 0,4&#10;&#10;SOLVABILITEIT:&#10;- Debt-to-equity ratio: 0,6&#10;- Equity ratio: 62,5%&#10;- Interest coverage ratio: 4,2&#10;&#10;OVERIGE FINANCIËLE INDICATOREN:&#10;- Omzetgroei: +7,3% (YoY)&#10;- EBITDA marge: 15,8%"
+                    maxLength={15000}
+                  />
+                  <div className="mt-2 text-xs text-gray-500 text-right">
+                    <span id="financial-count">0</span>/15000 karakters
+                  </div>
+                  
+                  {/* Financiële Begrippen Uitleg Knop */}
+                  <div className="mt-4">
+                    <button
+                      id="explain-financial-terms"
+                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors font-medium flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <span>🧠</span>
+                      <span>Leg financiële begrippen uit</span>
+                    </button>
+                  </div>
+                  
+                  {/* Financiële Uitleg Display */}
+                  <div id="financial-explanation" className="hidden mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200 p-6">
+                    <div className="flex items-center mb-4">
+                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-3">
+                        <span className="text-white text-sm">💡</span>
+                      </div>
+                      <h5 className="text-lg font-semibold text-blue-800">
+                        Uitleg Financiële Begrippen
+                      </h5>
+                    </div>
+                    <div id="financial-explanation-content" className="prose prose-sm max-w-none text-gray-700">
+                      <!-- AI-gegenereerde uitleg komt hier -->
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-blue-200">
+                      <p className="text-xs text-gray-500 flex items-center">
+                        <span className="w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center mr-2">
+                          <span className="text-blue-600 text-xs">🤖</span>
+                        </span>
+                        Uitleg gegenereerd door AI-coach • Gebaseerd op jouw ingevoerde cijfers
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-4 p-3 bg-emerald-100 rounded-lg">
+                  <p className="text-emerald-800 text-sm flex items-start">
+                    <span className="w-5 h-5 bg-emerald-200 rounded-full flex items-center justify-center mr-2 mt-0.5 text-xs">💡</span>
+                    <span>
+                      <strong>Tip:</strong> Voer concrete cijfers en percentages in. Hoe specifieker je bent, hoe beter de AI-coach je kan helpen 
+                      de financiële begrippen uit te leggen in de context van jouw organisatie.
+                    </span>
+                  </p>
+                </div>
+              </div>
+
               {/* Strategy */}
               <FeedbackSection
                 element="strategy"
@@ -290,8 +367,13 @@ export default function Home() {
           document.addEventListener('DOMContentLoaded', function() {
             const interviewTextarea = document.getElementById('interview-results');
             const surveyTextarea = document.getElementById('survey-results');
+            const financialTextarea = document.getElementById('financial-analysis');
             const interviewCounter = document.getElementById('interview-count');
             const surveyCounter = document.getElementById('survey-count');
+            const financialCounter = document.getElementById('financial-count');
+            const explainButton = document.getElementById('explain-financial-terms');
+            const explanationDiv = document.getElementById('financial-explanation');
+            const explanationContent = document.getElementById('financial-explanation-content');
             
             if (interviewTextarea && interviewCounter) {
               interviewTextarea.addEventListener('input', function() {
@@ -302,6 +384,74 @@ export default function Home() {
             if (surveyTextarea && surveyCounter) {
               surveyTextarea.addEventListener('input', function() {
                 surveyCounter.textContent = this.value.length;
+              });
+            }
+            
+            if (financialTextarea && financialCounter) {
+              financialTextarea.addEventListener('input', function() {
+                financialCounter.textContent = this.value.length;
+              });
+            }
+            
+            // Financiële begrippen uitleg functionaliteit
+            if (explainButton && financialTextarea && explanationDiv && explanationContent) {
+              explainButton.addEventListener('click', async function() {
+                const financialData = financialTextarea.value.trim();
+                
+                if (!financialData) {
+                  alert('Voer eerst financiële gegevens in voordat je uitleg vraagt.');
+                  return;
+                }
+                
+                if (financialData.length < 50) {
+                  alert('Voer minimaal 50 karakters aan financiële gegevens in voor zinvolle uitleg.');
+                  return;
+                }
+                
+                // Loading state
+                explainButton.disabled = true;
+                explainButton.innerHTML = '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>AI analyseert...';
+                
+                try {
+                  const response = await fetch('/api/financial-explanation', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      financialData: financialData
+                    }),
+                  });
+                  
+                  if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Er is een fout opgetreden');
+                  }
+                  
+                  const data = await response.json();
+                  
+                  // Format and display explanation
+                  const formattedExplanation = data.explanation
+                    .replace(/## (.*)/g, '<h3 class="text-lg font-semibold text-gray-800 mt-4 mb-2">$1</h3>')
+                    .replace(/\\*\\*(.*?)\\*\\*/g, '<strong class="font-semibold">$1</strong>')
+                    .replace(/\\*(.*?)\\*/g, '<em class="italic">$1</em>')
+                    .replace(/\\n\\n/g, '</p><p class="mb-2">')
+                    .replace(/\\n/g, '<br />');
+                  
+                  explanationContent.innerHTML = '<p class="mb-2">' + formattedExplanation + '</p>';
+                  explanationDiv.classList.remove('hidden');
+                  
+                  // Scroll to explanation
+                  explanationDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  
+                } catch (error) {
+                  console.error('Financial explanation error:', error);
+                  alert('Fout bij het ophalen van uitleg: ' + error.message);
+                } finally {
+                  // Reset button
+                  explainButton.disabled = false;
+                  explainButton.innerHTML = '<span>🧠</span><span>Leg financiële begrippen uit</span>';
+                }
               });
             }
           });

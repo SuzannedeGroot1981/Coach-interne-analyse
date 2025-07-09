@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
 
     // Prepare research context if available
     let researchContext = ''
-    if (researchData && (researchData.interviews || researchData.survey)) {
+    if (researchData && (researchData.interviews || researchData.survey || researchData.financial)) {
       researchContext = '\n\nBESCHIKBARE ONDERZOEKSGEGEVENS:\n'
       
       if (researchData.interviews) {
@@ -142,6 +142,10 @@ export async function POST(request: NextRequest) {
       
       if (researchData.survey) {
         researchContext += `\nENQUÊTERESULTATEN:\n${researchData.survey}\n`
+      }
+      
+      if (researchData.financial) {
+        researchContext += `\nFINANCIËLE ANALYSE:\n${researchData.financial}\n`
       }
       
       researchContext += '\nGebruik deze onderzoeksgegevens om je feedback te onderbouwen en te verrijken. Verwijs naar specifieke citaten, percentages of bevindingen waar relevant.'

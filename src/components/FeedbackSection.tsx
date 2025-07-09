@@ -28,10 +28,12 @@ export default function FeedbackSection({
   const getResearchData = () => {
     const interviewResults = (document.getElementById('interview-results') as HTMLTextAreaElement)?.value || ''
     const surveyResults = (document.getElementById('survey-results') as HTMLTextAreaElement)?.value || ''
+    const financialAnalysis = (document.getElementById('financial-analysis') as HTMLTextAreaElement)?.value || ''
     
     return {
       interviews: interviewResults.trim(),
-      survey: surveyResults.trim()
+      survey: surveyResults.trim(),
+      financial: financialAnalysis.trim()
     }
   }
 
