@@ -142,5 +142,7 @@ module.exports = {
       }
     },
   },
-  plugins: [],
-}
+      'sans': ['Gantari', 'Source Sans Pro', 'system-ui', 'sans-serif'],
+      'heading': ['Gantari', 'Source Sans Pro', 'system-ui', 'sans-serif'],
+      'gantari': ['Gantari', 'sans-serif'],
+      'source': ['Source Sans Pro', 'sans-serif'],
