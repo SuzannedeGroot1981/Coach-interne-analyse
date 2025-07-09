@@ -492,7 +492,12 @@ export default function WordExport() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 text-lg">
           <div className="hl-lichtgroen-bg rounded-2xl p-8 hl-lichtgroen-border border-2">
-            <h4 className="font-bold hl-donkergroen-text mb-6 text-xl">📊 Inhoud</h4>
+            <h4 className="font-bold hl-donkergroen-text mb-6 text-xl flex items-center">
+              <span className="w-10 h-10 hl-donkergroen-bg rounded-full flex items-center justify-center mr-4">
+                <span className="material-symbols-sharp hl-icon-white hl-icon-md">article</span>
+              </span>
+              Inhoud
+            </h4>
             <ul className="space-y-3 text-left hl-donkerpaars-text">
               <li>• Alle ingevulde 7S-secties</li>
               <li>• Onderzoeksgegevens (interviews & enquête)</li>
@@ -502,7 +507,12 @@ export default function WordExport() {
           </div>
           
           <div className="hl-zand-bg rounded-2xl p-8 hl-zand-border border-2">
-            <h4 className="font-bold hl-donkerpaars-text mb-6 text-xl">📝 Opmaak</h4>
+            <h4 className="font-bold hl-donkerpaars-text mb-6 text-xl flex items-center">
+              <span className="w-10 h-10 hl-donkerpaars-bg rounded-full flex items-center justify-center mr-4">
+                <span className="material-symbols-sharp hl-icon-white hl-icon-md">format_paint</span>
+              </span>
+              Opmaak
+            </h4>
             <ul className="space-y-3 text-left hl-donkergroen-text">
               <li>• Officiële Hogeschool Leiden huisstijl</li>
               <li>• Professionele APA-stijl layout</li>
