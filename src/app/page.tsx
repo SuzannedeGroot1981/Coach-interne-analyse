@@ -9,7 +9,7 @@ export default function Home() {
           <div className="flex justify-center mb-8">
             <div className="bg-white rounded-lg shadow-lg p-6">
               <Image 
-                src="/images/hogeschool-leiden-logo.png" 
+                src="/images/Logo_HL_Groen_RGB.png" 
                 alt="Hogeschool Leiden Logo" 
                 width={300} 
                 height={120}
