@@ -252,13 +252,13 @@ export function LoadSavedData() {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div>
-            <h4 className="text-yellow-800 font-medium">Opgeslagen concept gevonden</h4>
-            <p className="text-yellow-700 text-sm">Je hebt eerder gegevens opgeslagen in je browser.</p>
+            <h4 className="hl-donkergroen-text font-medium">Opgeslagen concept gevonden</h4>
+            <p className="hl-donkergroen-text text-sm">Je hebt eerder gegevens opgeslagen in je browser.</p>
           </div>
         </div>
         
         <div className="mt-3 text-center">
-          <p className="text-xs text-yellow-700">
+          <p className="text-xs hl-donkergroen-text">
             🔒 Je gegevens blijven privé en worden alleen lokaal in je browser opgeslagen
           </p>
         </div>
