@@ -75,16 +75,26 @@ export default function FeedbackSection({
       return
     }
 
-    console.log('🚀 Starting feedback request for element:', element, 'Text length:', text.length)
+    console.log('🚀 Starting feedback request:', {
+      element,
+      textLength: text.length,
+      hasResearchData: Object.values(getResearchData()).some(data => data.length > 0)
+    })
 
     setIsLoading(true)
     setShowFeedback(false)
+    setFeedback('') // Clear previous feedback
 
     // Get research data to include in feedback
     const researchData = getResearchData()
     
     try {
-      console.log('📡 Sending API request to /api/feedback')
+      console.log('📡 Sending API request to /api/feedback with payload:', {
+        textLength: text.trim().length,
+        element,
+        hasResearchData: Object.keys(researchData).length > 0
+      })
+      
       const response = await fetch('/api/feedback', {
         method: 'POST',
         headers: {
@@ -97,7 +107,11 @@ export default function FeedbackSection({
         }),
       })
 
-      console.log('📥 API Response status:', response.status)
+      console.log('📥 API Response:', {
+        status: response.status,
+        ok: response.ok,
+        headers: Object.fromEntries(response.headers.entries())
+      })
 
       if (!response.ok) {
         const errorData = await response.json()
@@ -109,8 +123,13 @@ export default function FeedbackSection({
       console.log('✅ Feedback received:', {
         feedbackLength: data.feedback?.length || 0,
         element: data.element,
-        success: data.success
+        success: data.success,
+        timestamp: data.timestamp
       })
+      
+      if (!data.feedback) {
+        throw new Error('Geen feedback ontvangen van de server')
+      }
       
       setFeedback(data.feedback)
       setShowFeedback(true)
@@ -123,10 +142,18 @@ export default function FeedbackSection({
           feedbackElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
         } else {
           console.warn('⚠️ Feedback element not found for scrolling')
+          // Try alternative selector
+          const altElement = document.querySelector(`[data-section="${element}"]`)
+          if (altElement) {
+            console.log('📍 Scrolling to section element instead')
+            altElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          }
         }
       }, 100)
     } catch (error) {
       console.error('Feedback error:', error)
+      setFeedback('')
+      setShowFeedback(false)
       alert('Fout bij het ophalen van feedback: ' + (error instanceof Error ? error.message : 'Onbekende fout'))
     } finally {
       setIsLoading(false)

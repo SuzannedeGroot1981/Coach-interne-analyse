@@ -272,6 +272,8 @@ Focus specifiek op:
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('🔄 Feedback API called at:', new Date().toISOString())
+    
     // Check API key
     if (!process.env.GEMINI_API_KEY) {
       console.error('GEMINI_API_KEY not found in environment variables')
@@ -286,9 +288,16 @@ export async function POST(request: NextRequest) {
 
     // Parse request data
     const body = await request.json()
+    console.log('📥 Request body received:', {
+      textLength: body.text?.length || 0,
+      element: body.element,
+      hasResearchData: !!body.researchData
+    })
+    
     const { text, element, researchData } = body
 
     if (!text || !element) {
+      console.error('❌ Missing required fields:', { hasText: !!text, hasElement: !!element })
       return NextResponse.json(
         { error: 'Tekst en element zijn vereist' },
         { status: 400 }
@@ -298,6 +307,7 @@ export async function POST(request: NextRequest) {
     // Validate element
     const validElements = ['strategy', 'structure', 'systems', 'sharedValues', 'skills', 'style', 'staff', 'summary', 'financial']
     if (!validElements.includes(element)) {
+      console.error('❌ Invalid element:', element)
       return NextResponse.json(
         { error: 'Ongeldig element. Gebruik: ' + validElements.join(', ') },
         { status: 400 }
@@ -306,6 +316,7 @@ export async function POST(request: NextRequest) {
 
     // Input validation
     if (typeof text !== 'string' || text.length > 10000) {
+      console.error('❌ Invalid text:', { type: typeof text, length: text?.length })
       return NextResponse.json(
         { error: 'Tekst moet een string zijn van maximaal 10.000 karakters' },
         { status: 400 }
@@ -313,6 +324,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (text.trim().length < 50) {
+      console.error('❌ Text too short:', text.trim().length)
       return NextResponse.json(
         { error: 'Tekst moet minimaal 50 karakters bevatten voor zinvolle feedback' },
         { status: 400 }
@@ -321,10 +333,17 @@ export async function POST(request: NextRequest) {
 
     // Get system prompt for this element
     const systemPrompt = SYSTEM_PROMPTS[element as keyof typeof SYSTEM_PROMPTS]
+    console.log('📋 Using system prompt for element:', element)
 
     // Prepare research context if available
     let researchContext = ''
     if (researchData && (researchData.interviews || researchData.survey || researchData.financial)) {
+      console.log('📊 Adding research context:', {
+        hasInterviews: !!researchData.interviews,
+        hasSurvey: !!researchData.survey,
+        hasFinancial: !!researchData.financial
+      })
+      
       researchContext = '\n\nBESCHIKBARE ONDERZOEKSGEGEVENS:\n'
       
       if (researchData.interviews) {
@@ -341,6 +360,7 @@ export async function POST(request: NextRequest) {
       
       researchContext += '\nGebruik deze onderzoeksgegevens om je feedback te onderbouwen en te verrijken. Verwijs naar specifieke citaten, percentages of bevindingen waar relevant.'
     }
+    
     // Initialize Gemini model with temperature 0.4 for consistent, focused feedback
     const model = genAI.getGenerativeModel({ 
       model: 'gemini-2.5-flash',
@@ -391,11 +411,20 @@ Geef gestructureerde feedback volgens dit format:
 
 Houd de feedback constructief, zakelijk en gericht op leerresultaten. Focus ALLEEN op interne aspecten.`
 
+    console.log('🤖 Sending request to Gemini API...')
     // Generate feedback
     const result = await model.generateContent(prompt)
     const response = await result.response
     const feedback = response.text()
+    
+    console.log('✅ Gemini API response received:', {
+      feedbackLength: feedback?.length || 0,
+      hasContent: !!feedback
+    })
 
+    if (!feedback) {
+      throw new Error('Geen feedback ontvangen van Gemini API')
+    }
     return NextResponse.json({ 
       feedback,
       element,
@@ -404,7 +433,11 @@ Houd de feedback constructief, zakelijk en gericht op leerresultaten. Focus ALLE
     })
 
   } catch (error) {
-    console.error('Feedback API error:', error)
+    console.error('❌ Feedback API error:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      timestamp: new Date().toISOString()
+    })
     
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     
