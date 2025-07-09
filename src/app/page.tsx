@@ -367,8 +367,13 @@ export default function Home() {
           document.addEventListener('DOMContentLoaded', function() {
             const interviewTextarea = document.getElementById('interview-results');
             const surveyTextarea = document.getElementById('survey-results');
+            const financialTextarea = document.getElementById('financial-analysis');
             const interviewCounter = document.getElementById('interview-count');
             const surveyCounter = document.getElementById('survey-count');
+            const financialCounter = document.getElementById('financial-count');
+            const explainButton = document.getElementById('explain-financial-terms');
+            const explanationDiv = document.getElementById('financial-explanation');
+            const explanationContent = document.getElementById('financial-explanation-content');
             
             if (interviewTextarea && interviewCounter) {
               interviewTextarea.addEventListener('input', function() {
@@ -379,6 +384,74 @@ export default function Home() {
             if (surveyTextarea && surveyCounter) {
               surveyTextarea.addEventListener('input', function() {
                 surveyCounter.textContent = this.value.length;
+              });
+            }
+            
+            if (financialTextarea && financialCounter) {
+              financialTextarea.addEventListener('input', function() {
+                financialCounter.textContent = this.value.length;
+              });
+            }
+            
+            // Financiële begrippen uitleg functionaliteit
+            if (explainButton && financialTextarea && explanationDiv && explanationContent) {
+              explainButton.addEventListener('click', async function() {
+                const financialData = financialTextarea.value.trim();
+                
+                if (!financialData) {
+                  alert('Voer eerst financiële gegevens in voordat je uitleg vraagt.');
+                  return;
+                }
+                
+                if (financialData.length < 50) {
+                  alert('Voer minimaal 50 karakters aan financiële gegevens in voor zinvolle uitleg.');
+                  return;
+                }
+                
+                // Loading state
+                explainButton.disabled = true;
+                explainButton.innerHTML = '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>AI analyseert...';
+                
+                try {
+                  const response = await fetch('/api/financial-explanation', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      financialData: financialData
+                    }),
+                  });
+                  
+                  if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Er is een fout opgetreden');
+                  }
+                  
+                  const data = await response.json();
+                  
+                  // Format and display explanation
+                  const formattedExplanation = data.explanation
+                    .replace(/## (.*)/g, '<h3 class="text-lg font-semibold text-gray-800 mt-4 mb-2">$1</h3>')
+                    .replace(/\\*\\*(.*?)\\*\\*/g, '<strong class="font-semibold">$1</strong>')
+                    .replace(/\\*(.*?)\\*/g, '<em class="italic">$1</em>')
+                    .replace(/\\n\\n/g, '</p><p class="mb-2">')
+                    .replace(/\\n/g, '<br />');
+                  
+                  explanationContent.innerHTML = '<p class="mb-2">' + formattedExplanation + '</p>';
+                  explanationDiv.classList.remove('hidden');
+                  
+                  // Scroll to explanation
+                  explanationDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  
+                } catch (error) {
+                  console.error('Financial explanation error:', error);
+                  alert('Fout bij het ophalen van uitleg: ' + error.message);
+                } finally {
+                  // Reset button
+                  explainButton.disabled = false;
+                  explainButton.innerHTML = '<span>🧠</span><span>Leg financiële begrippen uit</span>';
+                }
               });
             }
           });
