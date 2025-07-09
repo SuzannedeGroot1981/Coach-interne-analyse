@@ -75,6 +75,8 @@ export default function FeedbackSection({
       return
     }
 
+    console.log('🚀 Starting feedback request for element:', element, 'Text length:', text.length)
+
     setIsLoading(true)
     setShowFeedback(false)
 
@@ -82,6 +84,7 @@ export default function FeedbackSection({
     const researchData = getResearchData()
     
     try {
+      console.log('📡 Sending API request to /api/feedback')
       const response = await fetch('/api/feedback', {
         method: 'POST',
         headers: {
@@ -94,20 +97,32 @@ export default function FeedbackSection({
         }),
       })
 
+      console.log('📥 API Response status:', response.status)
+
       if (!response.ok) {
         const errorData = await response.json()
+        console.error('❌ API Error:', errorData)
         throw new Error(errorData.error || 'Er is een fout opgetreden')
       }
 
       const data = await response.json()
+      console.log('✅ Feedback received:', {
+        feedbackLength: data.feedback?.length || 0,
+        element: data.element,
+        success: data.success
+      })
+      
       setFeedback(data.feedback)
       setShowFeedback(true)
       
       // Scroll to feedback section after a short delay
       setTimeout(() => {
-        const feedbackElement = document.querySelector(`[data-section="${element}"] .feedback-display`)
+        const feedbackElement = document.querySelector(`[data-section="${element}"]`)?.querySelector('.feedback-display')
         if (feedbackElement) {
+          console.log('📍 Scrolling to feedback element')
           feedbackElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        } else {
+          console.warn('⚠️ Feedback element not found for scrolling')
         }
       }, 100)
     } catch (error) {
@@ -172,16 +187,23 @@ export default function FeedbackSection({
   const formatFeedback = (feedbackText: string) => {
     // Convert markdown-like formatting to HTML
     return feedbackText
-      .replace(/## (.*)/g, '<h3 class="text-xl font-bold text-green-800 mt-6 mb-4 border-b-2 border-green-200 pb-2">$1</h3>')
-      .replace(/### (.*)/g, '<h4 class="text-lg font-semibold text-green-700 mt-4 mb-3">$1</h4>')
+      .replace(/## (.*?)$/gm, '<h3 class="text-xl font-bold text-green-800 mt-6 mb-4 border-b-2 border-green-200 pb-2">$1</h3>')
+      .replace(/### (.*?)$/gm, '<h4 class="text-lg font-semibold text-green-700 mt-4 mb-3">$1</h4>')
       .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-green-900">$1</strong>')
       .replace(/\*(.*?)\*/g, '<em class="italic text-green-800">$1</em>')
-      .replace(/- (.*?)(?=\n|$)/g, '<li class="ml-4 mb-2 text-green-700">• $1</li>')
-      .replace(/(\n|^)([A-Z][^:\n]*:)/g, '$1<strong class="font-semibold text-green-800">$2</strong>')
-      .replace(/\n\n/g, '</p><p class="mb-4 text-green-700 leading-relaxed">')
+      .replace(/^- (.*?)$/gm, '<li class="ml-4 mb-2 text-green-700 list-disc">$1</li>')
+      .replace(/^([A-Z][^:\n]*:)/gm, '<strong class="font-semibold text-green-800 block mt-3 mb-2">$1</strong>')
+      .replace(/\n\s*\n/g, '</p><p class="mb-4 text-green-700 leading-relaxed">')
       .replace(/\n/g, '<br />')
-      .replace(/^/, '<p class="mb-4 text-green-700 leading-relaxed">')
-      .replace(/$/, '</p>')
+    
+    // Wrap in paragraph tags if not already wrapped
+    let formatted = feedbackText.includes('<h3>') || feedbackText.includes('<p>') ? 
+      feedbackText : `<p class="mb-4 text-green-700 leading-relaxed">${feedbackText}</p>`
+    
+    // Wrap list items in ul tags
+    formatted = formatted.replace(/((?:<li[^>]*>.*?<\/li>\s*)+)/g, '<ul class="mb-4">$1</ul>')
+    
+    return formatted
   }
 
   return (
@@ -246,7 +268,7 @@ export default function FeedbackSection({
         {feedback && (
           <button
             onClick={() => setShowFeedback(!showFeedback)}
-            className="px-6 py-3 bg-hl-gray-100 text-hl-gray-700 rounded-xl hover:bg-hl-gray-200 transition-colors font-medium"
+            className="px-6 py-3 bg-green-100 text-green-700 rounded-xl hover:bg-green-200 transition-colors font-medium border border-green-300"
           >
             <span className="material-symbols-sharp hl-icon-sm mr-2">
               {showFeedback ? 'visibility_off' : 'visibility'}
@@ -258,7 +280,7 @@ export default function FeedbackSection({
         {apaFeedback && (
           <button
             onClick={() => setShowApaFeedback(!showApaFeedback)}
-            className="px-6 py-3 bg-purple-100 text-purple-700 rounded-xl hover:bg-purple-200 transition-colors font-medium"
+            className="px-6 py-3 bg-purple-100 text-purple-700 rounded-xl hover:bg-purple-200 transition-colors font-medium border border-purple-300"
           >
             <span className="material-symbols-sharp hl-icon-sm mr-2">
               {showApaFeedback ? 'visibility_off' : 'visibility'}
@@ -269,7 +291,7 @@ export default function FeedbackSection({
       </div>
 
       {/* APA Feedback Display */}
-      {showApaFeedback && apaFeedback && (
+      {apaFeedback && showApaFeedback && (
         <div className="apa-feedback-display mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8 border-2 border-purple-200">
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mr-6">
@@ -281,7 +303,7 @@ export default function FeedbackSection({
           </div>
           <div 
             className="prose prose-lg max-w-none text-purple-700"
-            dangerouslySetInnerHTML={{ 
+            dangerouslySetInnerHTML={{
               __html: `<p class="mb-3">${formatFeedback(apaFeedback)}</p>` 
             }}
           />
@@ -297,7 +319,7 @@ export default function FeedbackSection({
       )}
 
       {/* Feedback Display */}
-      {showFeedback && feedback && (
+      {feedback && showFeedback && (
         <div className="feedback-display mt-8 bg-white rounded-2xl p-8 border-2 border-green-200 shadow-lg">
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 hl-donkergroen-bg rounded-full flex items-center justify-center mr-6">
@@ -309,9 +331,9 @@ export default function FeedbackSection({
           </div>
           <div 
             className="prose prose-lg max-w-none hl-donkerpaars-text"
-            dangerouslySetInnerHTML={{ 
+            dangerouslySetInnerHTML={{
               __html: formatFeedback(feedback)
-            }}
+            }} 
           />
           <div className="mt-6 pt-6 border-t hl-zand-border">
             <p className="text-sm hl-donkergroen-text flex items-center">
