@@ -42,7 +42,7 @@ export default function LocalStorage({ elementId, elementName, colorScheme }: Lo
       error: 'bg-red-100 text-red-700 border-red-300'
     },
     purple: {
-      button: 'bg-purple-100 hover:bg-purple-200 text-purple-700 border-hl-donkergroen',
+      button: 'bg-purple-100 hover:bg-purple-200 text-purple-700 border-purple-600',
       success: 'bg-green-100 text-green-700 border-green-300',
       error: 'bg-red-100 text-red-700 border-red-300'
     }
