@@ -477,60 +477,21 @@ INSTRUCTIES VOOR FEEDBACK:
 5. Focus op leerresultaten en ontwikkeling
 6. Gebruik professioneel, HBO-niveau taalgebruik
 
-Geef uitgebreide, professionele feedback volgens dit exacte format:
+Geef constructieve, professionele feedback volgens dit exacte format:
 
-## 👍 Wat gaat er goed
-[Oprecht compliment met specifieke voorbeelden uit de tekst. Noem concrete passages die sterk zijn en waarom ze goed zijn.]
+## 👍 Sterke punten (minimaal 2)
+[Benoem minimaal 2 concrete sterke punten uit de tekst met specifieke voorbeelden. Leg uit waarom deze aspecten goed zijn en hoe ze bijdragen aan de kwaliteit van de analyse.]
 
-## 📊 Inhoudelijke Beoordeling
+## 📊 Verbeterpunten en aanbevelingen
+[Geef een logische, samenhangende beoordeling van wat er verbeterd kan worden. Integreer de 5 beoordelingscriteria (beoogde vs feitelijke situatie, onderbouwing, genuanceerde analyse, sterktes/zwaktes, zakelijke schrijfstijl) in een vloeiende tekst. Geef concrete voorbeelden uit de tekst en praktische verbeteradviezen.]
 
-**Beoogde vs Feitelijke Situatie**
-[Beoordeel: Is er een goede schets van beide situaties? Wordt het verschil duidelijk? Geef concrete voorbeelden uit de tekst.]
+## 🎯 Concrete actiepunten
+1. [Specifiek, actionable verbeterpunt met uitleg hoe dit te realiseren]
+2. [Specifiek, actionable verbeterpunt met uitleg hoe dit te realiseren]  
+3. [Specifiek, actionable verbeterpunt met uitleg hoe dit te realiseren]
 
-**Onderbouwing met Bronnen, Cijfers en Voorbeelden**
-[Beoordeel: Worden concrete voorbeelden gebruikt? Zijn er cijfers/data? Worden interview/enquête resultaten gebruikt? Zijn bronnen correct vermeld? Geef specifieke voorbeelden.]
-
-**Genuanceerde Analyse**
-[Beoordeel: Is de analyse kritisch en genuanceerd? Worden verschillende perspectieven belicht? Is er diepgang? Geef concrete voorbeelden.]
-
-**Sterktes en Zwaktes Benoemd**
-[Beoordeel: Worden sterke en zwakke punten geïdentificeerd? Is er een evenwichtige beoordeling? Geef voorbeelden uit de tekst.]
-
-**Zakelijke Schrijfstijl**
-[Beoordeel: Is het taalgebruik zakelijk en professioneel? Zijn zinnen helder? Is de structuur logisch? Wordt spreektaal vermeden?]
-
-## 🎯 Concrete Verbeterpunten
-
-1. **[Specifiek verbeterpunt]**
-   - Wat ontbreekt: [Concrete beschrijving]
-   - Waarom belangrijk: [Uitleg voor HBO-niveau]
-   - Hoe verbeteren: [Concrete stappen]
-   - Voorbeeld: [Hoe het beter kan]
-
-2. **[Specifiek verbeterpunt]**
-   - Wat ontbreekt: [Concrete beschrijving]
-   - Waarom belangrijk: [Uitleg voor HBO-niveau]
-   - Hoe verbeteren: [Concrete stappen]
-   - Voorbeeld: [Hoe het beter kan]
-
-3. **[Specifiek verbeterpunt]**
-   - Wat ontbreekt: [Concrete beschrijving]
-   - Waarom belangrijk: [Uitleg voor HBO-niveau]
-   - Hoe verbeteren: [Concrete stappen]
-   - Voorbeeld: [Hoe het beter kan]
-
-## 📈 Eindadvies
-
-**Hoofdadvies voor verbetering:**
-[Het belangrijkste wat de student moet doen om de analyse naar HBO-niveau te tillen]
-
-**Volgende stappen:**
-1. [Concrete actie die de student kan ondernemen]
-2. [Concrete actie die de student kan ondernemen]
-3. [Concrete actie die de student kan ondernemen]
-
-**Afsluiting:**
-[Motiverende woorden over de ontwikkeling en het leerproces]
+## 💡 Eindadvies
+[Samenvattend advies over de belangrijkste volgende stap om de analyse naar HBO-niveau te tillen, afgesloten met motiverende woorden over het leerproces.]
 
 Wees specifiek, constructief en verwijs naar concrete passages. Focus op inhoudelijke kwaliteit zonder scores te geven.`
 
