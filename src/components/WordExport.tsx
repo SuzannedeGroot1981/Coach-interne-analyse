@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Document, Paragraph, TextRun, HeadingLevel, AlignmentType, Table, TableRow, TableCell, WidthType, BorderStyle } from 'docx'
+import { Document, Paragraph, TextRun, HeadingLevel, AlignmentType } from 'docx'
 
 interface ExportData {
   interviewResults: string
@@ -44,17 +44,17 @@ export default function WordExport() {
   }
 
   const createWordDocument = (data: ExportData): Document => {
-    const children: (Paragraph | Table)[] = []
+    const children: Paragraph[] = []
 
-    // Title page
+    // Title page with Hogeschool Leiden styling
     children.push(
       new Paragraph({
         children: [
           new TextRun({
             text: "INTERNE ANALYSE",
             bold: true,
-            size: 32,
-            color: "1F4E79"
+            size: 36,
+            color: "00A651" // HL Green
           })
         ],
         alignment: AlignmentType.CENTER,
@@ -64,8 +64,8 @@ export default function WordExport() {
         children: [
           new TextRun({
             text: "7S-Model van McKinsey",
-            size: 24,
-            color: "2F75B5"
+            size: 28,
+            color: "0066CC" // HL Blue
           })
         ],
         alignment: AlignmentType.CENTER,
@@ -75,7 +75,7 @@ export default function WordExport() {
         children: [
           new TextRun({
             text: `Datum: ${new Date().toLocaleDateString('nl-NL')}`,
-            size: 20
+            size: 22
           })
         ],
         alignment: AlignmentType.CENTER,
@@ -85,8 +85,9 @@ export default function WordExport() {
         children: [
           new TextRun({
             text: "Hogeschool Leiden",
-            size: 20,
-            italics: true
+            size: 22,
+            italics: true,
+            color: "00A651"
           })
         ],
         alignment: AlignmentType.CENTER,
@@ -109,8 +110,8 @@ export default function WordExport() {
           new TextRun({
             text: "INHOUDSOPGAVE",
             bold: true,
-            size: 24,
-            color: "1F4E79"
+            size: 28,
+            color: "00A651"
           })
         ],
         heading: HeadingLevel.HEADING_1,
@@ -136,7 +137,7 @@ export default function WordExport() {
     tocItems.forEach(item => {
       children.push(
         new Paragraph({
-          children: [new TextRun({ text: item, size: 20 })],
+          children: [new TextRun({ text: item, size: 22 })],
           spacing: { after: 120 }
         })
       )
@@ -157,8 +158,8 @@ export default function WordExport() {
           new TextRun({
             text: "1. INLEIDING",
             bold: true,
-            size: 24,
-            color: "1F4E79"
+            size: 28,
+            color: "00A651"
           })
         ],
         heading: HeadingLevel.HEADING_1,
@@ -192,8 +193,8 @@ export default function WordExport() {
             new TextRun({
               text: "2. ONDERZOEKSMETHODOLOGIE",
               bold: true,
-              size: 24,
-              color: "1F4E79"
+              size: 28,
+              color: "00A651"
             })
           ],
           heading: HeadingLevel.HEADING_1,
@@ -208,8 +209,8 @@ export default function WordExport() {
               new TextRun({
                 text: "2.1 Interviews",
                 bold: true,
-                size: 22,
-                color: "2F75B5"
+                size: 24,
+                color: "0066CC"
               })
             ],
             heading: HeadingLevel.HEADING_2,
@@ -226,8 +227,8 @@ export default function WordExport() {
               new TextRun({
                 text: "2.2 Enquête",
                 bold: true,
-                size: 22,
-                color: "2F75B5"
+                size: 24,
+                color: "0066CC"
               })
             ],
             heading: HeadingLevel.HEADING_2,
@@ -245,8 +246,8 @@ export default function WordExport() {
           new TextRun({
             text: "3. HET 7S-MODEL ANALYSE",
             bold: true,
-            size: 24,
-            color: "1F4E79"
+            size: 28,
+            color: "00A651"
           })
         ],
         heading: HeadingLevel.HEADING_1,
@@ -266,8 +267,8 @@ export default function WordExport() {
               new TextRun({
                 text: `3.${index + 1} ${SECTION_TITLES[sectionKey as keyof typeof SECTION_TITLES]}`,
                 bold: true,
-                size: 22,
-                color: "2F75B5"
+                size: 24,
+                color: "0066CC"
               })
             ],
             heading: HeadingLevel.HEADING_2,
@@ -286,8 +287,8 @@ export default function WordExport() {
             new TextRun({
               text: "4. FINANCIËLE ANALYSE",
               bold: true,
-              size: 24,
-              color: "1F4E79"
+              size: 28,
+              color: "00A651"
             })
           ],
           heading: HeadingLevel.HEADING_1,
@@ -305,8 +306,8 @@ export default function WordExport() {
           new TextRun({
             text: "5. BRONNENLIJST",
             bold: true,
-            size: 24,
-            color: "1F4E79"
+            size: 28,
+            color: "00A651"
           })
         ],
         heading: HeadingLevel.HEADING_1,
@@ -344,24 +345,6 @@ export default function WordExport() {
           }),
           new TextRun({
             text: ". Harper & Row.",
-            size: 22
-          })
-        ],
-        spacing: { after: 240 }
-      }),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: "Waterman, R. H., Peters, T. J., & Phillips, J. R. (1980). Structure is not organization. ",
-            size: 22
-          }),
-          new TextRun({
-            text: "Business Horizons, 23",
-            size: 22,
-            italics: true
-          }),
-          new TextRun({
-            text: "(3), 14-26.",
             size: 22
           })
         ],
@@ -478,39 +461,39 @@ export default function WordExport() {
   }
 
   const getButtonClass = () => {
-    const baseClass = "px-6 py-3 rounded-lg font-medium transition-all duration-200 disabled:cursor-not-allowed flex items-center space-x-2"
+    const baseClass = "px-8 py-4 rounded-xl font-bold transition-all duration-200 disabled:cursor-not-allowed flex items-center space-x-3 text-lg"
     
     if (exportStatus === 'success') {
-      return `${baseClass} bg-green-100 text-green-700 border border-green-300`
+      return `${baseClass} bg-hl-green-100 text-hl-green-700 border border-hl-green-300`
     }
     if (exportStatus === 'error') {
       return `${baseClass} bg-red-100 text-red-700 border border-red-300`
     }
     if (isExporting) {
-      return `${baseClass} bg-blue-100 text-blue-700 border border-blue-300`
+      return `${baseClass} bg-hl-blue-100 text-hl-blue-700 border border-hl-blue-300`
     }
-    return `${baseClass} bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg hover:shadow-xl`
+    return `${baseClass} bg-hl-green-500 hover:bg-hl-green-600 text-white shadow-hl-green hover:shadow-hl-lg transform hover:-translate-y-1`
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-8 mt-8">
+    <div className="hl-card p-10 mt-8">
       <div className="text-center">
-        <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <span className="text-2xl">📄</span>
+        <div className="w-20 h-20 bg-hl-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <span className="text-3xl">📄</span>
         </div>
         
-        <h3 className="text-2xl font-bold text-gray-800 mb-4">
+        <h3 className="text-3xl font-bold text-hl-gray-800 mb-6">
           Gratis Export naar Word Document
         </h3>
         
-        <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-          Exporteer je complete interne analyse gratis naar een professioneel Word document met:
+        <p className="text-hl-gray-600 mb-8 max-w-3xl mx-auto text-lg">
+          Exporteer je complete interne analyse gratis naar een professioneel Word document met Hogeschool Leiden opmaak:
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-sm text-gray-700">
-          <div className="bg-blue-50 rounded-lg p-4">
-            <h4 className="font-semibold text-blue-800 mb-2">📊 Inhoud</h4>
-            <ul className="space-y-1 text-left">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 text-sm text-hl-gray-700">
+          <div className="bg-hl-blue-50 rounded-xl p-6 border border-hl-blue-200">
+            <h4 className="font-bold text-hl-blue-700 mb-4 text-lg">📊 Inhoud</h4>
+            <ul className="space-y-2 text-left">
               <li>• Alle ingevulde 7S-secties</li>
               <li>• Onderzoeksgegevens (interviews & enquête)</li>
               <li>• Financiële analyse</li>
@@ -518,9 +501,10 @@ export default function WordExport() {
             </ul>
           </div>
           
-          <div className="bg-green-50 rounded-lg p-4">
-            <h4 className="font-semibold text-green-800 mb-2">📝 Opmaak</h4>
-            <ul className="space-y-1 text-left">
+          <div className="bg-hl-green-50 rounded-xl p-6 border border-hl-green-200">
+            <h4 className="font-bold text-hl-green-700 mb-4 text-lg">📝 Opmaak</h4>
+            <ul className="space-y-2 text-left">
+              <li>• Hogeschool Leiden huisstijl</li>
               <li>• Professionele APA-stijl layout</li>
               <li>• Inhoudsopgave</li>
               <li>• Genummerde hoofdstukken</li>
@@ -535,12 +519,12 @@ export default function WordExport() {
           className={getButtonClass()}
         >
           {isExporting && (
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-current"></div>
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-current"></div>
           )}
           <span>{getButtonText()}</span>
         </button>
         
-        <p className="text-xs text-gray-500 mt-4">
+        <p className="text-sm text-hl-gray-500 mt-6">
           💡 Volledig gratis • Het document wordt automatisch gedownload naar je Downloads map
         </p>
       </div>

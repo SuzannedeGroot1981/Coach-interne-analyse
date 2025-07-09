@@ -22,6 +22,7 @@ export default function FeedbackSection({
 }: FeedbackSectionProps) {
   const [text, setText] = useState('')
   const [feedback, setFeedback] = useState('')
+  const [apaFeedback, setApaFeedback] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isApaLoading, setIsApaLoading] = useState(false)
   const [showFeedback, setShowFeedback] = useState(false)
@@ -42,26 +43,22 @@ export default function FeedbackSection({
 
   const colors = {
     blue: {
-      bg: 'bg-blue-50',
-      border: 'border-blue-200',
-      text: 'text-blue-800',
-      textSecondary: 'text-blue-700',
-      button: 'bg-blue-600 hover:bg-blue-700',
-      apaButton: 'bg-purple-600 hover:bg-purple-700',
-      numberBg: 'bg-blue-600',
-      inputBorder: 'border-blue-300',
-      inputFocus: 'focus:ring-blue-500'
+      bg: 'bg-hl-blue-50',
+      border: 'border-hl-blue-200',
+      text: 'text-hl-blue-700',
+      textSecondary: 'text-hl-blue-600',
+      numberBg: 'bg-hl-blue-500',
+      inputBorder: 'border-hl-blue-300',
+      inputFocus: 'focus:border-hl-blue-500'
     },
     green: {
-      bg: 'bg-green-50',
-      border: 'border-green-200',
-      text: 'text-green-800',
-      textSecondary: 'text-green-700',
-      button: 'bg-green-600 hover:bg-green-700',
-      apaButton: 'bg-purple-600 hover:bg-purple-700',
-      numberBg: 'bg-green-600',
-      inputBorder: 'border-green-300',
-      inputFocus: 'focus:ring-green-500'
+      bg: 'bg-hl-green-50',
+      border: 'border-hl-green-200',
+      text: 'text-hl-green-700',
+      textSecondary: 'text-hl-green-600',
+      numberBg: 'bg-hl-green-500',
+      inputBorder: 'border-hl-green-300',
+      inputFocus: 'focus:border-hl-green-500'
     }
   }
 
@@ -154,10 +151,11 @@ export default function FeedbackSection({
       setIsApaLoading(false)
     }
   }
+
   const formatFeedback = (feedbackText: string) => {
     // Convert markdown-like formatting to HTML
     return feedbackText
-      .replace(/## (.*)/g, '<h3 class="text-lg font-semibold text-gray-800 mt-4 mb-2">$1</h3>')
+      .replace(/## (.*)/g, '<h3 class="text-lg font-semibold text-hl-gray-800 mt-4 mb-2">$1</h3>')
       .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
       .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
       .replace(/\n\n/g, '</p><p class="mb-2">')
@@ -165,9 +163,9 @@ export default function FeedbackSection({
   }
 
   return (
-    <div className={`${color.bg} rounded-lg p-6 border ${color.border}`} data-section={element}>
-      <h4 className={`text-xl font-semibold ${color.text} mb-3 flex items-center`}>
-        <span className={`w-8 h-8 ${color.numberBg} text-white rounded-full flex items-center justify-center mr-3 text-sm`}>
+    <div className={`${color.bg} rounded-xl p-6 border ${color.border} hl-card`} data-section={element}>
+      <h4 className={`text-xl font-bold ${color.text} mb-4 flex items-center`}>
+        <span className={`w-10 h-10 ${color.numberBg} text-white rounded-lg flex items-center justify-center mr-4 text-sm font-bold`}>
           {number}
         </span>
         {title}
@@ -178,19 +176,19 @@ export default function FeedbackSection({
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
-        className={`w-full p-4 border ${color.inputBorder} rounded-lg ${color.inputFocus} focus:border-transparent resize-none`}
+        className={`hl-textarea w-full ${color.inputBorder} ${color.inputFocus}`}
         rows={4}
         placeholder={placeholder}
         maxLength={10000}
       />
-      <div className="mt-2 text-xs text-gray-500 text-right">
+      <div className="mt-2 text-xs text-hl-gray-500 text-right">
         {text.length}/10000 karakters
       </div>
-      <div className="mt-4 flex items-center flex-wrap gap-3">
+      <div className="mt-6 flex items-center flex-wrap gap-3">
         <button
           onClick={handleFeedbackRequest}
           disabled={isLoading || !text.trim() || text.trim().length < 50}
-          className={`px-4 py-2 ${color.button} text-white rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2`}
+          className="hl-button-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
         >
           {isLoading ? (
             <>
@@ -208,7 +206,7 @@ export default function FeedbackSection({
         <button
           onClick={handleApaCheck}
           disabled={isApaLoading || !text.trim() || text.trim().length < 20}
-          className={`px-4 py-2 ${color.apaButton} text-white rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2`}
+          className="hl-button-secondary disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
         >
           {isApaLoading ? (
             <>
@@ -226,7 +224,7 @@ export default function FeedbackSection({
         {showFeedback && (
           <button
             onClick={() => setShowFeedback(!showFeedback)}
-            className="px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
+            className="px-4 py-2 bg-hl-gray-100 text-hl-gray-700 rounded-lg hover:bg-hl-gray-200 transition-colors text-sm font-medium"
           >
             {showFeedback ? '👁️ Verberg feedback' : '👁️ Toon feedback'}
           </button>
@@ -235,7 +233,7 @@ export default function FeedbackSection({
         {showApaFeedback && (
           <button
             onClick={() => setShowApaFeedback(!showApaFeedback)}
-            className="px-3 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors text-sm"
+            className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors text-sm font-medium"
           >
             {showApaFeedback ? '👁️ Verberg APA-check' : '👁️ Toon APA-check'}
           </button>
@@ -244,23 +242,23 @@ export default function FeedbackSection({
 
       {/* APA Feedback Display */}
       {showApaFeedback && apaFeedback && (
-        <div className="mt-6 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border border-purple-200 p-6 shadow-sm">
+        <div className="mt-6 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl border border-purple-200 p-6 hl-card">
           <div className="flex items-center mb-4">
-            <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mr-3">
+            <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center mr-4">
               <span className="text-white text-sm">📚</span>
             </div>
-            <h5 className="text-lg font-semibold text-purple-800">
+            <h5 className="text-lg font-bold text-purple-800">
               APA-stijl Controle
             </h5>
           </div>
           <div 
-            className="prose prose-sm max-w-none text-gray-700"
+            className="prose prose-sm max-w-none text-hl-gray-700"
             dangerouslySetInnerHTML={{ 
               __html: `<p class="mb-2">${formatFeedback(apaFeedback)}</p>` 
             }}
           />
           <div className="mt-4 pt-4 border-t border-purple-200">
-            <p className="text-xs text-gray-500 flex items-center">
+            <p className="text-xs text-hl-gray-500 flex items-center">
               <span className="w-4 h-4 bg-purple-100 rounded-full flex items-center justify-center mr-2">
                 <span className="text-purple-600 text-xs">📚</span>
               </span>
@@ -269,27 +267,28 @@ export default function FeedbackSection({
           </div>
         </div>
       )}
+
       {/* Feedback Display */}
       {showFeedback && feedback && (
-        <div className="mt-6 bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div className="mt-6 bg-white rounded-xl border border-hl-gray-200 p-6 hl-card">
           <div className="flex items-center mb-4">
-            <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mr-3">
+            <div className="w-10 h-10 bg-hl-green-500 rounded-full flex items-center justify-center mr-4">
               <span className="text-white text-sm">🎓</span>
             </div>
-            <h5 className="text-lg font-semibold text-purple-800">
+            <h5 className="text-lg font-bold text-hl-green-700">
               Feedback van je Coach
             </h5>
           </div>
           <div 
-            className="prose prose-sm max-w-none text-gray-700"
+            className="prose prose-sm max-w-none text-hl-gray-700"
             dangerouslySetInnerHTML={{ 
               __html: `<p class="mb-2">${formatFeedback(feedback)}</p>` 
             }}
           />
-          <div className="mt-4 pt-4 border-t border-gray-200">
-            <p className="text-xs text-gray-500 flex items-center">
-              <span className="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center mr-2">
-                <span className="text-green-600 text-xs">✓</span>
+          <div className="mt-4 pt-4 border-t border-hl-gray-200">
+            <p className="text-xs text-hl-gray-500 flex items-center">
+              <span className="w-4 h-4 bg-hl-green-100 rounded-full flex items-center justify-center mr-2">
+                <span className="text-hl-green-600 text-xs">✓</span>
               </span>
               Feedback gegenereerd door AI-coach • Gratis voor alle studenten • Gebaseerd op HBO-beoordelingscriteria
             </p>
