@@ -247,7 +247,6 @@ export default function FeedbackSection({
             <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center mr-4">
               <span className="text-white text-sm">📚</span>
             </div>
-            <h5 className="text-lg font-bold text-purple-800">
             <h5 className="hl-subtitle text-lg text-purple-800">
               APA-stijl Controle
             </h5>
@@ -276,7 +275,6 @@ export default function FeedbackSection({
             <div className="w-10 h-10 bg-hl-green-500 rounded-full flex items-center justify-center mr-4">
               <span className="text-white text-sm">🎓</span>
             </div>
-            <h5 className="text-lg font-bold text-hl-green-700">
             <h5 className="hl-subtitle text-lg text-hl-green-700">
               Feedback van je Coach
             </h5>
