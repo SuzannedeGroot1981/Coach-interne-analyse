@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import FeedbackSection from '@/components/FeedbackSection'
+import { LoadSavedData } from '@/components/LocalStorage'
 
 export default function Home() {
   return (
@@ -33,6 +34,9 @@ export default function Home() {
 
         {/* Main Content */}
         <div className="max-w-4xl mx-auto">
+          {/* Load Saved Data Component */}
+          <LoadSavedData />
+          
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <h2 className="text-2xl font-bold text-blue-800 mb-6 flex items-center">
               <span className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
@@ -319,6 +323,23 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
+                
+                {/* Local Storage for Financial Section */}
+                <div className="flex items-center justify-between mt-4 pt-4 border-t border-emerald-200">
+                  <div className="flex items-center space-x-3">
+                    <button
+                      id="financial-save-button"
+                      className="px-3 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 border border-emerald-300 rounded-lg text-sm font-medium transition-all duration-200"
+                      title="Sla je financiële analyse lokaal op in je browser"
+                    >
+                      💾 Sla concept op
+                    </button>
+                  </div>
+                  
+                  <div className="text-xs text-gray-400">
+                    💡 Wordt lokaal opgeslagen in je browser
+                  </div>
+                </div>
               </div>
               
               <div className="mt-4 p-3 bg-emerald-100 rounded-lg">
@@ -438,6 +459,68 @@ export default function Home() {
                   // Reset button
                   feedbackButton.disabled = false;
                   feedbackButton.innerHTML = '<span>💬</span><span>Vraag feedback aan de coach</span>';
+                }
+              });
+            }
+            
+            // Financial save functionality
+            const financialSaveButton = document.getElementById('financial-save-button');
+            if (financialSaveButton) {
+              financialSaveButton.addEventListener('click', function() {
+                let isSaving = false;
+                let saveStatus = 'idle';
+                
+                if (isSaving) return;
+                
+                isSaving = true;
+                this.innerHTML = '💾 Opslaan...';
+                this.disabled = true;
+                
+                try {
+                  // Get current data from all form elements
+                  const currentData = {
+                    timestamp: new Date().toLocaleString('nl-NL'),
+                    interviewResults: document.getElementById('interview-results')?.value || '',
+                    surveyResults: document.getElementById('survey-results')?.value || '',
+                    financialAnalysis: document.getElementById('financial-analysis')?.value || '',
+                    sections: {}
+                  };
+                  
+                  // Get data from all 7S sections
+                  const sectionIds = ['strategy', 'structure', 'systems', 'sharedValues', 'skills', 'style', 'staff'];
+                  sectionIds.forEach(sectionId => {
+                    const textarea = document.querySelector('[data-section="' + sectionId + '"] textarea');
+                    if (textarea) {
+                      currentData.sections[sectionId] = textarea.value || '';
+                    }
+                  });
+                  
+                  // Save to localStorage
+                  localStorage.setItem('interne-analyse-concept', JSON.stringify(currentData));
+                  
+                  this.innerHTML = '✅ Opgeslagen!';
+                  this.className = 'px-3 py-2 bg-green-100 text-green-700 border border-green-300 rounded-lg text-sm font-medium transition-all duration-200';
+                  
+                  // Reset after 3 seconds
+                  setTimeout(() => {
+                    this.innerHTML = '💾 Sla concept op';
+                    this.className = 'px-3 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 border border-emerald-300 rounded-lg text-sm font-medium transition-all duration-200';
+                    this.disabled = false;
+                    isSaving = false;
+                  }, 3000);
+                  
+                } catch (error) {
+                  console.error('Error saving:', error);
+                  this.innerHTML = '❌ Fout';
+                  this.className = 'px-3 py-2 bg-red-100 text-red-700 border border-red-300 rounded-lg text-sm font-medium transition-all duration-200';
+                  
+                  // Reset after 3 seconds
+                  setTimeout(() => {
+                    this.innerHTML = '💾 Sla concept op';
+                    this.className = 'px-3 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 border border-emerald-300 rounded-lg text-sm font-medium transition-all duration-200';
+                    this.disabled = false;
+                    isSaving = false;
+                  }, 3000);
                 }
               });
             }
