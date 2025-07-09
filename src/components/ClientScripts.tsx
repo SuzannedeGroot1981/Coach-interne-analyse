@@ -4,11 +4,126 @@ import { useEffect } from 'react'
 
 export default function ClientScripts() {
   useEffect(() => {
+    // File upload functionality
+    const setupFileUpload = (
+      inputId: string, 
+      textareaId: string, 
+      fileInfoId: string, 
+      fileNameId: string, 
+      fileSizeId: string, 
+      removeButtonId: string,
+      contentId: string,
+      processedTextId: string,
+      wordCountId: string,
+      charCountId: string
+    ) => {
+      const fileInput = document.getElementById(inputId) as HTMLInputElement
+      const textarea = document.getElementById(textareaId) as HTMLTextAreaElement
+      const fileInfo = document.getElementById(fileInfoId)
+      const fileName = document.getElementById(fileNameId)
+      const fileSize = document.getElementById(fileSizeId)
+      const removeButton = document.getElementById(removeButtonId)
+      const content = document.getElementById(contentId)
+      const processedText = document.getElementById(processedTextId)
+      const wordCount = document.getElementById(wordCountId)
+      const charCount = document.getElementById(charCountId)
+
+      if (!fileInput || !textarea) return
+
+      const processFile = async (file: File) => {
+        const formData = new FormData()
+        formData.append('file', file)
+
+        try {
+          const response = await fetch('/api/upload-docx', {
+            method: 'POST',
+            body: formData
+          })
+
+          if (!response.ok) {
+            const errorData = await response.json()
+            throw new Error(errorData.error || 'Fout bij het verwerken van het bestand')
+          }
+
+          const data = await response.json()
+          
+          // Update textarea with processed content
+          if (textarea) {
+            textarea.value = data.content || ''
+          }
+
+          // Show file info
+          if (fileName) fileName.textContent = file.name
+          if (fileSize) fileSize.textContent = `${(file.size / 1024).toFixed(1)} KB • ${data.fileType}`
+          if (fileInfo) fileInfo.classList.remove('hidden')
+
+          // Show processed content
+          if (processedText) processedText.textContent = data.content || ''
+          if (wordCount) wordCount.textContent = data.wordCount?.toString() || '0'
+          if (charCount) charCount.textContent = data.characterCount?.toString() || '0'
+          if (content) content.classList.remove('hidden')
+
+        } catch (error) {
+          console.error('File processing error:', error)
+          alert('Fout bij het verwerken van het bestand: ' + (error as Error).message)
+        }
+      }
+
+      const removeFile = () => {
+        if (textarea) textarea.value = ''
+        if (fileInfo) fileInfo.classList.add('hidden')
+        if (content) content.classList.add('hidden')
+        if (fileInput) fileInput.value = ''
+      }
+
+      fileInput.addEventListener('change', (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0]
+        if (file) {
+          // Check file size (10MB limit)
+          if (file.size > 10 * 1024 * 1024) {
+            alert('Bestand is te groot. Maximum grootte is 10MB.')
+            return
+          }
+          processFile(file)
+        }
+      })
+
+      if (removeButton) {
+        removeButton.addEventListener('click', removeFile)
+      }
+    }
+
+    // Setup file uploads
+    setupFileUpload(
+      'interview-file-input',
+      'interview-results', 
+      'interview-file-info',
+      'interview-file-name',
+      'interview-file-size',
+      'interview-remove-file',
+      'interview-content',
+      'interview-processed-text',
+      'interview-word-count',
+      'interview-char-count'
+    )
+
+    setupFileUpload(
+      'survey-file-input',
+      'survey-results',
+      'survey-file-info', 
+      'survey-file-name',
+      'survey-file-size',
+      'survey-remove-file',
+      'survey-content',
+      'survey-processed-text',
+      'survey-word-count',
+      'survey-char-count'
+    )
+
+    // Keep existing functionality for financial section
     const interviewTextarea = document.getElementById('interview-results') as HTMLTextAreaElement
     const surveyTextarea = document.getElementById('survey-results') as HTMLTextAreaElement
     const financialTextarea = document.getElementById('financial-analysis') as HTMLTextAreaElement
-    const interviewCounter = document.getElementById('interview-count')
-    const surveyCounter = document.getElementById('survey-count')
     const financialCounter = document.getElementById('financial-count')
     const feedbackButton = document.getElementById('financial-feedback-button')
     const feedbackDiv = document.getElementById('financial-feedback')
@@ -17,23 +132,7 @@ export default function ClientScripts() {
     const apaFeedbackDiv = document.getElementById('financial-apa-feedback')
     const apaFeedbackContent = document.getElementById('financial-apa-feedback-content')
     
-    // Character counters
-    if (interviewTextarea && interviewCounter) {
-      const updateInterviewCounter = () => {
-        interviewCounter.textContent = interviewTextarea.value.length.toString()
-      }
-      interviewTextarea.addEventListener('input', updateInterviewCounter)
-      updateInterviewCounter() // Initial count
-    }
-    
-    if (surveyTextarea && surveyCounter) {
-      const updateSurveyCounter = () => {
-        surveyCounter.textContent = surveyTextarea.value.length.toString()
-      }
-      surveyTextarea.addEventListener('input', updateSurveyCounter)
-      updateSurveyCounter() // Initial count
-    }
-    
+    // Character counter for financial section only
     if (financialTextarea && financialCounter) {
       const updateFinancialCounter = () => {
         financialCounter.textContent = financialTextarea.value.length.toString()
