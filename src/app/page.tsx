@@ -85,21 +85,21 @@ export default function Home() {
                 </h3>
                 <ul className="space-y-6">
                   <li className="flex items-start">
-                    <span className="w-10 h-10 hl-zand-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">1</span>
+                    <span className="w-10 h-10 hl-donkergroen-bg text-white rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">1</span>
                     <div>
                       <strong className="hl-donkergroen-text text-xl">Strategy (Strategie)</strong>
                       <p className="hl-donkergroen-text mt-2">De plannen en acties om concurrentievoordeel te behalen</p>
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <span className="w-10 h-10 hl-zand-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">2</span>
+                    <span className="w-10 h-10 hl-donkergroen-bg text-white rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">2</span>
                     <div>
                       <strong className="hl-donkergroen-text text-xl">Structure (Structuur)</strong>
                       <p className="hl-donkergroen-text mt-2">De organisatiestructuur en rapportagelijnen</p>
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <span className="w-10 h-10 hl-zand-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">3</span>
+                    <span className="w-10 h-10 hl-donkergroen-bg text-white rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">3</span>
                     <div>
                       <strong className="hl-donkergroen-text text-xl">Systems (Systemen)</strong>
                       <p className="hl-donkergroen-text mt-2">De processen en procedures die het werk ondersteunen</p>
