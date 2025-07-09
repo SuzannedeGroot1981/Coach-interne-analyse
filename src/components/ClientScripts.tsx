@@ -35,6 +35,10 @@ export default function ClientScripts() {
         formData.append('file', file)
 
         try {
+          // Show loading state
+          if (fileName) fileName.textContent = 'Bestand wordt verwerkt...'
+          if (fileInfo) fileInfo.classList.remove('hidden')
+
           const response = await fetch('/api/upload-docx', {
             method: 'POST',
             body: formData
@@ -50,6 +54,8 @@ export default function ClientScripts() {
           // Update textarea with processed content
           if (textarea) {
             textarea.value = data.content || ''
+            // Trigger input event to update any listeners
+            textarea.dispatchEvent(new Event('input', { bubbles: true }))
           }
 
           // Show file info
@@ -63,8 +69,17 @@ export default function ClientScripts() {
           if (charCount) charCount.textContent = data.characterCount?.toString() || '0'
           if (content) content.classList.remove('hidden')
 
+          console.log('File processed successfully:', {
+            fileName: file.name,
+            contentLength: data.content?.length || 0,
+            wordCount: data.wordCount,
+            charCount: data.characterCount
+          })
         } catch (error) {
           console.error('File processing error:', error)
+          // Reset loading state
+          if (fileName) fileName.textContent = 'Fout bij verwerken'
+          if (fileSize) fileSize.textContent = (error as Error).message
           alert('Fout bij het verwerken van het bestand: ' + (error as Error).message)
         }
       }
@@ -84,6 +99,7 @@ export default function ClientScripts() {
             alert('Bestand is te groot. Maximum grootte is 10MB.')
             return
           }
+          console.log('File selected:', file.name, 'Size:', (file.size / 1024).toFixed(1) + 'KB')
           processFile(file)
         }
       })
@@ -91,6 +107,13 @@ export default function ClientScripts() {
       if (removeButton) {
         removeButton.addEventListener('click', removeFile)
       }
+
+      // Debug: Check if elements are found
+      console.log('File upload setup for:', inputId, {
+        fileInput: !!fileInput,
+        textarea: !!textarea,
+        fileInfo: !!fileInfo
+      })
     }
 
     // Setup file uploads
