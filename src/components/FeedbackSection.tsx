@@ -89,44 +89,57 @@ export default function FeedbackSection({
     const researchData = getResearchData()
     
     try {
-      console.log('📡 Sending API request to /api/feedback with payload:', {
-        textLength: text.trim().length,
-        element,
-        hasResearchData: Object.keys(researchData).length > 0
-      })
+      // Try new coach API first, fallback to old feedback API
+      let response
+      let data
       
-      const response = await fetch('/api/feedback', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          text: text.trim(),
-          element: element,
-          researchData: researchData
-        }),
-      })
-
-      console.log('📥 API Response:', {
-        status: response.status,
-        ok: response.ok,
-        headers: Object.fromEntries(response.headers.entries())
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        console.error('❌ API Error:', errorData)
-        throw new Error(errorData.error || 'Er is een fout opgetreden')
+      try {
+        console.log('📡 Trying new coach API...')
+        response = await fetch('/api/coach', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            tekst: text.trim(),
+            stapId: element
+          }),
+        })
+        
+        if (response.ok) {
+          data = await response.json()
+          console.log('✅ Coach API successful:', {
+            feedbackLength: data.feedback?.length || 0,
+            stapId: data.stapId,
+            stapNaam: data.stapNaam
+          })
+        } else {
+          throw new Error('Coach API failed, trying fallback...')
+        }
+      } catch (coachError) {
+        console.log('⚠️ Coach API failed, using fallback feedback API:', coachError)
+        
+        // Fallback to original feedback API
+        response = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            text: text.trim(),
+            element: element,
+            researchData: researchData
+          }),
+        })
+        
+        if (!response.ok) {
+          const errorData = await response.json()
+          throw new Error(errorData.error || 'Er is een fout opgetreden')
+        }
+        
+        data = await response.json()
+        console.log('✅ Fallback feedback API successful')
       }
-
-      const data = await response.json()
-      console.log('✅ Feedback received:', {
-        feedbackLength: data.feedback?.length || 0,
-        element: data.element,
-        success: data.success,
-        timestamp: data.timestamp
-      })
-      
       if (!data.feedback) {
         throw new Error('Geen feedback ontvangen van de server')
       }

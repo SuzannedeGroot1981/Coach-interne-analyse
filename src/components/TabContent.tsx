@@ -347,21 +347,43 @@ export default function TabContent({ activeTab }: TabContentProps) {
                       button.innerHTML = '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>Coach analyseert...'
                       
                       try {
-                        const response = await fetch('/api/feedback', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({
-                            text: financialData,
-                            element: 'financial'
-                          }),
-                        })
+                        // Try coach API first, fallback to feedback API
+                        let response
+                        let data
                         
-                        if (!response.ok) {
-                          const errorData = await response.json()
-                          throw new Error(errorData.error || 'Er is een fout opgetreden')
+                        try {
+                          response = await fetch('/api/coach', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                              tekst: financialData,
+                              stapId: 'financial'
+                            }),
+                          })
+                          
+                          if (response.ok) {
+                            data = await response.json()
+                          } else {
+                            throw new Error('Coach API failed')
+                          }
+                        } catch (coachError) {
+                          // Fallback to feedback API
+                          response = await fetch('/api/feedback', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                              text: financialData,
+                              element: 'financial'
+                            }),
+                          })
+                          
+                          if (!response.ok) {
+                            const errorData = await response.json()
+                            throw new Error(errorData.error || 'Er is een fout opgetreden')
+                          }
+                          
+                          data = await response.json()
                         }
-                        
-                        const data = await response.json()
                         
                         // Format and display feedback
                         const formattedFeedback = data.feedback
