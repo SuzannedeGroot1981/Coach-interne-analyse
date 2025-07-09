@@ -68,7 +68,7 @@ export default function Home() {
                 <p className="text-blue-600">Download je complete analyse</p>
               </div>
             </div>
-          </p>
+          </div>
         </div>
 
         {/* Main Content */}
