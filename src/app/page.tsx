@@ -27,8 +27,47 @@ export default function Home() {
             Interne Analyse Coach
           </h1>
           
-          <p className="text-xl text-blue-700 font-medium mb-8 max-w-3xl mx-auto">
-            Jouw AI-gestuurde begeleiding bij het schrijven van interne analyses
+          <p className="text-xl text-blue-700 font-medium mb-4 max-w-3xl mx-auto">
+            Gratis AI-coach voor studenten bij het schrijven van interne analyses
+          </p>
+          
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-8 max-w-2xl mx-auto">
+            <div className="flex items-center justify-center space-x-2 text-green-800">
+              <span className="text-2xl">🎓</span>
+              <div className="text-center">
+                <p className="font-semibold">Volledig Gratis & Openbaar</p>
+                <p className="text-sm text-green-700">Geen inlog vereist • Direct gebruiken • Voor alle studenten</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8 max-w-3xl mx-auto">
+            <h3 className="text-lg font-semibold text-blue-800 mb-3 text-center">
+              🚀 Hoe werkt het?
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div className="text-center">
+                <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-xl">✍️</span>
+                </div>
+                <p className="font-medium text-blue-800">1. Schrijf je analyse</p>
+                <p className="text-blue-600">Vul de 7S-secties in met je onderzoek</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-xl">🤖</span>
+                </div>
+                <p className="font-medium text-blue-800">2. Vraag AI-feedback</p>
+                <p className="text-blue-600">Krijg direct professionele feedback</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-xl">📄</span>
+                </div>
+                <p className="font-medium text-blue-800">3. Exporteer naar Word</p>
+                <p className="text-blue-600">Download je complete analyse</p>
+              </div>
+            </div>
           </p>
         </div>
 
@@ -389,14 +428,22 @@ export default function Home() {
 
           {/* Footer */}
           <div className="text-center mt-12">
-            <div className="inline-flex items-center space-x-4 text-blue-600">
-              <span>🎓</span>
-              <span>Hogeschool Leiden - Interne Analyse Coach</span>
-              <span>🎓</span>
+            <div className="bg-gray-50 rounded-lg p-6 max-w-2xl mx-auto">
+              <div className="inline-flex items-center space-x-4 text-blue-600 mb-3">
+                <span>🎓</span>
+                <span className="font-semibold">Interne Analyse Coach voor Studenten</span>
+                <span>🎓</span>
+              </div>
+              <p className="text-gray-600 text-sm mb-3">
+                Deze tool is volledig gratis en openbaar beschikbaar voor alle studenten. 
+                Geen registratie of inlog vereist.
+              </p>
+              <div className="flex items-center justify-center space-x-6 text-xs text-gray-500">
+                <span>🔒 Privacy-vriendelijk</span>
+                <span>💾 Lokaal opslaan</span>
+                <span>🌐 Altijd toegankelijk</span>
+              </div>
             </div>
-            <p className="text-gray-500 text-sm mt-2">
-              Powered by AI • Gebaseerd op het 7S-model van McKinsey
-            </p>
           </div>
         </div>
       </div>

@@ -221,7 +221,7 @@ export function LoadSavedData() {
     }
   }
 
-  if (!hasData) return null
+              className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
 
   return (
     <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
@@ -234,6 +234,12 @@ export function LoadSavedData() {
             <h4 className="text-yellow-800 font-medium">Opgeslagen concept gevonden</h4>
             <p className="text-yellow-700 text-sm">Je hebt eerder gegevens opgeslagen in je browser.</p>
           </div>
+        </div>
+        
+        <div className="mt-3 text-center">
+          <p className="text-xs text-yellow-700">
+            🔒 Je gegevens blijven privé en worden alleen lokaal in je browser opgeslagen
+          </p>
         </div>
         
         <div className="flex items-center space-x-2">

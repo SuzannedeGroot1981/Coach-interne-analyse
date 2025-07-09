@@ -500,11 +500,11 @@ export default function WordExport() {
         </div>
         
         <h3 className="text-2xl font-bold text-gray-800 mb-4">
-          Export naar Word Document
+          Gratis Export naar Word Document
         </h3>
         
         <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-          Exporteer je complete interne analyse naar een professioneel Word document met:
+          Exporteer je complete interne analyse gratis naar een professioneel Word document met:
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-sm text-gray-700">
@@ -541,7 +541,7 @@ export default function WordExport() {
         </button>
         
         <p className="text-xs text-gray-500 mt-4">
-          💡 Het document wordt automatisch gedownload naar je Downloads map
+          💡 Volledig gratis • Het document wordt automatisch gedownload naar je Downloads map
         </p>
       </div>
     </div>

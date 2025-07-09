@@ -264,7 +264,7 @@ export default function FeedbackSection({
               <span className="w-4 h-4 bg-purple-100 rounded-full flex items-center justify-center mr-2">
                 <span className="text-purple-600 text-xs">📚</span>
               </span>
-              APA-controle door AI • Gebaseerd op APA 7e editie richtlijnen
+              APA-controle door AI • Gratis voor studenten • Gebaseerd op APA 7e editie richtlijnen
             </p>
           </div>
         </div>
@@ -291,7 +291,7 @@ export default function FeedbackSection({
               <span className="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center mr-2">
                 <span className="text-green-600 text-xs">✓</span>
               </span>
-              Feedback gegenereerd door AI-coach • Gebaseerd op HBO-beoordelingscriteria
+              Feedback gegenereerd door AI-coach • Gratis voor alle studenten • Gebaseerd op HBO-beoordelingscriteria
             </p>
           </div>
         </div>

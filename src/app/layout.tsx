@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Interne Analyse Coach - Hogeschool Leiden',
-  description: 'AI-coach voor studenten bij het schrijven van een interne analyse volgens het 7S-model van McKinsey',
+  title: 'Interne Analyse Coach - Voor Studenten',
+  description: 'Gratis AI-coach voor studenten bij het schrijven van een interne analyse volgens het 7S-model van McKinsey. Geen inlog vereist.',
 }
 
 export default function RootLayout({
