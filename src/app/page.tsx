@@ -114,6 +114,73 @@ export default function Home() {
                 📝 Jouw Interne Analyse
               </h3>
               
+              {/* Onderzoeksinput Sectie */}
+              <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-6 border border-yellow-200 mb-8">
+                <h3 className="text-xl font-bold text-orange-800 mb-6 flex items-center">
+                  <span className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
+                    🔍
+                  </span>
+                  Onderzoeksgegevens
+                </h3>
+                <p className="text-orange-700 text-sm mb-6">
+                  Deze gegevens worden door de coach meegenomen in de feedback op alle 7S-elementen voor een meer onderbouwde analyse.
+                </p>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Interviewresultaten */}
+                  <div className="bg-white rounded-lg p-4 border border-orange-200">
+                    <h4 className="text-lg font-semibold text-orange-800 mb-3 flex items-center">
+                      <span className="w-6 h-6 bg-orange-200 rounded-full flex items-center justify-center mr-2 text-sm">💬</span>
+                      Interviewresultaten
+                    </h4>
+                    <p className="text-orange-600 text-sm mb-3">
+                      Plak hier citaten of samenvattingen uit de gevoerde gesprekken met medewerkers, managers of andere stakeholders.
+                    </p>
+                    <textarea
+                      id="interview-results"
+                      className="w-full p-3 border border-orange-300 rounded-lg focus:ring-orange-500 focus:border-transparent resize-none"
+                      rows={6}
+                      placeholder="Bijvoorbeeld:&#10;&#10;Interview Manager A: 'De communicatie tussen afdelingen verloopt moeizaam...'&#10;&#10;Interview Medewerker B: 'We missen duidelijke procedures voor...'&#10;&#10;Samenvatting interviews: Uit 8 interviews blijkt dat..."
+                      maxLength={15000}
+                    />
+                    <div className="mt-2 text-xs text-gray-500 text-right">
+                      <span id="interview-count">0</span>/15000 karakters
+                    </div>
+                  </div>
+
+                  {/* Enquêteresultaten */}
+                  <div className="bg-white rounded-lg p-4 border border-orange-200">
+                    <h4 className="text-lg font-semibold text-orange-800 mb-3 flex items-center">
+                      <span className="w-6 h-6 bg-orange-200 rounded-full flex items-center justify-center mr-2 text-sm">📊</span>
+                      Resultaten enquête
+                    </h4>
+                    <p className="text-orange-600 text-sm mb-3">
+                      Voer hier de geanalyseerde uitkomsten van je enquête in, inclusief percentages, scores en belangrijke bevindingen.
+                    </p>
+                    <textarea
+                      id="survey-results"
+                      className="w-full p-3 border border-orange-300 rounded-lg focus:ring-orange-500 focus:border-transparent resize-none"
+                      rows={6}
+                      placeholder="Bijvoorbeeld:&#10;&#10;Medewerkerstevredenheid: 7.2/10 (n=45)&#10;Communicatie effectiviteit: 6.1/10&#10;Leiderschapsstijl waardering: 78% positief&#10;&#10;Belangrijkste bevindingen:&#10;- 65% vindt de organisatiestructuur onduidelijk&#10;- 82% is tevreden met de werksfeer..."
+                      maxLength={15000}
+                    />
+                    <div className="mt-2 text-xs text-gray-500 text-right">
+                      <span id="survey-count">0</span>/15000 karakters
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-4 p-3 bg-orange-100 rounded-lg">
+                  <p className="text-orange-800 text-sm flex items-start">
+                    <span className="w-5 h-5 bg-orange-200 rounded-full flex items-center justify-center mr-2 mt-0.5 text-xs">💡</span>
+                    <span>
+                      <strong>Tip:</strong> Hoe meer concrete gegevens je invoert, hoe specifieker en waardevoller de feedback van de coach wordt. 
+                      Denk aan citaten, percentages, scores en kwalitatieve observaties.
+                    </span>
+                  </p>
+                </div>
+              </div>
+
               {/* Strategy */}
               <FeedbackSection
                 element="strategy"
@@ -216,6 +283,30 @@ export default function Home() {
           </div>
         </div>
       </div>
+      
+      {/* Character counter script */}
+      <script dangerouslySetInnerHTML={{
+        __html: `
+          document.addEventListener('DOMContentLoaded', function() {
+            const interviewTextarea = document.getElementById('interview-results');
+            const surveyTextarea = document.getElementById('survey-results');
+            const interviewCounter = document.getElementById('interview-count');
+            const surveyCounter = document.getElementById('survey-count');
+            
+            if (interviewTextarea && interviewCounter) {
+              interviewTextarea.addEventListener('input', function() {
+                interviewCounter.textContent = this.value.length;
+              });
+            }
+            
+            if (surveyTextarea && surveyCounter) {
+              surveyTextarea.addEventListener('input', function() {
+                surveyCounter.textContent = this.value.length;
+              });
+            }
+          });
+        `
+      }} />
     </div>
   )
 }

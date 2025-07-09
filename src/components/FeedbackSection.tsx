@@ -23,6 +23,17 @@ export default function FeedbackSection({
   const [feedback, setFeedback] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [showFeedback, setShowFeedback] = useState(false)
+  
+  // Function to get research data from the page
+  const getResearchData = () => {
+    const interviewResults = (document.getElementById('interview-results') as HTMLTextAreaElement)?.value || ''
+    const surveyResults = (document.getElementById('survey-results') as HTMLTextAreaElement)?.value || ''
+    
+    return {
+      interviews: interviewResults.trim(),
+      survey: surveyResults.trim()
+    }
+  }
 
   const colors = {
     blue: {
@@ -63,6 +74,8 @@ export default function FeedbackSection({
     setIsLoading(true)
     setShowFeedback(false)
 
+    // Get research data to include in feedback
+    const researchData = getResearchData()
     try {
       const response = await fetch('/api/feedback', {
         method: 'POST',
@@ -71,7 +84,8 @@ export default function FeedbackSection({
         },
         body: JSON.stringify({
           text: text.trim(),
-          element: element
+          element: element,
+          researchData: researchData
         }),
       })
 

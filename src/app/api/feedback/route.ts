@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
 
     // Parse request data
     const body = await request.json()
-    const { text, element } = body
+    const { text, element, researchData } = body
 
     if (!text || !element) {
       return NextResponse.json(
@@ -131,6 +131,21 @@ export async function POST(request: NextRequest) {
     // Get system prompt for this element
     const systemPrompt = SYSTEM_PROMPTS[element as keyof typeof SYSTEM_PROMPTS]
 
+    // Prepare research context if available
+    let researchContext = ''
+    if (researchData && (researchData.interviews || researchData.survey)) {
+      researchContext = '\n\nBESCHIKBARE ONDERZOEKSGEGEVENS:\n'
+      
+      if (researchData.interviews) {
+        researchContext += `\nINTERVIEWRESULTATEN:\n${researchData.interviews}\n`
+      }
+      
+      if (researchData.survey) {
+        researchContext += `\nENQUÊTERESULTATEN:\n${researchData.survey}\n`
+      }
+      
+      researchContext += '\nGebruik deze onderzoeksgegevens om je feedback te onderbouwen en te verrijken. Verwijs naar specifieke citaten, percentages of bevindingen waar relevant.'
+    }
     // Initialize Gemini model with temperature 0.4 for consistent, focused feedback
     const model = genAI.getGenerativeModel({ 
       model: 'gemini-2.5-flash',
@@ -143,7 +158,7 @@ export async function POST(request: NextRequest) {
     })
 
     // Create the prompt
-    const prompt = `${systemPrompt}
+    const prompt = `${systemPrompt}${researchContext}
 
 STUDENT TEKST VOOR ANALYSE:
 "${text}"
