@@ -4,7 +4,7 @@ import Script from 'next/script'
 
 export const metadata: Metadata = {
   title: 'Interne Analyse Coach - Voor Studenten',
-  description: 'Gratis AI-coach voor studenten bij het schrijven van een interne analyse volgens het 7S-model van McKinsey. Geen inlog vereist.',
+  description: 'Jouw AI-coach bij het schrijven van een interne analyse volgens het 7S-model van McKinsey. Geen inlog vereist.',
 }
 
 export default function RootLayout({

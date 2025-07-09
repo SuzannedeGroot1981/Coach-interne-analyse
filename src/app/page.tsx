@@ -27,7 +27,7 @@ export default function Home() {
           </h1>
           
           <p className="text-xl hl-donkerpaars-text font-medium mb-6 max-w-4xl mx-auto">
-            AI-coach voor studenten bij het schrijven van interne analyses volgens het 7S-model van McKinsey
+            Jouw AI-coach bij het schrijven van interne analyses volgens het 7S-model van McKinsey
           </p>
           
           <div className="hl-warning rounded-2xl p-8 mb-8 max-w-5xl mx-auto hl-slide-up">

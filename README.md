@@ -1,6 +1,6 @@
 # 🎓 Interne Analyse Coach - Voor Studenten
 
-> **AI-coach voor studenten bij het schrijven van interne analyses volgens het 7S-model van McKinsey**
+> **Jouw AI-coach bij het schrijven van interne analyses volgens het 7S-model van McKinsey**
 >
 > **Volledig openbaar toegankelijk - Geen inlog vereist**
 
