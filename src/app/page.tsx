@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import FeedbackSection from '@/components/FeedbackSection'
 
 export default function Home() {
   return (
@@ -114,171 +115,87 @@ export default function Home() {
               </h3>
               
               {/* Strategy */}
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
-                <h4 className="text-xl font-semibold text-blue-800 mb-3 flex items-center">
-                  <span className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">1</span>
-                  Strategy (Strategie)
-                </h4>
-                <p className="text-blue-700 text-sm mb-4">
-                  Beschrijf de strategische plannen en acties van de organisatie om concurrentievoordeel te behalen.
-                </p>
-                <textarea
-                  className="w-full p-4 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                  rows={4}
-                  placeholder="Bijvoorbeeld: De organisatie richt zich op digitale transformatie door innovatieve technologieën te implementeren..."
-                ></textarea>
-                <div className="mt-4">
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                    💬 Vraag feedback aan coach
-                  </button>
-                </div>
-              </div>
+              <FeedbackSection
+                element="strategy"
+                title="Strategy (Strategie)"
+                description="Beschrijf de strategische plannen en acties van de organisatie om concurrentievoordeel te behalen."
+                placeholder="Bijvoorbeeld: De organisatie richt zich op digitale transformatie door innovatieve technologieën te implementeren..."
+                colorScheme="blue"
+                number={1}
+              />
 
               {/* Structure */}
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
-                <h4 className="text-xl font-semibold text-blue-800 mb-3 flex items-center">
-                  <span className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">2</span>
-                  Structure (Structuur)
-                </h4>
-                <p className="text-blue-700 text-sm mb-4">
-                  Analyseer de organisatiestructuur, hiërarchie en rapportagelijnen binnen de organisatie.
-                </p>
-                <textarea
-                  className="w-full p-4 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                  rows={4}
-                  placeholder="Bijvoorbeeld: De organisatie heeft een platte structuur met korte communicatielijnen tussen management en uitvoering..."
-                ></textarea>
-                <div className="mt-4">
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                    💬 Vraag feedback aan coach
-                  </button>
-                </div>
-              </div>
+              <FeedbackSection
+                element="structure"
+                title="Structure (Structuur)"
+                description="Analyseer de organisatiestructuur, hiërarchie en rapportagelijnen binnen de organisatie."
+                placeholder="Bijvoorbeeld: De organisatie heeft een platte structuur met korte communicatielijnen tussen management en uitvoering..."
+                colorScheme="blue"
+                number={2}
+              />
 
               {/* Systems */}
-              <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
-                <h4 className="text-xl font-semibold text-blue-800 mb-3 flex items-center">
-                  <span className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">3</span>
-                  Systems (Systemen)
-                </h4>
-                <p className="text-blue-700 text-sm mb-4">
-                  Beschrijf de processen, procedures en systemen die het dagelijkse werk ondersteunen.
-                </p>
-                <textarea
-                  className="w-full p-4 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                  rows={4}
-                  placeholder="Bijvoorbeeld: De organisatie gebruikt een geïntegreerd ERP-systeem voor alle bedrijfsprocessen..."
-                ></textarea>
-                <div className="mt-4">
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                    💬 Vraag feedback aan coach
-                  </button>
-                </div>
-              </div>
+              <FeedbackSection
+                element="systems"
+                title="Systems (Systemen)"
+                description="Beschrijf de processen, procedures en systemen die het dagelijkse werk ondersteunen."
+                placeholder="Bijvoorbeeld: De organisatie gebruikt een geïntegreerd ERP-systeem voor alle bedrijfsprocessen..."
+                colorScheme="blue"
+                number={3}
+              />
 
               {/* Shared Values */}
-              <div className="bg-green-50 rounded-lg p-6 border border-green-200">
-                <h4 className="text-xl font-semibold text-green-800 mb-3 flex items-center">
-                  <span className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">4</span>
-                  Shared Values (Gedeelde Waarden)
-                </h4>
-                <p className="text-green-700 text-sm mb-4">
-                  Identificeer de kernwaarden, cultuur en fundamentele overtuigingen van de organisatie.
-                </p>
-                <textarea
-                  className="w-full p-4 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
-                  rows={4}
-                  placeholder="Bijvoorbeeld: De organisatie hecht veel waarde aan innovatie, samenwerking en klantgerichtheid..."
-                ></textarea>
-                <div className="mt-4">
-                  <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
-                    💬 Vraag feedback aan coach
-                  </button>
-                </div>
-              </div>
+              <FeedbackSection
+                element="sharedValues"
+                title="Shared Values (Gedeelde Waarden)"
+                description="Identificeer de kernwaarden, cultuur en fundamentele overtuigingen van de organisatie."
+                placeholder="Bijvoorbeeld: De organisatie hecht veel waarde aan innovatie, samenwerking en klantgerichtheid..."
+                colorScheme="green"
+                number={4}
+              />
 
               {/* Skills */}
-              <div className="bg-green-50 rounded-lg p-6 border border-green-200">
-                <h4 className="text-xl font-semibold text-green-800 mb-3 flex items-center">
-                  <span className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">5</span>
-                  Skills (Vaardigheden)
-                </h4>
-                <p className="text-green-700 text-sm mb-4">
-                  Analyseer de kerncompetenties, capabilities en vaardigheden van de organisatie.
-                </p>
-                <textarea
-                  className="w-full p-4 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
-                  rows={4}
-                  placeholder="Bijvoorbeeld: De organisatie beschikt over sterke technische vaardigheden en projectmanagement expertise..."
-                ></textarea>
-                <div className="mt-4">
-                  <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
-                    💬 Vraag feedback aan coach
-                  </button>
-                </div>
-              </div>
+              <FeedbackSection
+                element="skills"
+                title="Skills (Vaardigheden)"
+                description="Analyseer de kerncompetenties, capabilities en vaardigheden van de organisatie."
+                placeholder="Bijvoorbeeld: De organisatie beschikt over sterke technische vaardigheden en projectmanagement expertise..."
+                colorScheme="green"
+                number={5}
+              />
 
               {/* Style */}
-              <div className="bg-green-50 rounded-lg p-6 border border-green-200">
-                <h4 className="text-xl font-semibold text-green-800 mb-3 flex items-center">
-                  <span className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">6</span>
-                  Style (Stijl)
-                </h4>
-                <p className="text-green-700 text-sm mb-4">
-                  Beschrijf de leiderschapsstijl, managementaanpak en besluitvormingsprocessen.
-                </p>
-                <textarea
-                  className="w-full p-4 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
-                  rows={4}
-                  placeholder="Bijvoorbeeld: Het management hanteert een participatieve leiderschapsstijl met veel ruimte voor inbreng van medewerkers..."
-                ></textarea>
-                <div className="mt-4">
-                  <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
-                    💬 Vraag feedback aan coach
-                  </button>
-                </div>
-              </div>
+              <FeedbackSection
+                element="style"
+                title="Style (Stijl)"
+                description="Beschrijf de leiderschapsstijl, managementaanpak en besluitvormingsprocessen."
+                placeholder="Bijvoorbeeld: Het management hanteert een participatieve leiderschapsstijl met veel ruimte voor inbreng van medewerkers..."
+                colorScheme="green"
+                number={6}
+              />
 
               {/* Staff */}
-              <div className="bg-green-50 rounded-lg p-6 border border-green-200">
-                <h4 className="text-xl font-semibold text-green-800 mb-3 flex items-center">
-                  <span className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">7</span>
-                  Staff (Personeel)
-                </h4>
-                <p className="text-green-700 text-sm mb-4">
-                  Analyseer de mensen in de organisatie, hun rollen, verantwoordelijkheden en ontwikkeling.
-                </p>
-                <textarea
-                  className="w-full p-4 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
-                  rows={4}
-                  placeholder="Bijvoorbeeld: De organisatie heeft een divers team van ervaren professionals met verschillende achtergronden..."
-                ></textarea>
-                <div className="mt-4">
-                  <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
-                    💬 Vraag feedback aan coach
-                  </button>
-                </div>
-              </div>
+              <FeedbackSection
+                element="staff"
+                title="Staff (Personeel)"
+                description="Analyseer de mensen in de organisatie, hun rollen, verantwoordelijkheden en ontwikkeling."
+                placeholder="Bijvoorbeeld: De organisatie heeft een divers team van ervaren professionals met verschillende achtergronden..."
+                colorScheme="green"
+                number={7}
+              />
 
               {/* Samenvatting sectie */}
-              <div className="bg-gradient-to-r from-blue-100 to-green-100 rounded-lg p-6 border border-gray-200">
-                <h4 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
-                  <span className="w-8 h-8 bg-gray-600 text-white rounded-full flex items-center justify-center mr-3">📋</span>
-                  Samenvatting & Conclusies
-                </h4>
-                <p className="text-gray-700 text-sm mb-4">
-                  Vat je bevindingen samen en trek conclusies over de onderlinge samenhang tussen de 7 S'en.
-                </p>
-                <textarea
-                  className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent resize-none"
-                  rows={6}
+              <div className="bg-gradient-to-r from-blue-100 to-green-100 rounded-lg p-6 border border-gray-200 relative">
+                <FeedbackSection
+                  element="summary"
+                  title="Samenvatting & Conclusies"
+                  description="Vat je bevindingen samen en trek conclusies over de onderlinge samenhang tussen de 7 S'en."
                   placeholder="Bijvoorbeeld: De analyse toont aan dat de organisatie sterk is in... maar uitdagingen heeft op het gebied van..."
-                ></textarea>
-                <div className="mt-4 flex space-x-3">
-                  <button className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium">
-                    💬 Vraag feedback aan coach
-                  </button>
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                  colorScheme="blue"
+                  number={8}
+                />
+                <div className="mt-6 pt-4 border-t border-gray-300">
+                  <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-lg hover:from-blue-700 hover:to-green-700 transition-all font-medium shadow-lg">
                     📄 Genereer volledig rapport
                   </button>
                 </div>
