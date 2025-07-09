@@ -23,7 +23,6 @@ export default function Home() {
             </div>
           </div>
           
-          <h1 className="text-5xl font-bold text-hl-gray-800 mb-6 font-heading">
           <h1 className="hl-main-title text-hl-gray-800 mb-6">
             Interne Analyse Coach
           </h1>
@@ -43,7 +42,6 @@ export default function Home() {
           </div>
           
           <div className="hl-info rounded-xl p-6 mb-8 max-w-4xl mx-auto hl-slide-up">
-            <h3 className="text-xl font-bold text-hl-blue-700 mb-4 text-center">
             <h3 className="hl-subtitle text-xl mb-4 text-center">
               🚀 Hoe werkt het?
             </h3>
@@ -79,7 +77,6 @@ export default function Home() {
           <LoadSavedData />
           
           <div className="hl-card p-8 mb-8">
-            <h2 className="text-3xl font-bold hl-section-header mb-8 flex items-center">
             <h2 className="hl-section-header text-3xl mb-8 flex items-center">
               <span className="w-10 h-10 bg-hl-green-500 text-white rounded-lg flex items-center justify-center mr-4">
                 📊
@@ -390,7 +387,6 @@ export default function Home() {
                       APA-stijl Controle - Financiële Analyse
                     </h5>
                   </div>
-                  <div id="financial-apa-feedback-content" className="prose prose-sm max-w-none text-hl-gray-700">
                   <div id="financial-apa-feedback-content" className="hl-feedback-content text-hl-gray-700">
                   </div>
                   <div className="mt-4 pt-4 border-t border-purple-200">
@@ -473,7 +469,5 @@ export default function Home() {
       {/* Client-side scripts component */}
       <ClientScripts />
     </div>
-  )
-}
   )
 }
