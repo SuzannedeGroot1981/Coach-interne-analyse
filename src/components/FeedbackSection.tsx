@@ -266,7 +266,7 @@ export default function FeedbackSection({
           <div className="mt-6 pt-6 border-t border-purple-200">
             <p className="text-sm text-purple-600 flex items-center">
               <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-3">
-                <span className="material-symbols-sharp text-purple-600" style="font-size: 16px;">check_circle</span>
+                <span className="material-symbols-sharp text-purple-600" style={{ fontSize: '16px' }}>check_circle</span>
               </span>
               APA-controle door AI • Gratis voor studenten • Gebaseerd op APA 7e editie richtlijnen
             </p>
@@ -294,7 +294,7 @@ export default function FeedbackSection({
           <div className="mt-6 pt-6 border-t hl-zand-border">
             <p className="text-sm hl-donkergroen-text flex items-center">
               <span className="w-6 h-6 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-3">
-                <span className="material-symbols-sharp hl-donkergroen-text" style="font-size: 16px;">check_circle</span>
+                <span className="material-symbols-sharp hl-donkergroen-text" style={{ fontSize: '16px' }}>check_circle</span>
               </span>
               Feedback gegenereerd door AI-coach • Gratis voor alle studenten • Gebaseerd op HBO-beoordelingscriteria
             </p>

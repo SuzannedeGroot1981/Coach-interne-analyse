@@ -239,5 +239,3 @@ export default function ClientScripts() {
 
   return null
 }
-
-export default ClientScripts
