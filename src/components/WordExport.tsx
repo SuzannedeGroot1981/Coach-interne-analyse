@@ -46,15 +46,15 @@ export default function WordExport() {
   const createWordDocument = (data: ExportData): Document => {
     const children: Paragraph[] = []
 
-    // Title page with Hogeschool Leiden styling
+    // Title page with Hogeschool Leiden official colors
     children.push(
       new Paragraph({
         children: [
           new TextRun({
             text: "INTERNE ANALYSE",
             bold: true,
-            size: 36,
-            color: "00A651" // HL Green
+            size: 40,
+            color: "004D46" // HL Donkergroen
           })
         ],
         alignment: AlignmentType.CENTER,
@@ -64,8 +64,8 @@ export default function WordExport() {
         children: [
           new TextRun({
             text: "7S-Model van McKinsey",
-            size: 28,
-            color: "0066CC" // HL Blue
+            size: 32,
+            color: "280F4B" // HL Donkerpaars
           })
         ],
         alignment: AlignmentType.CENTER,
@@ -75,7 +75,7 @@ export default function WordExport() {
         children: [
           new TextRun({
             text: `Datum: ${new Date().toLocaleDateString('nl-NL')}`,
-            size: 22
+            size: 24
           })
         ],
         alignment: AlignmentType.CENTER,
@@ -85,9 +85,9 @@ export default function WordExport() {
         children: [
           new TextRun({
             text: "Hogeschool Leiden",
-            size: 22,
+            size: 24,
             italics: true,
-            color: "00A651"
+            color: "004D46" // HL Donkergroen
           })
         ],
         alignment: AlignmentType.CENTER,
@@ -110,8 +110,8 @@ export default function WordExport() {
           new TextRun({
             text: "INHOUDSOPGAVE",
             bold: true,
-            size: 28,
-            color: "00A651"
+            size: 32,
+            color: "004D46" // HL Donkergroen
           })
         ],
         heading: HeadingLevel.HEADING_1,
@@ -137,7 +137,7 @@ export default function WordExport() {
     tocItems.forEach(item => {
       children.push(
         new Paragraph({
-          children: [new TextRun({ text: item, size: 22 })],
+          children: [new TextRun({ text: item, size: 24 })],
           spacing: { after: 120 }
         })
       )
@@ -158,8 +158,8 @@ export default function WordExport() {
           new TextRun({
             text: "1. INLEIDING",
             bold: true,
-            size: 28,
-            color: "00A651"
+            size: 32,
+            color: "004D46" // HL Donkergroen
           })
         ],
         heading: HeadingLevel.HEADING_1,
@@ -169,7 +169,7 @@ export default function WordExport() {
         children: [
           new TextRun({
             text: "Deze interne analyse is uitgevoerd volgens het 7S-model van McKinsey & Company. Het 7S-model biedt een gestructureerd raamwerk voor het analyseren van zeven onderling verbonden elementen binnen een organisatie: Strategy, Structure, Systems, Shared Values, Skills, Style en Staff.",
-            size: 22
+            size: 24
           })
         ],
         spacing: { after: 240 }
@@ -178,7 +178,7 @@ export default function WordExport() {
         children: [
           new TextRun({
             text: "Het model onderscheidt tussen 'harde' elementen (Strategy, Structure, Systems) die relatief eenvoudig te identificeren en te beïnvloeden zijn, en 'zachte' elementen (Shared Values, Skills, Style, Staff) die meer cultuur- en gedragsgerelateerd zijn en moeilijker te veranderen.",
-            size: 22
+            size: 24
           })
         ],
         spacing: { after: 400 }
@@ -193,8 +193,8 @@ export default function WordExport() {
             new TextRun({
               text: "2. ONDERZOEKSMETHODOLOGIE",
               bold: true,
-              size: 28,
-              color: "00A651"
+              size: 32,
+              color: "004D46" // HL Donkergroen
             })
           ],
           heading: HeadingLevel.HEADING_1,
@@ -209,8 +209,8 @@ export default function WordExport() {
               new TextRun({
                 text: "2.1 Interviews",
                 bold: true,
-                size: 24,
-                color: "0066CC"
+                size: 28,
+                color: "280F4B" // HL Donkerpaars
               })
             ],
             heading: HeadingLevel.HEADING_2,
@@ -227,8 +227,8 @@ export default function WordExport() {
               new TextRun({
                 text: "2.2 Enquête",
                 bold: true,
-                size: 24,
-                color: "0066CC"
+                size: 28,
+                color: "280F4B" // HL Donkerpaars
               })
             ],
             heading: HeadingLevel.HEADING_2,
@@ -246,8 +246,8 @@ export default function WordExport() {
           new TextRun({
             text: "3. HET 7S-MODEL ANALYSE",
             bold: true,
-            size: 28,
-            color: "00A651"
+            size: 32,
+            color: "004D46" // HL Donkergroen
           })
         ],
         heading: HeadingLevel.HEADING_1,
@@ -267,8 +267,8 @@ export default function WordExport() {
               new TextRun({
                 text: `3.${index + 1} ${SECTION_TITLES[sectionKey as keyof typeof SECTION_TITLES]}`,
                 bold: true,
-                size: 24,
-                color: "0066CC"
+                size: 28,
+                color: "280F4B" // HL Donkerpaars
               })
             ],
             heading: HeadingLevel.HEADING_2,
@@ -287,8 +287,8 @@ export default function WordExport() {
             new TextRun({
               text: "4. FINANCIËLE ANALYSE",
               bold: true,
-              size: 28,
-              color: "00A651"
+              size: 32,
+              color: "004D46" // HL Donkergroen
             })
           ],
           heading: HeadingLevel.HEADING_1,
@@ -306,8 +306,8 @@ export default function WordExport() {
           new TextRun({
             text: "5. BRONNENLIJST",
             bold: true,
-            size: 28,
-            color: "00A651"
+            size: 32,
+            color: "004D46" // HL Donkergroen
           })
         ],
         heading: HeadingLevel.HEADING_1,
@@ -318,16 +318,16 @@ export default function WordExport() {
         children: [
           new TextRun({
             text: "McKinsey & Company. (1980). The 7-S framework. ",
-            size: 22
+            size: 24
           }),
           new TextRun({
             text: "McKinsey Quarterly",
-            size: 22,
+            size: 24,
             italics: true
           }),
           new TextRun({
             text: ".",
-            size: 22
+            size: 24
           })
         ],
         spacing: { after: 240 }
@@ -336,16 +336,16 @@ export default function WordExport() {
         children: [
           new TextRun({
             text: "Peters, T. J., & Waterman, R. H. (1982). ",
-            size: 22
+            size: 24
           }),
           new TextRun({
             text: "In search of excellence: Lessons from America's best-run companies",
-            size: 22,
+            size: 24,
             italics: true
           }),
           new TextRun({
             text: ". Harper & Row.",
-            size: 22
+            size: 24
           })
         ],
         spacing: { after: 240 }
@@ -355,7 +355,7 @@ export default function WordExport() {
     return new Document({
       creator: "Hogeschool Leiden - Interne Analyse Coach",
       title: "Interne Analyse - 7S Model",
-      description: "Interne analyse uitgevoerd volgens het 7S-model van McKinsey",
+      description: "Interne analyse uitgevoerd volgens het 7S-model van McKinsey - Hogeschool Leiden",
       sections: [{
         properties: {
           page: {
@@ -382,7 +382,7 @@ export default function WordExport() {
           children: [
             new TextRun({
               text: line.trim(),
-              size: 22
+              size: 24
             })
           ],
           spacing: { after: 240 },
@@ -430,7 +430,7 @@ export default function WordExport() {
       // Generate filename with timestamp
       const now = new Date()
       const timestamp = now.toISOString().slice(0, 16).replace('T', '_').replace(/:/g, '-')
-      link.download = `Interne_Analyse_7S_${timestamp}.docx`
+      link.download = `Interne_Analyse_7S_HL_${timestamp}.docx`
       
       // Trigger download
       document.body.appendChild(link)
@@ -461,39 +461,39 @@ export default function WordExport() {
   }
 
   const getButtonClass = () => {
-    const baseClass = "px-8 py-4 rounded-xl font-bold transition-all duration-200 disabled:cursor-not-allowed flex items-center space-x-3 text-lg"
+    const baseClass = "px-10 py-5 rounded-2xl font-bold transition-all duration-200 disabled:cursor-not-allowed flex items-center space-x-4 text-xl"
     
     if (exportStatus === 'success') {
-      return `${baseClass} bg-hl-green-100 text-hl-green-700 border border-hl-green-300`
+      return `${baseClass} hl-lichtgroen-bg hl-donkergroen-text hl-lichtgroen-border border-2`
     }
     if (exportStatus === 'error') {
-      return `${baseClass} bg-red-100 text-red-700 border border-red-300`
+      return `${baseClass} bg-red-100 text-red-700 border-2 border-red-300`
     }
     if (isExporting) {
-      return `${baseClass} bg-hl-blue-100 text-hl-blue-700 border border-hl-blue-300`
+      return `${baseClass} hl-zand-bg hl-donkerpaars-text hl-zand-border border-2`
     }
-    return `${baseClass} bg-hl-green-500 hover:bg-hl-green-600 text-white shadow-hl-green hover:shadow-hl-lg transform hover:-translate-y-1`
+    return `${baseClass} hl-donkergroen-bg text-white hl-glow-green transform hover:-translate-y-1`
   }
 
   return (
-    <div className="hl-card p-10 mt-8">
+    <div className="hl-card p-12 mt-12">
       <div className="text-center">
-        <div className="w-20 h-20 bg-hl-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <span className="text-3xl">📄</span>
+        <div className="w-24 h-24 hl-geel-bg rounded-full flex items-center justify-center mx-auto mb-8">
+          <span className="text-4xl">📄</span>
         </div>
         
-        <h3 className="text-3xl font-bold text-hl-gray-800 mb-6">
+        <h3 className="text-4xl font-bold hl-donkergroen-text mb-8">
           Gratis Export naar Word Document
         </h3>
         
-        <p className="text-hl-gray-600 mb-8 max-w-3xl mx-auto text-lg">
-          Exporteer je complete interne analyse gratis naar een professioneel Word document met Hogeschool Leiden opmaak:
+        <p className="hl-donkerpaars-text mb-10 max-w-4xl mx-auto text-xl">
+          Exporteer je complete interne analyse gratis naar een professioneel Word document met officiële Hogeschool Leiden huisstijl:
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 text-sm text-hl-gray-700">
-          <div className="bg-hl-blue-50 rounded-xl p-6 border border-hl-blue-200">
-            <h4 className="font-bold text-hl-blue-700 mb-4 text-lg">📊 Inhoud</h4>
-            <ul className="space-y-2 text-left">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 text-lg">
+          <div className="hl-lichtgroen-bg rounded-2xl p-8 hl-lichtgroen-border border-2">
+            <h4 className="font-bold hl-donkergroen-text mb-6 text-xl">📊 Inhoud</h4>
+            <ul className="space-y-3 text-left hl-donkerpaars-text">
               <li>• Alle ingevulde 7S-secties</li>
               <li>• Onderzoeksgegevens (interviews & enquête)</li>
               <li>• Financiële analyse</li>
@@ -501,10 +501,10 @@ export default function WordExport() {
             </ul>
           </div>
           
-          <div className="bg-hl-green-50 rounded-xl p-6 border border-hl-green-200">
-            <h4 className="font-bold text-hl-green-700 mb-4 text-lg">📝 Opmaak</h4>
-            <ul className="space-y-2 text-left">
-              <li>• Hogeschool Leiden huisstijl</li>
+          <div className="hl-zand-bg rounded-2xl p-8 hl-zand-border border-2">
+            <h4 className="font-bold hl-donkerpaars-text mb-6 text-xl">📝 Opmaak</h4>
+            <ul className="space-y-3 text-left hl-donkergroen-text">
+              <li>• Officiële Hogeschool Leiden huisstijl</li>
               <li>• Professionele APA-stijl layout</li>
               <li>• Inhoudsopgave</li>
               <li>• Genummerde hoofdstukken</li>
@@ -519,12 +519,12 @@ export default function WordExport() {
           className={getButtonClass()}
         >
           {isExporting && (
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-current"></div>
+            <div className="animate-spin rounded-full h-7 w-7 border-b-2 border-current"></div>
           )}
           <span>{getButtonText()}</span>
         </button>
         
-        <p className="text-sm text-hl-gray-500 mt-6">
+        <p className="text-lg hl-donkerpaars-text mt-8">
           💡 Volledig gratis • Het document wordt automatisch gedownload naar je Downloads map
         </p>
       </div>

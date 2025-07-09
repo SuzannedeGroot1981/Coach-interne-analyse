@@ -8,7 +8,7 @@ interface FeedbackSectionProps {
   title: string
   description: string
   placeholder: string
-  colorScheme: 'blue' | 'green'
+  colorScheme: 'green' | 'purple'
   number: number
 }
 
@@ -42,23 +42,23 @@ export default function FeedbackSection({
   }
 
   const colors = {
-    blue: {
-      bg: 'bg-hl-blue-50',
-      border: 'border-hl-blue-200',
-      text: 'text-hl-blue-700',
-      textSecondary: 'text-hl-blue-600',
-      numberBg: 'bg-hl-blue-500',
-      inputBorder: 'border-hl-blue-300',
-      inputFocus: 'focus:border-hl-blue-500'
-    },
     green: {
-      bg: 'bg-hl-green-50',
-      border: 'border-hl-green-200',
-      text: 'text-hl-green-700',
-      textSecondary: 'text-hl-green-600',
-      numberBg: 'bg-hl-green-500',
-      inputBorder: 'border-hl-green-300',
-      inputFocus: 'focus:border-hl-green-500'
+      bg: 'hl-lichtgroen-bg',
+      border: 'hl-lichtgroen-border border-2',
+      text: 'hl-donkergroen-text',
+      textSecondary: 'hl-donkerpaars-text',
+      numberBg: 'hl-donkergroen-bg',
+      inputBorder: 'hl-lichtgroen-border border-2',
+      inputFocus: 'focus:border-hl-donkergroen'
+    },
+    purple: {
+      bg: 'hl-zand-bg',
+      border: 'hl-zand-border border-2',
+      text: 'hl-donkerpaars-text',
+      textSecondary: 'hl-donkergroen-text',
+      numberBg: 'hl-donkerpaars-bg',
+      inputBorder: 'hl-zand-border border-2',
+      inputFocus: 'focus:border-hl-donkerpaars'
     }
   }
 
@@ -155,36 +155,36 @@ export default function FeedbackSection({
   const formatFeedback = (feedbackText: string) => {
     // Convert markdown-like formatting to HTML
     return feedbackText
-      .replace(/## (.*)/g, '<h3 class="text-lg font-semibold text-hl-gray-800 mt-4 mb-2">$1</h3>')
+      .replace(/## (.*)/g, '<h3 class="text-xl font-semibold hl-donkergroen-text mt-6 mb-3">$1</h3>')
       .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
       .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
-      .replace(/\n\n/g, '</p><p class="mb-2">')
+      .replace(/\n\n/g, '</p><p class="mb-3">')
       .replace(/\n/g, '<br />')
   }
 
   return (
-    <div className={`${color.bg} rounded-xl p-6 border ${color.border} hl-card`} data-section={element}>
-      <h4 className={`text-xl font-bold ${color.text} mb-4 flex items-center`}>
-        <span className={`w-10 h-10 ${color.numberBg} text-white rounded-lg flex items-center justify-center mr-4 text-sm font-bold`}>
+    <div className={`${color.bg} rounded-2xl p-8 ${color.border} hl-card`} data-section={element}>
+      <h4 className={`text-2xl font-bold ${color.text} mb-6 flex items-center`}>
+        <span className={`w-12 h-12 ${color.numberBg} text-white rounded-xl flex items-center justify-center mr-6 text-lg font-bold`}>
           {number}
         </span>
         {title}
       </h4>
-      <p className={`${color.textSecondary} text-sm mb-4`}>
+      <p className={`${color.textSecondary} mb-6 text-lg`}>
         {description}
       </p>
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
         className={`hl-textarea w-full ${color.inputBorder} ${color.inputFocus}`}
-        rows={4}
+        rows={5}
         placeholder={placeholder}
         maxLength={10000}
       />
-      <div className="mt-2 text-xs text-hl-gray-500 text-right">
+      <div className="mt-3 text-sm text-hl-gray-500 text-right">
         {text.length}/10000 karakters
       </div>
-      <div className="mt-6 flex items-center flex-wrap gap-3">
+      <div className="mt-8 flex items-center flex-wrap gap-4">
         <button
           onClick={handleFeedbackRequest}
           disabled={isLoading || !text.trim() || text.trim().length < 50}
@@ -192,7 +192,7 @@ export default function FeedbackSection({
         >
           {isLoading ? (
             <>
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
               <span>Coach analyseert...</span>
             </>
           ) : (
@@ -210,7 +210,7 @@ export default function FeedbackSection({
         >
           {isApaLoading ? (
             <>
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
               <span>APA controleren...</span>
             </>
           ) : (
@@ -224,7 +224,7 @@ export default function FeedbackSection({
         {showFeedback && (
           <button
             onClick={() => setShowFeedback(!showFeedback)}
-            className="px-4 py-2 bg-hl-gray-100 text-hl-gray-700 rounded-lg hover:bg-hl-gray-200 transition-colors text-sm font-medium"
+            className="px-6 py-3 bg-hl-gray-100 text-hl-gray-700 rounded-xl hover:bg-hl-gray-200 transition-colors font-medium"
           >
             {showFeedback ? '👁️ Verberg feedback' : '👁️ Toon feedback'}
           </button>
@@ -233,7 +233,7 @@ export default function FeedbackSection({
         {showApaFeedback && (
           <button
             onClick={() => setShowApaFeedback(!showApaFeedback)}
-            className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors text-sm font-medium"
+            className="px-6 py-3 bg-purple-100 text-purple-700 rounded-xl hover:bg-purple-200 transition-colors font-medium"
           >
             {showApaFeedback ? '👁️ Verberg APA-check' : '👁️ Toon APA-check'}
           </button>
@@ -242,25 +242,25 @@ export default function FeedbackSection({
 
       {/* APA Feedback Display */}
       {showApaFeedback && apaFeedback && (
-        <div className="mt-6 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl border border-purple-200 p-6 hl-card">
-          <div className="flex items-center mb-4">
-            <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center mr-4">
-              <span className="text-white text-sm">📚</span>
+        <div className="mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl border-2 border-purple-200 p-8 hl-card">
+          <div className="flex items-center mb-6">
+            <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mr-6">
+              <span className="text-white text-lg">📚</span>
             </div>
-            <h5 className="text-lg font-bold text-purple-800">
+            <h5 className="text-xl font-bold text-purple-800">
               APA-stijl Controle
             </h5>
           </div>
           <div 
-            className="prose prose-sm max-w-none text-hl-gray-700"
+            className="prose prose-lg max-w-none text-purple-700"
             dangerouslySetInnerHTML={{ 
-              __html: `<p class="mb-2">${formatFeedback(apaFeedback)}</p>` 
+              __html: `<p class="mb-3">${formatFeedback(apaFeedback)}</p>` 
             }}
           />
-          <div className="mt-4 pt-4 border-t border-purple-200">
-            <p className="text-xs text-hl-gray-500 flex items-center">
-              <span className="w-4 h-4 bg-purple-100 rounded-full flex items-center justify-center mr-2">
-                <span className="text-purple-600 text-xs">📚</span>
+          <div className="mt-6 pt-6 border-t border-purple-200">
+            <p className="text-sm text-purple-600 flex items-center">
+              <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                <span className="text-purple-600 text-sm">📚</span>
               </span>
               APA-controle door AI • Gratis voor studenten • Gebaseerd op APA 7e editie richtlijnen
             </p>
@@ -270,25 +270,25 @@ export default function FeedbackSection({
 
       {/* Feedback Display */}
       {showFeedback && feedback && (
-        <div className="mt-6 bg-white rounded-xl border border-hl-gray-200 p-6 hl-card">
-          <div className="flex items-center mb-4">
-            <div className="w-10 h-10 bg-hl-green-500 rounded-full flex items-center justify-center mr-4">
-              <span className="text-white text-sm">🎓</span>
+        <div className="mt-8 bg-white rounded-2xl border-2 hl-zand-border p-8 hl-card">
+          <div className="flex items-center mb-6">
+            <div className="w-12 h-12 hl-donkergroen-bg rounded-full flex items-center justify-center mr-6">
+              <span className="text-white text-lg">🎓</span>
             </div>
-            <h5 className="text-lg font-bold text-hl-green-700">
+            <h5 className="text-xl font-bold hl-donkergroen-text">
               Feedback van je Coach
             </h5>
           </div>
           <div 
-            className="prose prose-sm max-w-none text-hl-gray-700"
+            className="prose prose-lg max-w-none hl-donkerpaars-text"
             dangerouslySetInnerHTML={{ 
-              __html: `<p class="mb-2">${formatFeedback(feedback)}</p>` 
+              __html: `<p class="mb-3">${formatFeedback(feedback)}</p>` 
             }}
           />
-          <div className="mt-4 pt-4 border-t border-hl-gray-200">
-            <p className="text-xs text-hl-gray-500 flex items-center">
-              <span className="w-4 h-4 bg-hl-green-100 rounded-full flex items-center justify-center mr-2">
-                <span className="text-hl-green-600 text-xs">✓</span>
+          <div className="mt-6 pt-6 border-t hl-zand-border">
+            <p className="text-sm hl-donkergroen-text flex items-center">
+              <span className="w-6 h-6 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-3">
+                <span className="hl-donkergroen-text text-sm">✓</span>
               </span>
               Feedback gegenereerd door AI-coach • Gratis voor alle studenten • Gebaseerd op HBO-beoordelingscriteria
             </p>
