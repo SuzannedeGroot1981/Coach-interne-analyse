@@ -164,13 +164,13 @@ export default function FeedbackSection({
 
   return (
     <div className={`${color.bg} rounded-xl p-6 border ${color.border} hl-card`} data-section={element}>
-      <h4 className={`text-xl font-bold ${color.text} mb-4 flex items-center`}>
+      <h4 className={`hl-subtitle text-xl ${color.text} mb-4 flex items-center`}>
         <span className={`w-10 h-10 ${color.numberBg} text-white rounded-lg flex items-center justify-center mr-4 text-sm font-bold`}>
           {number}
         </span>
         {title}
       </h4>
-      <p className={`${color.textSecondary} text-sm mb-4`}>
+      <p className={`hl-description-text ${color.textSecondary} mb-4`}>
         {description}
       </p>
       <textarea
@@ -181,7 +181,7 @@ export default function FeedbackSection({
         placeholder={placeholder}
         maxLength={10000}
       />
-      <div className="mt-2 text-xs text-hl-gray-500 text-right">
+      <div className="mt-2 hl-counter-text text-right">
         {text.length}/10000 karakters
       </div>
       <div className="mt-6 flex items-center flex-wrap gap-3">
@@ -224,7 +224,7 @@ export default function FeedbackSection({
         {showFeedback && (
           <button
             onClick={() => setShowFeedback(!showFeedback)}
-            className="px-4 py-2 bg-hl-gray-100 text-hl-gray-700 rounded-lg hover:bg-hl-gray-200 transition-colors text-sm font-medium"
+            className="px-4 py-2 bg-hl-gray-100 text-hl-gray-700 rounded-lg hover:bg-hl-gray-200 transition-colors hl-feature-text"
           >
             {showFeedback ? '👁️ Verberg feedback' : '👁️ Toon feedback'}
           </button>
@@ -233,7 +233,7 @@ export default function FeedbackSection({
         {showApaFeedback && (
           <button
             onClick={() => setShowApaFeedback(!showApaFeedback)}
-            className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors text-sm font-medium"
+            className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors hl-feature-text"
           >
             {showApaFeedback ? '👁️ Verberg APA-check' : '👁️ Toon APA-check'}
           </button>
@@ -248,17 +248,18 @@ export default function FeedbackSection({
               <span className="text-white text-sm">📚</span>
             </div>
             <h5 className="text-lg font-bold text-purple-800">
+            <h5 className="hl-subtitle text-lg text-purple-800">
               APA-stijl Controle
             </h5>
           </div>
           <div 
-            className="prose prose-sm max-w-none text-hl-gray-700"
+            className="hl-feedback-content text-hl-gray-700"
             dangerouslySetInnerHTML={{ 
               __html: `<p class="mb-2">${formatFeedback(apaFeedback)}</p>` 
             }}
           />
           <div className="mt-4 pt-4 border-t border-purple-200">
-            <p className="text-xs text-hl-gray-500 flex items-center">
+            <p className="hl-meta-text flex items-center">
               <span className="w-4 h-4 bg-purple-100 rounded-full flex items-center justify-center mr-2">
                 <span className="text-purple-600 text-xs">📚</span>
               </span>
@@ -276,17 +277,18 @@ export default function FeedbackSection({
               <span className="text-white text-sm">🎓</span>
             </div>
             <h5 className="text-lg font-bold text-hl-green-700">
+            <h5 className="hl-subtitle text-lg text-hl-green-700">
               Feedback van je Coach
             </h5>
           </div>
           <div 
-            className="prose prose-sm max-w-none text-hl-gray-700"
+            className="hl-feedback-content text-hl-gray-700"
             dangerouslySetInnerHTML={{ 
               __html: `<p class="mb-2">${formatFeedback(feedback)}</p>` 
             }}
           />
           <div className="mt-4 pt-4 border-t border-hl-gray-200">
-            <p className="text-xs text-hl-gray-500 flex items-center">
+            <p className="hl-meta-text flex items-center">
               <span className="w-4 h-4 bg-hl-green-100 rounded-full flex items-center justify-center mr-2">
                 <span className="text-hl-green-600 text-xs">✓</span>
               </span>
