@@ -40,7 +40,7 @@ export default function Home() {
                 <div className="w-20 h-20 hl-lichtgroen-bg rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="material-symbols-sharp hl-icon-xl hl-icon-primary">edit</span>
                 </div>
-                <p className="font-bold text-xl hl-donkergroen-text mb-3">1. Schrijf je analyse</p>
+                <p className="font-bold text-xl hl-donkerpaars-text mb-3">1. Schrijf je analyse</p>
                 <p className="hl-donkerpaars-text">Vul de 7S-secties in met je onderzoek</p>
               </div>
               <div className="text-center bg-white rounded-xl p-6 hl-card">
@@ -48,13 +48,13 @@ export default function Home() {
                   <span className="material-symbols-sharp hl-icon-xl hl-icon-secondary">psychology</span>
                 </div>
                 <p className="font-bold text-xl hl-donkerpaars-text mb-3">2. Vraag AI-feedback</p>
-                <p className="hl-donkergroen-text">Krijg direct professionele feedback</p>
+                <p className="hl-donkerpaars-text">Krijg direct professionele feedback</p>
               </div>
               <div className="text-center bg-white rounded-xl p-6 hl-card">
                 <div className="w-20 h-20 hl-geel-bg rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="material-symbols-sharp hl-icon-xl hl-icon-primary">description</span>
                 </div>
-                <p className="font-bold text-xl hl-donkergroen-text mb-3">3. Exporteer naar Word</p>
+                <p className="font-bold text-xl hl-donkerpaars-text mb-3">3. Exporteer naar Word</p>
                 <p className="hl-donkerpaars-text">Download je complete analyse</p>
               </div>
             </div>
