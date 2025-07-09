@@ -268,7 +268,7 @@ export default function FeedbackSection({
               <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-3">
                 <span className="material-symbols-sharp text-purple-600" style={{ fontSize: '16px' }}>check_circle</span>
               </span>
-              APA-controle door AI • Gratis voor studenten • Gebaseerd op APA 7e editie richtlijnen
+              APA-controle door AI • Voor studenten • Gebaseerd op APA 7e editie richtlijnen
             </p>
           </div>
         </div>
@@ -296,7 +296,7 @@ export default function FeedbackSection({
               <span className="w-6 h-6 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-3">
                 <span className="material-symbols-sharp hl-donkergroen-text" style={{ fontSize: '16px' }}>check_circle</span>
               </span>
-              Feedback gegenereerd door AI-coach • Gratis voor alle studenten • Gebaseerd op HBO-beoordelingscriteria
+              Feedback gegenereerd door AI-coach • Voor alle studenten • Gebaseerd op HBO-beoordelingscriteria
             </p>
           </div>
         </div>

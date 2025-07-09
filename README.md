@@ -1,12 +1,12 @@
 # 🎓 Interne Analyse Coach - Voor Studenten
 
-> **Gratis AI-coach voor studenten bij het schrijven van interne analyses volgens het 7S-model van McKinsey**
+> **AI-coach voor studenten bij het schrijven van interne analyses volgens het 7S-model van McKinsey**
 >
 > **Volledig openbaar toegankelijk - Geen inlog vereist**
 
-Een professionele, gratis toegankelijke web-applicatie die studenten helpt bij het schrijven van interne analyses met behulp van AI-feedback. Gebaseerd op het bewezen 7S-model van McKinsey & Company.
+Een professionele, toegankelijke web-applicatie die studenten helpt bij het schrijven van interne analyses met behulp van AI-feedback. Gebaseerd op het bewezen 7S-model van McKinsey & Company.
 
-## ✨ Voor Studenten - Volledig Gratis
+## ✨ Voor Studenten
 
 ### 🎯 **Wat krijg je?**
 - 🤖 **AI-Coach Feedback**: Professionele feedback op je 7S-analyse
@@ -38,7 +38,7 @@ Een professionele, gratis toegankelijke web-applicatie die studenten helpt bij h
 ## 🎓 Voor Studenten Gemaakt
 
 ### ✅ **Waarom Deze Tool?**
-- **Gratis & Toegankelijk**: Geen kosten, geen barriers
+- **Toegankelijk**: Geen kosten, geen barriers
 - **Educatief**: Leer terwijl je schrijft met AI-feedback
 - **Professioneel**: HBO-niveau beoordelingscriteria
 - **Praktisch**: Direct bruikbare Word-export
@@ -90,8 +90,8 @@ GEMINI_API_KEY=your_gemini_api_key_here
 - **Toegankelijkheid**: 24/7 beschikbaar voor alle studenten
 
 ### 🏫 **Implementatie**
-- **Geen IT-ondersteuning nodig**: Direct via web browser
-- **Geen licenties**: Volledig gratis te gebruiken
+- **Geen IT-ondersteuning nodig**: Direct via web browser  
+- **Geen licenties**: Volledig te gebruiken
 - **Geen training**: Intuïtieve interface
 - **Geen onderhoud**: Cloud-based, altijd up-to-date
 
@@ -136,7 +136,7 @@ Deze tool is gemaakt voor studenten, door studenten. Feedback en suggesties zijn
 
 ---
 
-## 🎉 **Start Nu - Volledig Gratis!**
+## 🎉 **Start Nu!**
 
 Geen registratie, geen kosten, geen gedoe. Ga direct naar de website en begin met je interne analyse!
 
@@ -144,5 +144,5 @@ Geen registratie, geen kosten, geen gedoe. Ga direct naar de website en begin me
 
 ---
 
-*Interne Analyse Coach v2.0 - Gratis voor alle studenten*  
+*Interne Analyse Coach v2.0 - Voor alle studenten*  
 *Powered by AI • Gebaseerd op het 7S-model van McKinsey*

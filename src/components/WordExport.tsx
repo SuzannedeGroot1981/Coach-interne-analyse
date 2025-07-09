@@ -483,11 +483,11 @@ export default function WordExport() {
         </div>
         
         <h3 className="text-4xl font-bold hl-donkergroen-text mb-8">
-          Gratis Export naar Word Document
+          Export naar Word Document
         </h3>
         
         <p className="hl-donkerpaars-text mb-10 max-w-4xl mx-auto text-xl">
-          Exporteer je complete interne analyse gratis naar een professioneel Word document met officiële Hogeschool Leiden huisstijl:
+          Exporteer je complete interne analyse naar een professioneel Word document met officiële Hogeschool Leiden huisstijl:
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 text-lg">
@@ -535,7 +535,7 @@ export default function WordExport() {
         </button>
         
         <p className="text-lg hl-donkerpaars-text mt-8">
-          💡 Volledig gratis • Het document wordt automatisch gedownload naar je Downloads map
+          💡 Het document wordt automatisch gedownload naar je Downloads map
         </p>
       </div>
     </div>

@@ -28,7 +28,7 @@ export default function Home() {
           </h1>
           
           <p className="text-xl hl-donkerpaars-text font-medium mb-6 max-w-4xl mx-auto">
-            Gratis AI-coach voor studenten bij het schrijven van interne analyses volgens het 7S-model van McKinsey
+            AI-coach voor studenten bij het schrijven van interne analyses volgens het 7S-model van McKinsey
           </p>
           
           <div className="hl-warning rounded-2xl p-8 mb-8 max-w-5xl mx-auto hl-slide-up">
@@ -437,7 +437,7 @@ export default function Home() {
                 <span className="material-symbols-sharp hl-icon-xl hl-icon-primary">school</span>
               </div>
               <p className="hl-donkerpaars-text mb-6 text-lg">
-                Deze tool is volledig gratis en openbaar beschikbaar voor alle studenten. 
+                Deze tool is volledig openbaar beschikbaar voor alle studenten. 
                 Geen registratie of inlog vereist.
               </p>
               <div className="flex items-center justify-center space-x-10 text-lg hl-donkergroen-text">
