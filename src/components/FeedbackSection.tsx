@@ -225,24 +225,32 @@ export default function FeedbackSection({
   }
 
   const formatFeedback = (feedbackText: string) => {
-    // Convert markdown-like formatting to HTML
+    // Enhanced formatting for the new coach feedback format
     let formatted = feedbackText
-      .replace(/## (.*?)$/gm, '<h3 class="text-xl font-bold text-green-800 mt-6 mb-4 border-b-2 border-green-200 pb-2">$1</h3>')
-      .replace(/### (.*?)$/gm, '<h4 class="text-lg font-semibold text-green-700 mt-4 mb-3">$1</h4>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-green-900">$1</strong>')
+      // Coach Feedback header
+      .replace(/\*\*Coach Feedback\*\*/g, '<h3 class="text-xl font-bold text-green-800 mb-4 pb-2 border-b-2 border-green-300">Coach Feedback</h3>')
+      
+      // Bold text for emphasis
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-green-900">$1</strong>')
+      
+      // Italic text
       .replace(/\*(.*?)\*/g, '<em class="italic text-green-800">$1</em>')
-      .replace(/^- (.*?)$/gm, '<li class="ml-4 mb-2 text-green-700 list-disc">$1</li>')
-      .replace(/^([A-Z][^:\n]*:)/gm, '<strong class="font-semibold text-green-800 block mt-3 mb-2">$1</strong>')
+      
+      // Numbered list items (1. 2. 3.)
+      .replace(/^(\d+)\.\s+\*\*(.*?)\*\*:\s*(.*?)$/gm, '<div class="mb-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500"><h4 class="font-bold text-green-800 mb-2">$1. $2</h4><p class="text-green-700 leading-relaxed">$3</p></div>')
+      .replace(/^(\d+)\.\s+(.*?)$/gm, '<div class="mb-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500"><p class="text-green-700 leading-relaxed"><strong class="text-green-800">$1.</strong> $2</p></div>')
+      
+      // Handle "Echter," paragraph specially
+      .replace(/(Echter,.*?)(?=\d+\.)/gs, '<div class="mb-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200"><p class="text-gray-800 leading-relaxed">$1</p></div>')
+      
+      // Regular paragraphs
       .replace(/\n\s*\n/g, '</p><p class="mb-4 text-green-700 leading-relaxed">')
       .replace(/\n/g, '<br />')
     
-    // Wrap in paragraph tags if not already wrapped
-    if (!formatted.includes('<h3>') && !formatted.includes('<p>')) {
+    // Wrap in paragraph if not already formatted
+    if (!formatted.includes('<h3>') && !formatted.includes('<div>') && !formatted.includes('<p>')) {
       formatted = `<p class="mb-4 text-green-700 leading-relaxed">${formatted}</p>`
     }
-    
-    // Wrap list items in ul tags
-    formatted = formatted.replace(/((?:<li[^>]*>.*?<\/li>\s*)+)/g, '<ul class="mb-4">$1</ul>')
     
     return formatted
   }
@@ -361,17 +369,17 @@ export default function FeedbackSection({
 
       {/* Feedback Display */}
       {feedback && showFeedback && (
-        <div className="feedback-display mt-8 bg-white rounded-2xl p-8 border-2 border-green-200 shadow-lg">
+        <div className="feedback-display mt-8 bg-white rounded-2xl p-8 border-2 border-green-200 shadow-lg max-w-none">
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 hl-donkergroen-bg rounded-full flex items-center justify-center mr-6">
               <span className="material-symbols-sharp hl-icon-white hl-icon-md">school</span>
             </div>
             <h5 className="text-xl font-bold hl-donkergroen-text">
-              Feedback van je Coach
+              Professionele HBO-Coach Feedback
             </h5>
           </div>
           <div 
-            className="prose prose-lg max-w-none"
+            className="coach-feedback-content max-w-none"
             dangerouslySetInnerHTML={{
               __html: formatFeedback(feedback)
             }} 
@@ -381,7 +389,7 @@ export default function FeedbackSection({
               <span className="w-6 h-6 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-3">
                 <span className="material-symbols-sharp hl-donkergroen-text" style={{ fontSize: '16px' }}>check_circle</span>
               </span>
-              Feedback gegenereerd door AI-coach • Voor alle studenten • Gebaseerd op HBO-beoordelingscriteria
+              Professionele feedback door AI-coach • HBO-niveau beoordeling • Gebaseerd op 7S-model criteria
             </p>
           </div>
         </div>
