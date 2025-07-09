@@ -483,7 +483,6 @@ export default function WordExport() {
         </div>
         
         <h3 className="text-3xl font-bold text-hl-gray-800 mb-6">
-        <h3 className="hl-main-title text-hl-gray-800 mb-6">
           Gratis Export naar Word Document
         </h3>
         
@@ -526,7 +525,6 @@ export default function WordExport() {
         </button>
         
         <p className="text-sm text-hl-gray-500 mt-6">
-        <p className="hl-meta-text mt-6">
           💡 Volledig gratis • Het document wordt automatisch gedownload naar je Downloads map
         </p>
       </div>
