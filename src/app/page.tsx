@@ -88,21 +88,21 @@ export default function Home() {
                     <span className="w-10 h-10 hl-zand-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">1</span>
                     <div>
                       <strong className="hl-donkergroen-text text-xl">Strategy (Strategie)</strong>
-                      <p className="hl-donkerpaars-text mt-2">De plannen en acties om concurrentievoordeel te behalen</p>
+                      <p className="hl-donkergroen-text mt-2">De plannen en acties om concurrentievoordeel te behalen</p>
                     </div>
                   </li>
                   <li className="flex items-start">
                     <span className="w-10 h-10 hl-zand-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">2</span>
                     <div>
                       <strong className="hl-donkergroen-text text-xl">Structure (Structuur)</strong>
-                      <p className="hl-donkerpaars-text mt-2">De organisatiestructuur en rapportagelijnen</p>
+                      <p className="hl-donkergroen-text mt-2">De organisatiestructuur en rapportagelijnen</p>
                     </div>
                   </li>
                   <li className="flex items-start">
                     <span className="w-10 h-10 hl-zand-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">3</span>
                     <div>
                       <strong className="hl-donkergroen-text text-xl">Systems (Systemen)</strong>
-                      <p className="hl-donkerpaars-text mt-2">De processen en procedures die het werk ondersteunen</p>
+                      <p className="hl-donkergroen-text mt-2">De processen en procedures die het werk ondersteunen</p>
                     </div>
                   </li>
                 </ul>
@@ -121,28 +121,28 @@ export default function Home() {
                     <span className="w-10 h-10 hl-geel-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">4</span>
                     <div>
                       <strong className="hl-donkerpaars-text text-xl">Shared Values (Gedeelde Waarden)</strong>
-                      <p className="hl-donkergroen-text mt-2">De kernwaarden en cultuur van de organisatie</p>
+                      <p className="hl-donkerpaars-text mt-2">De kernwaarden en cultuur van de organisatie</p>
                     </div>
                   </li>
                   <li className="flex items-start">
                     <span className="w-10 h-10 hl-geel-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">5</span>
                     <div>
                       <strong className="hl-donkerpaars-text text-xl">Style (Stijl)</strong>
-                      <p className="hl-donkergroen-text mt-2">De leiderschapsstijl en managementaanpak</p>
+                      <p className="hl-donkerpaars-text mt-2">De leiderschapsstijl en managementaanpak</p>
                     </div>
                   </li>
                   <li className="flex items-start">
                     <span className="w-10 h-10 hl-geel-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">6</span>
                     <div>
                       <strong className="hl-donkerpaars-text text-xl">Staff (Personeel)</strong>
-                      <p className="hl-donkergroen-text mt-2">De mensen en hun vaardigheden in de organisatie</p>
+                      <p className="hl-donkerpaars-text mt-2">De mensen en hun vaardigheden in de organisatie</p>
                     </div>
                   </li>
                   <li className="flex items-start">
                     <span className="w-10 h-10 hl-geel-bg hl-donkergroen-text rounded-full flex items-center justify-center mr-5 mt-1 text-lg font-bold">7</span>
                     <div>
                       <strong className="hl-donkerpaars-text text-xl">Skills (Vaardigheden)</strong>
-                      <p className="hl-donkergroen-text mt-2">De kerncompetenties en capabilities</p>
+                      <p className="hl-donkerpaars-text mt-2">De kerncompetenties en capabilities</p>
                     </div>
                   </li>
                 </ul>
