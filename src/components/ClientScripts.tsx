@@ -155,6 +155,15 @@ export default function ClientScripts() {
     const apaFeedbackDiv = document.getElementById('financial-apa-feedback')
     const apaFeedbackContent = document.getElementById('financial-apa-feedback-content')
     
+    // Debug logging
+    console.log('ClientScripts loaded, checking elements:', {
+      interviewTextarea: !!interviewTextarea,
+      surveyTextarea: !!surveyTextarea,
+      financialTextarea: !!financialTextarea,
+      feedbackButton: !!feedbackButton,
+      apaCheckButton: !!apaCheckButton
+    })
+    
     // Character counter for financial section only
     if (financialTextarea && financialCounter) {
       const updateFinancialCounter = () => {
@@ -179,6 +188,8 @@ export default function ClientScripts() {
           return
         }
         
+        console.log('Requesting financial feedback...', { textLength: financialData.length })
+        
         // Loading state
         feedbackButton.disabled = true
         feedbackButton.innerHTML = '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>Coach analyseert...'
@@ -201,6 +212,8 @@ export default function ClientScripts() {
           }
           
           const data = await response.json()
+          
+          console.log('Financial feedback received:', { feedbackLength: data.feedback?.length || 0 })
           
           // Format and display feedback
           const formattedFeedback = data.feedback
@@ -244,6 +257,8 @@ export default function ClientScripts() {
           return
         }
         
+        console.log('Requesting financial APA check...', { textLength: financialData.length })
+        
         // Loading state
         apaCheckButton.disabled = true
         apaCheckButton.innerHTML = '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>APA controleren...'
@@ -267,6 +282,8 @@ export default function ClientScripts() {
           }
           
           const data = await response.json()
+          
+          console.log('Financial APA feedback received:', { feedbackLength: data.apaFeedback?.length || 0 })
           
           // Format and display APA feedback
           const formattedFeedback = data.apaFeedback

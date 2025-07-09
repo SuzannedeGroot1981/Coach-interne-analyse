@@ -80,6 +80,7 @@ export default function FeedbackSection({
 
     // Get research data to include in feedback
     const researchData = getResearchData()
+    
     try {
       const response = await fetch('/api/feedback', {
         method: 'POST',
@@ -221,7 +222,7 @@ export default function FeedbackSection({
           )}
         </button>
         
-        {showFeedback && (
+        {feedback && (
           <button
             onClick={() => setShowFeedback(!showFeedback)}
             className="px-6 py-3 bg-hl-gray-100 text-hl-gray-700 rounded-xl hover:bg-hl-gray-200 transition-colors font-medium"
@@ -233,7 +234,7 @@ export default function FeedbackSection({
           </button>
         )}
         
-        {showApaFeedback && (
+        {apaFeedback && (
           <button
             onClick={() => setShowApaFeedback(!showApaFeedback)}
             className="px-6 py-3 bg-purple-100 text-purple-700 rounded-xl hover:bg-purple-200 transition-colors font-medium"
@@ -248,7 +249,7 @@ export default function FeedbackSection({
 
       {/* APA Feedback Display */}
       {showApaFeedback && apaFeedback && (
-        <div className="mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8 hl-card">
+        <div className="mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8 border-2 border-purple-200">
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mr-6">
               <span className="material-symbols-sharp hl-icon-white hl-icon-md">library_books</span>
@@ -276,7 +277,7 @@ export default function FeedbackSection({
 
       {/* Feedback Display */}
       {showFeedback && feedback && (
-        <div className="mt-8 bg-white rounded-2xl p-8 hl-card">
+        <div className="mt-8 bg-white rounded-2xl p-8 border-2 border-green-200">
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 hl-donkergroen-bg rounded-full flex items-center justify-center mr-6">
               <span className="material-symbols-sharp hl-icon-white hl-icon-md">school</span>
