@@ -152,8 +152,8 @@ export default function Home() {
             {/* Onderzoeksinput Sectie */}
             <div className="hl-warning rounded-2xl p-8 mb-12">
               <h3 className="text-3xl font-bold hl-donkergroen-text mb-8 flex items-center">
-                <span className="w-12 h-12 hl-geel-bg hl-donkergroen-text rounded-xl flex items-center justify-center mr-6">
-                  <span className="material-symbols-sharp hl-icon-primary hl-icon-lg">search</span>
+                <span className="w-12 h-12 hl-donkergroen-bg rounded-xl flex items-center justify-center mr-6">
+                  <span className="material-symbols-sharp hl-icon-white hl-icon-lg">search</span>
                 </span>
                 Onderzoeksgegevens
               </h3>
