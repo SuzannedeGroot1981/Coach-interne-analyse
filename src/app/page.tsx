@@ -1,50 +1,9 @@
-'use client'
-
-import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { LoadSavedData } from '@/components/LocalStorage'
 import ClientScripts from '@/components/ClientScripts'
-import TabNavigation from '@/components/TabNavigation'
-import TabContent from '@/components/TabContent'
+import TabInterface from '@/components/TabInterface'
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState('onderzoek')
-  const [progress, setProgress] = useState({ completed: 0, total: 9 })
-
-  // Calculate progress based on filled sections
-  useEffect(() => {
-    const calculateProgress = () => {
-      let completed = 0
-      const total = 9 // 2 onderzoek + 7 S-elementen
-
-      // Check onderzoek sections
-      const interviewResults = (document.getElementById('interview-results') as HTMLTextAreaElement)?.value || ''
-      const surveyResults = (document.getElementById('survey-results') as HTMLTextAreaElement)?.value || ''
-      
-      if (interviewResults.trim().length > 50) completed++
-      if (surveyResults.trim().length > 50) completed++
-
-      // Check 7S sections
-      const sectionIds = ['strategy', 'structure', 'systems', 'sharedValues', 'skills', 'style', 'staff']
-      sectionIds.forEach(sectionId => {
-        const textarea = document.querySelector(`[data-section="${sectionId}"] textarea`) as HTMLTextAreaElement
-        if (textarea && textarea.value.trim().length > 50) {
-          completed++
-        }
-      })
-
-      setProgress({ completed, total })
-    }
-
-    // Initial calculation
-    calculateProgress()
-
-    // Set up interval to recalculate progress
-    const interval = setInterval(calculateProgress, 1000)
-
-    return () => clearInterval(interval)
-  }, [])
-
   return (
     <div className="min-h-screen hl-gradient-bg">
       <div className="container mx-auto px-4 py-12">
@@ -189,15 +148,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Tab Navigation */}
-            <TabNavigation 
-              activeTab={activeTab} 
-              onTabChange={setActiveTab}
-              progress={progress}
-            />
-
-            {/* Tab Content */}
-            <TabContent activeTab={activeTab} />
+            {/* Tab Interface - Client Component */}
+            <TabInterface />
           </div>
 
           {/* Footer */}
