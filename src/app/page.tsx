@@ -157,7 +157,7 @@ export default function Home() {
                 </span>
                 Onderzoeksgegevens
               </h3>
-              <p className="hl-donkerpaars-text mb-8 text-lg">
+              <p className="hl-donkergroen-text mb-8 text-lg">
                 Deze gegevens worden door de coach meegenomen in de feedback op alle 7S-elementen voor een meer onderbouwde analyse.
               </p>
               
@@ -170,7 +170,7 @@ export default function Home() {
                     </span>
                     Interviewresultaten
                   </h4>
-                  <p className="hl-donkerpaars-text mb-6">
+                  <p className="hl-donkergroen-text mb-6">
                     Plak hier citaten of samenvattingen uit de gevoerde gesprekken met medewerkers, managers of andere stakeholders.
                   </p>
                   <textarea
@@ -193,7 +193,7 @@ export default function Home() {
                     </span>
                     Resultaten enquête
                   </h4>
-                  <p className="hl-donkerpaars-text mb-6">
+                  <p className="hl-donkergroen-text mb-6">
                     Voer hier de geanalyseerde uitkomsten van je enquête in, inclusief percentages, scores en belangrijke bevindingen.
                   </p>
                   <textarea
