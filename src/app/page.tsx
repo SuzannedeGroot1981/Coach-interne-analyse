@@ -33,7 +33,7 @@ export default function Home() {
           
           <div className="hl-warning rounded-2xl p-8 mb-8 max-w-5xl mx-auto hl-slide-up">
             <h3 className="text-2xl font-bold hl-donkergroen-text mb-6 text-center">
-              🚀 Hoe werkt het?
+              Hoe werkt het?
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
               <div className="text-center bg-white rounded-xl p-6 hl-card">
