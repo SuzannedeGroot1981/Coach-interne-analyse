@@ -17,7 +17,7 @@ interface SavedData {
 interface LocalStorageProps {
   elementId: string
   elementName: string
-  colorScheme: 'blue' | 'green' | 'emerald'
+  colorScheme: 'blue' | 'green' | 'emerald' | 'purple'
 }
 
 export default function LocalStorage({ elementId, elementName, colorScheme }: LocalStorageProps) {
@@ -38,6 +38,11 @@ export default function LocalStorage({ elementId, elementName, colorScheme }: Lo
     },
     emerald: {
       button: 'bg-emerald-100 hover:bg-emerald-200 text-emerald-700 border-emerald-300',
+      success: 'bg-green-100 text-green-700 border-green-300',
+      error: 'bg-red-100 text-red-700 border-red-300'
+    },
+    purple: {
+      button: 'bg-purple-100 hover:bg-purple-200 text-purple-700 border-purple-300',
       success: 'bg-green-100 text-green-700 border-green-300',
       error: 'bg-red-100 text-red-700 border-red-300'
     }
