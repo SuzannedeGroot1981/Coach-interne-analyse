@@ -330,22 +330,6 @@ export default function Home() {
                 number={7}
               />
 
-              {/* Samenvatting sectie */}
-              <div className="bg-gradient-to-r from-blue-100 to-green-100 rounded-lg p-6 border border-gray-200 relative">
-                <FeedbackSection
-                  element="summary"
-                  title="Samenvatting & Conclusies"
-                  description="Vat je bevindingen samen en trek conclusies over de onderlinge samenhang tussen de 7 S'en."
-                  placeholder="Bijvoorbeeld: De analyse toont aan dat de organisatie sterk is in... maar uitdagingen heeft op het gebied van..."
-                  colorScheme="blue"
-                  number={8}
-                />
-                <div className="mt-6 pt-4 border-t border-gray-300">
-                  <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-lg hover:from-blue-700 hover:to-green-700 transition-all font-medium shadow-lg">
-                    📄 Genereer volledig rapport
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
 
