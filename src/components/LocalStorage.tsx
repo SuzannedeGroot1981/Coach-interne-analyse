@@ -270,7 +270,7 @@ export function LoadSavedData() {
           <button
             onClick={loadSavedData}
             disabled={isLoading}
-            className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+            className="px-4 py-2 bg-hl-donkergroen hover:bg-hl-donkergroen-600 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
           >
             {isLoading ? (
               <>
