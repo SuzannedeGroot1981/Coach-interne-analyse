@@ -442,7 +442,11 @@ Houd de feedback constructief, zakelijk en gericht op leerresultaten. Focus ALLE
         error: apiError instanceof Error ? apiError.message : 'Unknown API error',
         stack: apiError instanceof Error ? apiError.stack : undefined
       })
+      
+      // Try simplified prompt as fallback
       const simplePrompt = `Geef feedback op deze ${element} tekst voor een HBO interne analyse:
+
+"${text}"`
 
       try {
         result = await model.generateContent(simplePrompt)
@@ -453,19 +457,15 @@ Houd de feedback constructief, zakelijk en gericht op leerresultaten. Focus ALLE
         console.error('❌ Even simplified prompt failed:', fallbackError)
         throw new Error('Gemini API is momenteel niet beschikbaar. Probeer het later opnieuw.')
       }
-    console.log('✅ Gemini API response received:', {
-    })
-     return NextResponse.json({ 
-       feedback: `## 🤖 AI Feedback Tijdelijk Niet Beschikbaar
-       element,
-       success: true, // Still return success so the UI shows the message
-       warning: 'Geen feedback ontvangen van AI',
-       timestamp: new Date().toISOString()
-     })
     }
     
+    console.log('✅ Gemini API response received:', {
+      feedbackLength: feedback?.length || 0,
+      feedbackPreview: feedback ? feedback.substring(0, 100) + '...' : 'NO CONTENT'
+    })
+
     // Validate that we have meaningful feedback
-    if (feedback.trim().length < 10) {
+    if (!feedback || feedback.trim().length < 10) {
       console.warn('⚠️ Very short feedback received:', feedback)
       return NextResponse.json({ 
         feedback: `## ⚠️ Beperkte Feedback Ontvangen
