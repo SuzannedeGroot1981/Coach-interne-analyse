@@ -221,7 +221,6 @@ export function LoadSavedData() {
     }
   }
 
-              className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
 
   return (
     <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
