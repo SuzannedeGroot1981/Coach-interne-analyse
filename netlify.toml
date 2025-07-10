@@ -9,16 +9,15 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Public access headers - no authentication required
+# Simplified headers - no COEP restrictions
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     
-# API routes - public access
+# API routes - public access with CORS
 [[headers]]
   for = "/api/*"
   [headers.values]
