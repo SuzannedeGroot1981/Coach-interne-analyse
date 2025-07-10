@@ -146,7 +146,6 @@ export default function TabContent({ activeTab }: TabContentProps) {
                   
                   <button
                     id="financial-apa-button"
-                    type="button"
                     className="hl-button-secondary flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <span className="material-symbols-sharp hl-icon-white hl-icon-sm">menu_book</span>

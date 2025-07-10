@@ -344,8 +344,7 @@ Geef een korte, behulpzame reactie als HBO-docent. Max 200 woorden.`
     
     // Financial APA check functionality
     if (apaCheckButton && financialTextarea && apaFeedbackDiv && apaFeedbackContent) {
-      const handleApaCheckClick = async (e: Event) => {
-        e.preventDefault()
+      const handleApaCheckClick = async () => {
         
         const financialData = financialTextarea.value.trim()
         
@@ -411,9 +410,8 @@ Geef een korte, behulpzame reactie als HBO-docent. Max 200 woorden.`
         }
       }
       
-      // Remove any existing event listeners first
-      apaCheckButton.removeEventListener('click', handleApaCheckClick)
-      // Add the event listener
+      // Add the event listener (remove any existing first)
+      apaCheckButton.onclick = null
       apaCheckButton.addEventListener('click', handleApaCheckClick)
       
       console.log('✅ APA check event listener added to financial button')
