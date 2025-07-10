@@ -9,7 +9,7 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Simplified headers - no COEP restrictions
+# Basic security headers only
 [[headers]]
   for = "/*"
   [headers.values]
@@ -17,7 +17,7 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     
-# API routes - public access with CORS
+# API routes CORS
 [[headers]]
   for = "/api/*"
   [headers.values]

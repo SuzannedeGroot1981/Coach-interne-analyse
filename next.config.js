@@ -4,7 +4,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Apply basic security headers to all routes (no COEP)
+        // Apply basic security headers to all routes
         source: '/(.*)',
         headers: [
           {
@@ -19,11 +19,10 @@ const nextConfig = {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin'
           }
-          // Removed Permissions-Policy that was causing COEP issues
         ],
       },
       {
-        // API routes get CORS headers only
+        // API routes CORS headers
         source: '/api/(.*)',
         headers: [
           {
