@@ -1,9 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { NextRequest, NextResponse } from 'next/server'
 
-// Initialize Gemini AI client
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
-
 export async function POST(request: NextRequest) {
   try {
     // Check API key
@@ -17,6 +14,9 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       )
     }
+
+    // Initialize Gemini AI client after API key check
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
 
     // Parse request data
     const body = await request.json()
