@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import LocalStorage from './LocalStorage'
+import FeedbackChat from './FeedbackChat'
 
 interface FeedbackSectionProps {
   element: string
@@ -343,6 +344,15 @@ export default function FeedbackSection({
               Feedback door AI-coach • HBO-niveau • Gebaseerd op 7S-model criteria
             </p>
           </div>
+          
+          {/* Interactive Chat with Coach */}
+          <FeedbackChat
+            element={element}
+            elementTitle={title}
+            originalText={text}
+            originalFeedback={feedback}
+            colorScheme={colorScheme}
+          />
         </div>
       )}
       
