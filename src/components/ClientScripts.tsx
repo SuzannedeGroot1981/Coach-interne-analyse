@@ -345,20 +345,22 @@ Geef een korte, behulpzame reactie als HBO-docent. Max 200 woorden.`
     // Financial APA check functionality
     if (apaCheckButton && financialTextarea && apaFeedbackDiv && apaFeedbackContent) {
       const handleApaCheckClick = async () => {
-        
         const financialData = financialTextarea.value.trim()
         
         if (!financialData) {
-          alert('Voer eerst financiële gegevens in voordat je APA-controle vraagt.')
+          alert('Voer eerst financiële gegevens in bij Financiële Analyse voordat je APA-controle vraagt.')
           return
         }
         
         if (financialData.length < 20) {
-          alert('Voer minimaal 20 karakters aan financiële gegevens in voor APA-controle.')
+          alert('Voer minimaal 20 karakters aan financiële gegevens in bij Financiële Analyse voor APA-controle.')
           return
         }
         
-        console.log('Requesting financial APA check...', { textLength: financialData.length })
+        console.log('🔍 Starting APA check for financial section', { 
+          textLength: financialData.length,
+          element: 'financial'
+        })
         
         // Loading state
         apaCheckButton.disabled = true
@@ -384,7 +386,11 @@ Geef een korte, behulpzame reactie als HBO-docent. Max 200 woorden.`
           
           const data = await response.json()
           
-          console.log('Financial APA feedback received:', { feedbackLength: data.apaFeedback?.length || 0 })
+          console.log('✅ Financial APA check completed:', { 
+            feedbackLength: data.apaFeedback?.length || 0,
+            element: data.element,
+            sectionTitle: data.sectionTitle
+          })
           
           // Format and display APA feedback
           const formattedFeedback = data.apaFeedback
@@ -401,8 +407,8 @@ Geef een korte, behulpzame reactie als HBO-docent. Max 200 woorden.`
           apaFeedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'start' })
           
         } catch (error) {
-          console.error('Financial APA check error:', error)
-          alert('Fout bij APA-controle: ' + (error as Error).message)
+          console.error('❌ Financial APA check error:', error)
+          alert('Fout bij APA-controle voor Financiële Analyse: ' + (error as Error).message)
         } finally {
           // Reset button
           apaCheckButton.disabled = false

@@ -133,16 +133,22 @@ export default function FeedbackSection({
   }
 
   const handleApaCheck = async () => {
-    if (!text.trim()) {
-      alert('Voer eerst tekst in voordat je APA-controle vraagt.')
+    const currentText = text.trim()
+    
+    if (!currentText) {
+      alert(`Voer eerst tekst in bij ${title} voordat je APA-controle vraagt.`)
       return
     }
 
-    if (text.trim().length < 20) {
-      alert('Voer minimaal 20 karakters in voor APA-controle.')
+    if (currentText.length < 20) {
+      alert(`Voer minimaal 20 karakters in bij ${title} voor APA-controle.`)
       return
     }
 
+    console.log(`🔍 Starting APA check for ${element} (${title})`, {
+      textLength: currentText.length,
+      element: element
+    })
     setIsApaLoading(true)
     setShowApaFeedback(false)
 
@@ -153,7 +159,7 @@ export default function FeedbackSection({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          text: text.trim(),
+          text: currentText,
           element: element,
           sectionTitle: title
         }),
@@ -165,6 +171,13 @@ export default function FeedbackSection({
       }
 
       const data = await response.json()
+      
+      console.log(`✅ APA check completed for ${element}:`, {
+        feedbackLength: data.apaFeedback?.length || 0,
+        element: data.element,
+        sectionTitle: data.sectionTitle
+      })
+      
       setApaFeedback(data.apaFeedback)
       setShowApaFeedback(true)
       
@@ -173,11 +186,13 @@ export default function FeedbackSection({
         const apaElement = document.querySelector(`[data-section="${element}"] .apa-feedback-display`)
         if (apaElement) {
           apaElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        } else {
+          console.warn(`⚠️ APA feedback element not found for section: ${element}`)
         }
       }, 100)
     } catch (error) {
-      console.error('APA check error:', error)
-      alert('Fout bij APA-controle: ' + (error instanceof Error ? error.message : 'Onbekende fout'))
+      console.error(`❌ APA check error for ${element}:`, error)
+      alert(`Fout bij APA-controle voor ${title}: ` + (error instanceof Error ? error.message : 'Onbekende fout'))
     } finally {
       setIsApaLoading(false)
     }
@@ -299,7 +314,7 @@ export default function FeedbackSection({
               <span className="material-symbols-sharp hl-icon-white hl-icon-md">library_books</span>
             </div>
             <h5 className="text-xl font-bold text-purple-800">
-              APA-stijl Controle
+              APA-stijl Controle - {title}
             </h5>
           </div>
           <div 
@@ -313,7 +328,7 @@ export default function FeedbackSection({
               <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-3">
                 <span className="material-symbols-sharp text-purple-600" style={{ fontSize: '16px' }}>check_circle</span>
               </span>
-              APA-controle door AI • Voor studenten • Gebaseerd op APA 7e editie richtlijnen
+              APA-controle voor {title} • Gebaseerd op APA 7e editie richtlijnen • Element: {element}
             </p>
           </div>
         </div>
