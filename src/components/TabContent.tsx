@@ -248,43 +248,22 @@ export default function TabContent({ activeTab }: TabContentProps) {
                       
                       if (!button || !apaFeedbackDiv || !apaFeedbackContent) return
                       
-                      // Loading state
-                      button.disabled = true
-                      button.innerHTML = '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>APA controleren...'
+                      // Use the improved feedback API directly
+                      const response = await fetch('/api/feedback', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          text: financialData,
+                          element: 'financial'
+                        }),
+                      })
                       
-                      try {
-                        const response = await fetch('/api/apa-check', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({
-                            text: financialData,
-                            element: 'financial',
-                            sectionTitle: 'Financiële Analyse'
-                          }),
-                        })
-                        
-                        if (!response.ok) {
-                          const errorData = await response.json()
-                          throw new Error(errorData.error || 'Er is een fout opgetreden')
-                        }
-                        
-                        const data = await response.json()
-                        
-                        // Format and display APA feedback
-                        const formattedFeedback = data.apaFeedback
-                          .replace(/## (.*)/g, '<h3 class="text-lg font-semibold text-gray-800 mt-4 mb-2">$1</h3>')
-                          .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
-                          .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
-                          .replace(/\n\n/g, '</p><p class="mb-2">')
-                          .replace(/\n/g, '<br />')
-                        
-                        apaFeedbackContent.innerHTML = '<p class="mb-2">' + formattedFeedback + '</p>'
-                        apaFeedbackDiv.classList.remove('hidden')
-                        
-                        // Scroll to APA feedback
-                        apaFeedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                        
-                      } catch (error) {
+                      if (!response.ok) {
+                        const errorData = await response.json()
+                        throw new Error(errorData.error || 'Er is een fout opgetreden')
+                      }
+                      
+                      const data = await response.json()
                         console.error('Financial APA check error:', error)
                         alert('Fout bij APA-controle: ' + (error as Error).message)
                       } finally {

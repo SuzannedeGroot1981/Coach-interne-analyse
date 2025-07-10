@@ -74,56 +74,30 @@ export default function FeedbackSection({
     setFeedback('') // Clear previous feedback
 
     try {
-      // Try new coach API first, fallback to old feedback API
-      let response
-      let data
+      // Use the improved feedback API directly
+      console.log('📡 Using improved feedback API...')
+      const response = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: text.trim(),
+          element: element
+        }),
+      })
       
-      try {
-        console.log('📡 Trying new coach API...')
-        response = await fetch('/api/coach', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            tekst: text.trim(),
-            stapId: element
-          }),
-        })
-        
-        if (response.ok) {
-          data = await response.json()
-          console.log('✅ Coach API successful:', {
-            feedbackLength: data.feedback?.length || 0,
-            stapId: data.stapId,
-            stapNaam: data.stapNaam
-          })
-        } else {
-          throw new Error('Coach API failed, trying fallback...')
-        }
-      } catch (coachError) {
-        console.log('⚠️ Coach API failed, using fallback feedback API:', coachError)
-        
-        // Fallback to original feedback API
-        response = await fetch('/api/feedback', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            text: text.trim(),
-            element: element
-          }),
-        })
-        
-        if (!response.ok) {
-          const errorData = await response.json()
-          throw new Error(errorData.error || 'Er is een fout opgetreden')
-        }
-        
-        data = await response.json()
-        console.log('✅ Fallback feedback API successful')
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Er is een fout opgetreden')
       }
+      
+      const data = await response.json()
+      console.log('✅ Improved feedback API successful:', {
+        feedbackLength: data.feedback?.length || 0,
+        element: data.element
+      })
+      
       if (!data.feedback) {
         throw new Error('Geen feedback ontvangen van de server')
       }
