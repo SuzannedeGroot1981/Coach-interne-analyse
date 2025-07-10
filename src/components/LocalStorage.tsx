@@ -234,51 +234,6 @@ export function LoadSavedData() {
     }
   }
 
-
-  return (
-    <div className="bg-yellow-50 rounded-lg p-4 mb-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div>
-            <h4 className="hl-donkergroen-text font-medium">Opgeslagen concept gevonden</h4>
-            <p className="hl-donkergroen-text text-sm">Je hebt eerder gegevens opgeslagen in je browser.</p>
-          </div>
-        </div>
-        
-        <div className="mt-3 text-center">
-          <p className="text-xs hl-donkergroen-text">
-            🔒 Je gegevens blijven privé en worden alleen lokaal in je browser opgeslagen
-          </p>
-        </div>
-        
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={loadSavedData}
-            disabled={isLoading}
-            className="px-4 py-2 bg-hl-donkergroen hover:bg-hl-donkergroen-600 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
-          >
-            {isLoading ? (
-              <>
-                <span className="material-symbols-sharp hl-icon-white hl-icon-sm mr-2">hourglass_empty</span>
-                Laden...
-              </>
-            ) : (
-              <>
-                <span className="material-symbols-sharp hl-icon-white hl-icon-sm mr-2">folder_open</span>
-                Laad concept
-              </>
-            )}
-          </button>
-          
-          <button
-            onClick={clearSavedData}
-            className="px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg text-sm transition-colors"
-            title="Verwijder opgeslagen gegevens"
-          >
-            <span className="material-symbols-sharp hl-icon-sm">delete</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  )
+  // Return null to hide the component completely
+  return null
 }
