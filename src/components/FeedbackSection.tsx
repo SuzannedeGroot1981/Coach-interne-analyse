@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import LocalStorage from './LocalStorage'
 import FeedbackChat from './FeedbackChat'
+import APAChecker from './APAChecker'
+import APAResults from './APAResults'
 
 interface FeedbackSectionProps {
   element: string
@@ -11,6 +13,19 @@ interface FeedbackSectionProps {
   placeholder: string
   colorScheme: 'green' | 'purple'
   number: number
+}
+
+interface APACheckResult {
+  score: number
+  issues: Array<{
+    type: 'error' | 'warning' | 'suggestion'
+    category: string
+    message: string
+    example?: string
+    fix?: string
+  }>
+  suggestions: string[]
+  strengths: string[]
 }
 
 export default function FeedbackSection({ 
@@ -23,11 +38,10 @@ export default function FeedbackSection({
 }: FeedbackSectionProps) {
   const [text, setText] = useState('')
   const [feedback, setFeedback] = useState('')
-  const [apaFeedback, setApaFeedback] = useState('')
+  const [apaResult, setApaResult] = useState<APACheckResult | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [isApaLoading, setIsApaLoading] = useState(false)
   const [showFeedback, setShowFeedback] = useState(false)
-  const [showApaFeedback, setShowApaFeedback] = useState(false)
+  const [showApaResults, setShowApaResults] = useState(false)
   
   // Function to get research data from the page
 
@@ -132,70 +146,17 @@ export default function FeedbackSection({
     }
   }
 
-  const handleApaCheck = async () => {
-    const currentText = text.trim()
+  const handleApaResult = (result: APACheckResult) => {
+    setApaResult(result)
+    setShowApaResults(true)
     
-    if (!currentText) {
-      alert(`Voer eerst tekst in bij ${title} voordat je APA-controle vraagt.`)
-      return
-    }
-
-    if (currentText.length < 20) {
-      alert(`Voer minimaal 20 karakters in bij ${title} voor APA-controle.`)
-      return
-    }
-
-    console.log(`🔍 Starting APA check for ${element} (${title})`, {
-      textLength: currentText.length,
-      element: element
-    })
-    setIsApaLoading(true)
-    setShowApaFeedback(false)
-
-    try {
-      const response = await fetch('/api/apa-check', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          text: currentText,
-          element: element,
-          sectionTitle: title
-        }),
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || 'Er is een fout opgetreden')
+    // Scroll to results after a short delay
+    setTimeout(() => {
+      const resultsElement = document.querySelector(`[data-section="${element}"] .apa-results-display`)
+      if (resultsElement) {
+        resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
-
-      const data = await response.json()
-      
-      console.log(`✅ APA check completed for ${element}:`, {
-        feedbackLength: data.apaFeedback?.length || 0,
-        element: data.element,
-        sectionTitle: data.sectionTitle
-      })
-      
-      setApaFeedback(data.apaFeedback)
-      setShowApaFeedback(true)
-      
-      // Scroll to APA feedback section after a short delay
-      setTimeout(() => {
-        const apaElement = document.querySelector(`[data-section="${element}"] .apa-feedback-display`)
-        if (apaElement) {
-          apaElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        } else {
-          console.warn(`⚠️ APA feedback element not found for section: ${element}`)
-        }
-      }, 100)
-    } catch (error) {
-      console.error(`❌ APA check error for ${element}:`, error)
-      alert(`Fout bij APA-controle voor ${title}: ` + (error instanceof Error ? error.message : 'Onbekende fout'))
-    } finally {
-      setIsApaLoading(false)
-    }
+    }, 100)
   }
 
   const formatFeedback = (feedbackText: string) => {
@@ -263,24 +224,11 @@ export default function FeedbackSection({
           )}
         </button>
         
-        <button
-          onClick={handleApaCheck}
-          disabled={isApaLoading || !text.trim() || text.trim().length < 20}
-          className="hl-button-secondary disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
-          type="button"
-        >
-          {isApaLoading ? (
-            <>
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-              <span>APA controleren...</span>
-            </>
-          ) : (
-            <>
-              <span className="material-symbols-sharp hl-icon-white hl-icon-sm">menu_book</span>
-              <span>Self-check APA</span>
-            </>
-          )}
-        </button>
+        <APAChecker 
+          text={text}
+          onResult={handleApaResult}
+          className="hl-button-secondary"
+        />
         
         {feedback && (
           <button
@@ -294,44 +242,27 @@ export default function FeedbackSection({
           </button>
         )}
         
-        {apaFeedback && (
+        {apaResult && (
           <button
-            onClick={() => setShowApaFeedback(!showApaFeedback)}
+            onClick={() => setShowApaResults(!showApaResults)}
             className="px-6 py-3 bg-purple-100 text-purple-700 rounded-xl hover:bg-purple-200 transition-colors font-medium border border-purple-300"
           >
             <span className="material-symbols-sharp hl-icon-sm mr-2">
-              {showApaFeedback ? 'visibility_off' : 'visibility'}
+              {showApaResults ? 'visibility_off' : 'visibility'}
             </span>
-            {showApaFeedback ? 'Verberg APA-check' : 'Toon APA-check'}
+            {showApaResults ? 'Verberg APA-check' : 'Toon APA-check'}
           </button>
         )}
       </div>
 
       {/* APA Feedback Display */}
-      {apaFeedback && showApaFeedback && (
-        <div className="apa-feedback-display mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8 border-2 border-purple-200" data-section={element}>
-          <div className="flex items-center mb-6">
-            <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mr-6">
-              <span className="material-symbols-sharp hl-icon-white hl-icon-md">library_books</span>
-            </div>
-            <h5 className="text-xl font-bold text-purple-800">
-              APA-stijl Controle - {title}
-            </h5>
-          </div>
-          <div 
-            className="prose prose-lg max-w-none text-purple-700"
-            dangerouslySetInnerHTML={{
-              __html: formatFeedback(apaFeedback)
-            }}
+      {apaResult && showApaResults && (
+        <div className="apa-results-display" data-section={element}>
+          <APAResults 
+            result={apaResult}
+            sectionTitle={title}
+            onClose={() => setShowApaResults(false)}
           />
-          <div className="mt-6 pt-6 border-t border-purple-200">
-            <p className="text-sm text-purple-600 flex items-center">
-              <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-3">
-                <span className="material-symbols-sharp text-purple-600" style={{ fontSize: '16px' }}>check_circle</span>
-              </span>
-              APA-controle voor {title} • Gebaseerd op APA 7e editie richtlijnen • Element: {element}
-            </p>
-          </div>
         </div>
       )}
 

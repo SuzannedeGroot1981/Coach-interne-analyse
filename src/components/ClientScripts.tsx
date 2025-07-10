@@ -344,76 +344,38 @@ Geef een korte, behulpzame reactie als HBO-docent. Max 200 woorden.`
     
     // Financial APA check functionality
     if (apaCheckButton && financialTextarea && apaFeedbackDiv && apaFeedbackContent) {
-      const handleApaCheckClick = async () => {
+      const handleApaCheckClick = () => {
         const financialData = financialTextarea.value.trim()
         
         if (!financialData) {
-          alert('Voer eerst financiële gegevens in bij Financiële Analyse voordat je APA-controle vraagt.')
+          alert('Voer eerst financiële gegevens in voordat je APA-controle vraagt.')
           return
         }
         
         if (financialData.length < 20) {
-          alert('Voer minimaal 20 karakters aan financiële gegevens in bij Financiële Analyse voor APA-controle.')
+          alert('Voer minimaal 20 karakters in voor APA-controle.')
           return
         }
-        
-        console.log('🔍 Starting APA check for financial section', { 
-          textLength: financialData.length,
-          element: 'financial'
-        })
         
         // Loading state
         apaCheckButton.disabled = true
         apaCheckButton.innerHTML = '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>APA controleren...'
         
-        try {
-          const response = await fetch('/api/apa-check', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              text: financialData,
-              element: 'financial',
-              sectionTitle: 'Financiële Analyse'
-            }),
-          })
+        // Simulate processing time
+        setTimeout(() => {
+          // Perform client-side APA check
+          const result = performClientSideAPACheck(financialData)
           
-          if (!response.ok) {
-            const errorData = await response.json()
-            throw new Error(errorData.error || 'Er is een fout opgetreden')
-          }
+          // Display results
+          displayAPAResults(result, apaFeedbackContent, apaFeedbackDiv)
           
-          const data = await response.json()
-          
-          console.log('✅ Financial APA check completed:', { 
-            feedbackLength: data.apaFeedback?.length || 0,
-            element: data.element,
-            sectionTitle: data.sectionTitle
-          })
-          
-          // Format and display APA feedback
-          const formattedFeedback = data.apaFeedback
-            .replace(/## (.*)/g, '<h3 class="text-lg font-semibold text-gray-800 mt-4 mb-2">$1</h3>')
-            .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
-            .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
-            .replace(/\n\n/g, '</p><p class="mb-2">')
-            .replace(/\n/g, '<br />')
-          
-          apaFeedbackContent.innerHTML = '<p class="mb-2">' + formattedFeedback + '</p>'
-          apaFeedbackDiv.classList.remove('hidden')
-          
-          // Scroll to APA feedback
-          apaFeedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'start' })
-          
-        } catch (error) {
-          console.error('❌ Financial APA check error:', error)
-          alert('Fout bij APA-controle voor Financiële Analyse: ' + (error as Error).message)
-        } finally {
           // Reset button
           apaCheckButton.disabled = false
           apaCheckButton.innerHTML = '<span>📚</span><span>Self-check APA</span>'
-        }
+          
+          // Scroll to results
+          apaFeedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }, 1000)
       }
       
       // Add the event listener (remove any existing first)
@@ -425,6 +387,106 @@ Geef een korte, behulpzame reactie als HBO-docent. Max 200 woorden.`
       newButton.addEventListener('click', handleApaCheckClick)
       
       console.log('✅ APA check event listener added to financial button')
+    }
+    
+    // Client-side APA check function
+    const performClientSideAPACheck = (text: string) => {
+      const issues: string[] = []
+      const strengths: string[] = []
+      let score = 100
+      
+      // Check for in-text citations
+      const citations = text.match(/\([A-Za-z][^)]*,\s*\d{4}[^)]*\)/g) || []
+      if (citations.length === 0) {
+        issues.push('❌ <strong>Geen bronverwijzingen gevonden</strong><br>Voeg citaties toe in de vorm (Auteur, jaar)')
+        score -= 25
+      } else {
+        strengths.push(`✅ ${citations.length} bronverwijzing(en) gevonden`)
+      }
+      
+      // Check for direct quotes
+      const quotes = text.match(/"[^"]+"/g) || []
+      const quotesWithPages = text.match(/"[^"]+"[^(]*\([^)]*,\s*\d{4},\s*p\.\s*\d+\)/g) || []
+      if (quotes.length > 0 && quotesWithPages.length === 0) {
+        issues.push('⚠️ <strong>Directe citaten zonder paginanummer</strong><br>Voeg paginanummers toe: "Citaat" (Auteur, 2023, p. 15)')
+        score -= 15
+      }
+      
+      // Check for informal language
+      const informalWords = ['heel', 'erg', 'super', 'gewoon', 'eigenlijk']
+      const foundInformal = informalWords.filter(word => text.toLowerCase().includes(word))
+      if (foundInformal.length > 0) {
+        issues.push(`💡 <strong>Informele woorden gevonden:</strong> ${foundInformal.join(', ')}<br>Gebruik formeler taalgebruik`)
+        score -= 10
+      }
+      
+      // Check for evidence
+      const evidenceWords = ['onderzoek toont', 'uit interviews', 'de cijfers', 'bijvoorbeeld']
+      const hasEvidence = evidenceWords.some(phrase => text.toLowerCase().includes(phrase))
+      if (hasEvidence) {
+        strengths.push('✅ Goede onderbouwing met concrete voorbeelden')
+      } else {
+        issues.push('⚠️ <strong>Weinig concrete voorbeelden</strong><br>Voeg meer specifieke onderzoeksresultaten toe')
+        score -= 20
+      }
+      
+      return { score: Math.max(0, score), issues, strengths }
+    }
+    
+    // Display APA results function
+    const displayAPAResults = (result: any, contentElement: HTMLElement, containerElement: HTMLElement) => {
+      let html = `
+        <div class="mb-6">
+          <div class="flex items-center justify-between p-4 rounded-lg ${result.score >= 80 ? 'bg-green-100 border-green-200' : result.score >= 60 ? 'bg-yellow-100 border-yellow-200' : 'bg-red-100 border-red-200'} border-2">
+            <div>
+              <h3 class="text-xl font-bold ${result.score >= 80 ? 'text-green-700' : result.score >= 60 ? 'text-yellow-700' : 'text-red-700'}">
+                APA Score: ${result.score}/100
+              </h3>
+              <p class="text-sm ${result.score >= 80 ? 'text-green-600' : result.score >= 60 ? 'text-yellow-600' : 'text-red-600'}">
+                ${result.score >= 80 ? '🎉 Uitstekend! Je tekst voldoet grotendeels aan APA-richtlijnen' :
+                  result.score >= 60 ? '👍 Goed! Nog enkele verbeterpunten voor perfecte APA-stijl' :
+                  '📚 Er zijn belangrijke APA-aspecten die aandacht nodig hebben'}
+              </p>
+            </div>
+            <div class="text-3xl">
+              ${result.score >= 80 ? '🏆' : result.score >= 60 ? '📈' : '📖'}
+            </div>
+          </div>
+        </div>
+      `
+      
+      if (result.strengths.length > 0) {
+        html += `
+          <div class="mb-4">
+            <h4 class="text-lg font-semibold text-green-800 mb-2">👍 Wat gaat goed</h4>
+            <div class="space-y-2">
+              ${result.strengths.map((strength: string) => `
+                <div class="bg-green-50 border border-green-200 rounded p-3">
+                  <p class="text-green-800 text-sm">${strength}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `
+      }
+      
+      if (result.issues.length > 0) {
+        html += `
+          <div class="mb-4">
+            <h4 class="text-lg font-semibold text-gray-800 mb-2">🔍 Verbeterpunten</h4>
+            <div class="space-y-2">
+              ${result.issues.map((issue: string) => `
+                <div class="bg-gray-50 border border-gray-200 rounded p-3">
+                  <p class="text-gray-800 text-sm">${issue}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `
+      }
+      
+      contentElement.innerHTML = html
+      containerElement.classList.remove('hidden')
     }
     
     // Financial save functionality
