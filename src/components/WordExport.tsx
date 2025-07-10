@@ -8,6 +8,9 @@ interface ExportData {
   sections: {
     [key: string]: string
   }
+  feedback: {
+    [key: string]: string
+  }
 }
 
 const SECTION_TITLES = {
@@ -25,6 +28,28 @@ export default function WordExport() {
   const [exportStatus, setExportStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const collectFormData = (): ExportData => {
+    const feedback: { [key: string]: string } = {}
+    
+    // Collect feedback from all sections
+    const sectionOrder = ['strategy', 'structure', 'systems', 'sharedValues', 'skills', 'style', 'staff']
+    sectionOrder.forEach(sectionKey => {
+      const feedbackElement = document.querySelector(`[data-section="${sectionKey}"] .coach-feedback-content`)
+      if (feedbackElement) {
+        // Extract text content from HTML, removing HTML tags
+        const tempDiv = document.createElement('div')
+        tempDiv.innerHTML = feedbackElement.innerHTML
+        feedback[sectionKey] = tempDiv.textContent || tempDiv.innerText || ''
+      }
+    })
+    
+    // Collect financial feedback
+    const financialFeedbackElement = document.querySelector('.coach-feedback-content')
+    if (financialFeedbackElement) {
+      const tempDiv = document.createElement('div')
+      tempDiv.innerHTML = financialFeedbackElement.innerHTML
+      feedback['financial'] = tempDiv.textContent || tempDiv.innerText || ''
+    }
+
     return {
       financialAnalysis: (document.getElementById('financial-analysis') as HTMLTextAreaElement)?.value || '',
       sections: {
@@ -35,7 +60,8 @@ export default function WordExport() {
         skills: (document.querySelector('[data-section="skills"] textarea') as HTMLTextAreaElement)?.value || '',
         style: (document.querySelector('[data-section="style"] textarea') as HTMLTextAreaElement)?.value || '',
         staff: (document.querySelector('[data-section="staff"] textarea') as HTMLTextAreaElement)?.value || ''
-      }
+      },
+      feedback
     }
   }
 
@@ -62,6 +88,18 @@ export default function WordExport() {
             text: "7S-Model van McKinsey",
             size: 32,
             color: "280F4B" // HL Donkerpaars
+          })
+        ],
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 400 }
+      }),
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: "Met AI-Coach Feedback",
+            size: 24,
+            italics: true,
+            color: "004D46"
           })
         ],
         alignment: AlignmentType.CENTER,
@@ -126,7 +164,8 @@ export default function WordExport() {
       "2.6 Style (Stijl)",
       "2.7 Staff (Personeel)",
       "3. Financiële Analyse",
-      "4. Bronnenlijst"
+      "4. AI-Coach Feedback Samenvatting",
+      "5. Bronnenlijst"
     ]
 
     tocItems.forEach(item => {
@@ -176,10 +215,19 @@ export default function WordExport() {
             size: 24
           })
         ],
+        spacing: { after: 240 }
+      }),
+      new Paragraph({
+        children: [
+          new TextRun({
+            text: "Deze analyse is ondersteund door AI-coach feedback om de kwaliteit en diepgang van de analyse te verbeteren volgens HBO-standaarden.",
+            size: 24,
+            italics: true
+          })
+        ],
         spacing: { after: 400 }
       })
     )
-
 
     // 2. 7S-Model Analyse
     children.push(
@@ -198,11 +246,14 @@ export default function WordExport() {
       })
     )
 
-    // Add each 7S section
+    // Add each 7S section with feedback
     const sectionOrder = ['strategy', 'structure', 'systems', 'sharedValues', 'skills', 'style', 'staff']
     sectionOrder.forEach((sectionKey, index) => {
       const sectionContent = data.sections[sectionKey]
+      const sectionFeedback = data.feedback[sectionKey]
+      
       if (sectionContent && sectionContent.trim()) {
+        // Section title
         children.push(
           new Paragraph({
             children: [
@@ -215,9 +266,51 @@ export default function WordExport() {
             ],
             heading: HeadingLevel.HEADING_2,
             spacing: { after: 240 }
-          }),
-          ...createParagraphsFromText(sectionContent)
+          })
         )
+        
+        // Section content
+        children.push(...createParagraphsFromText(sectionContent))
+        
+        // Add feedback if available
+        if (sectionFeedback && sectionFeedback.trim()) {
+          children.push(
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "AI-Coach Feedback:",
+                  bold: true,
+                  size: 24,
+                  color: "004D46"
+                })
+              ],
+              spacing: { after: 200, before: 400 }
+            })
+          )
+          
+          // Create feedback box
+          const feedbackParagraphs = createParagraphsFromText(sectionFeedback)
+          feedbackParagraphs.forEach(para => {
+            // Style feedback paragraphs differently
+            children.push(
+              new Paragraph({
+                children: para.children.map(child => 
+                  new TextRun({
+                    ...child,
+                    size: 22,
+                    color: "666666",
+                    italics: true
+                  })
+                ),
+                spacing: { after: 200 },
+                indent: { left: 400 },
+                border: {
+                  left: { color: "004D46", space: 1, style: "single", size: 6 }
+                }
+              })
+            )
+          })
+        }
       }
     })
 
@@ -239,14 +332,144 @@ export default function WordExport() {
         }),
         ...createParagraphsFromText(data.financialAnalysis)
       )
+      
+      // Add financial feedback if available
+      if (data.feedback.financial && data.feedback.financial.trim()) {
+        children.push(
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: "AI-Coach Feedback:",
+                bold: true,
+                size: 24,
+                color: "004D46"
+              })
+            ],
+            spacing: { after: 200, before: 400 }
+          })
+        )
+        
+        const feedbackParagraphs = createParagraphsFromText(data.feedback.financial)
+        feedbackParagraphs.forEach(para => {
+          children.push(
+            new Paragraph({
+              children: para.children.map(child => 
+                new TextRun({
+                  ...child,
+                  size: 22,
+                  color: "666666",
+                  italics: true
+                })
+              ),
+              spacing: { after: 200 },
+              indent: { left: 400 },
+              border: {
+                left: { color: "004D46", space: 1, style: "single", size: 6 }
+              }
+            })
+          )
+        })
+      }
     }
 
-    // 4. Bronnenlijst (APA Style)
+    // 4. AI-Coach Feedback Samenvatting
+    const hasFeedback = Object.values(data.feedback).some(feedback => feedback && feedback.trim())
+    if (hasFeedback) {
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: "4. AI-COACH FEEDBACK SAMENVATTING",
+              bold: true,
+              size: 32,
+              color: "004D46" // HL Donkergroen
+            })
+          ],
+          heading: HeadingLevel.HEADING_1,
+          spacing: { after: 400 },
+          pageBreakBefore: true
+        }),
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: "Deze sectie bevat een overzicht van alle AI-coach feedback die is gegenereerd tijdens het schrijfproces. Deze feedback is bedoeld om de kwaliteit van de analyse te verbeteren volgens HBO-standaarden.",
+              size: 24
+            })
+          ],
+          spacing: { after: 400 }
+        })
+      )
+
+      // Add feedback summary for each section
+      sectionOrder.forEach((sectionKey, index) => {
+        const sectionFeedback = data.feedback[sectionKey]
+        if (sectionFeedback && sectionFeedback.trim()) {
+          children.push(
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `4.${index + 1} Feedback: ${SECTION_TITLES[sectionKey as keyof typeof SECTION_TITLES]}`,
+                  bold: true,
+                  size: 24,
+                  color: "280F4B"
+                })
+              ],
+              spacing: { after: 200, before: 300 }
+            }),
+            ...createParagraphsFromText(sectionFeedback).map(para => 
+              new Paragraph({
+                children: para.children.map(child => 
+                  new TextRun({
+                    ...child,
+                    size: 22,
+                    color: "666666"
+                  })
+                ),
+                spacing: { after: 200 },
+                indent: { left: 200 }
+              })
+            )
+          )
+        }
+      })
+
+      // Add financial feedback to summary
+      if (data.feedback.financial && data.feedback.financial.trim()) {
+        children.push(
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: `4.${sectionOrder.length + 1} Feedback: Financiële Analyse`,
+                bold: true,
+                size: 24,
+                color: "280F4B"
+              })
+            ],
+            spacing: { after: 200, before: 300 }
+          }),
+          ...createParagraphsFromText(data.feedback.financial).map(para => 
+            new Paragraph({
+              children: para.children.map(child => 
+                new TextRun({
+                  ...child,
+                  size: 22,
+                  color: "666666"
+                })
+              ),
+              spacing: { after: 200 },
+              indent: { left: 200 }
+            })
+          )
+        )
+      }
+    }
+
+    // 5. Bronnenlijst (APA Style)
     children.push(
       new Paragraph({
         children: [
           new TextRun({
-            text: "4. BRONNENLIJST",
+            text: hasFeedback ? "5. BRONNENLIJST" : "4. BRONNENLIJST",
             bold: true,
             size: 32,
             color: "004D46" // HL Donkergroen
@@ -296,8 +519,8 @@ export default function WordExport() {
 
     return new Document({
       creator: "Hogeschool Leiden - Interne Analyse Coach",
-      title: "Interne Analyse - 7S Model",
-      description: "Interne analyse uitgevoerd volgens het 7S-model van McKinsey - Hogeschool Leiden",
+      title: "Interne Analyse - 7S Model met AI-Coach Feedback",
+      description: "Interne analyse uitgevoerd volgens het 7S-model van McKinsey met AI-coach feedback - Hogeschool Leiden",
       sections: [{
         properties: {
           page: {
@@ -341,7 +564,7 @@ export default function WordExport() {
     setExportStatus('idle')
 
     try {
-      // Collect all form data
+      // Collect all form data including feedback
       const formData = collectFormData()
       
       // Check if there's any content to export
@@ -370,7 +593,7 @@ export default function WordExport() {
       // Generate filename with timestamp
       const now = new Date()
       const timestamp = now.toISOString().slice(0, 16).replace('T', '_').replace(/:/g, '-')
-      link.download = `Interne_Analyse_7S_HL_${timestamp}.docx`
+      link.download = `Interne_Analyse_7S_met_Feedback_${timestamp}.docx`
       
       // Trigger download
       document.body.appendChild(link)
@@ -397,7 +620,7 @@ export default function WordExport() {
     if (isExporting) return '⏳ Exporteren...'
     if (exportStatus === 'success') return '✅ Geëxporteerd!'
     if (exportStatus === 'error') return '❌ Fout'
-    return '📄 Exporteer naar Word'
+    return '📄 Exporteer complete analyse met feedback'
   }
 
   const getButtonClass = () => {
@@ -423,45 +646,12 @@ export default function WordExport() {
         </div>
         
         <h3 className="text-4xl font-bold hl-donkergroen-text mb-8">
-          Export naar Word Document
+          Export Complete Analyse
         </h3>
         
         <p className="hl-donkerpaars-text mb-10 max-w-4xl mx-auto text-xl">
-          Exporteer je complete interne analyse naar een professioneel Word document met officiële Hogeschool Leiden huisstijl:
+          Exporteer je complete interne analyse inclusief alle AI-coach feedback naar een professioneel Word document met officiële Hogeschool Leiden huisstijl.
         </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 text-lg">
-          <div className="hl-lichtgroen-bg rounded-2xl p-8 hl-lichtgroen-border border-2">
-            <h4 className="font-bold hl-donkergroen-text mb-6 text-xl flex items-center">
-              <span className="w-10 h-10 hl-donkergroen-bg rounded-full flex items-center justify-center mr-4">
-                <span className="material-symbols-sharp hl-icon-white hl-icon-md">article</span>
-              </span>
-              Inhoud
-            </h4>
-            <ul className="space-y-3 text-left hl-donkerpaars-text">
-              <li>• Alle ingevulde 7S-secties</li>
-              <li>• Onderzoeksgegevens (interviews & enquête)</li>
-              <li>• Financiële analyse</li>
-              <li>• Gestructureerde hoofdstukken</li>
-            </ul>
-          </div>
-          
-          <div className="hl-zand-bg rounded-2xl p-8 hl-zand-border border-2">
-            <h4 className="font-bold hl-donkerpaars-text mb-6 text-xl flex items-center">
-              <span className="w-10 h-10 hl-donkerpaars-bg rounded-full flex items-center justify-center mr-4">
-                <span className="material-symbols-sharp hl-icon-white hl-icon-md">format_paint</span>
-              </span>
-              Opmaak
-            </h4>
-            <ul className="space-y-3 text-left hl-donkergroen-text">
-              <li>• Officiële Hogeschool Leiden huisstijl</li>
-              <li>• Professionele APA-stijl layout</li>
-              <li>• Inhoudsopgave</li>
-              <li>• Genummerde hoofdstukken</li>
-              <li>• Bronnenlijst in APA-formaat</li>
-            </ul>
-          </div>
-        </div>
         
         <button
           onClick={handleExport}
@@ -475,7 +665,7 @@ export default function WordExport() {
         </button>
         
         <p className="text-lg hl-donkerpaars-text mt-8">
-          💡 Het document wordt automatisch gedownload naar je Downloads map
+          💡 Het document bevat je analyse, alle AI-coach feedback en wordt automatisch gedownload
         </p>
       </div>
     </div>
