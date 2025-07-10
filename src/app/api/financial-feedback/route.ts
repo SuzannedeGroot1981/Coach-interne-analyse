@@ -20,26 +20,26 @@ export async function POST(request: NextRequest) {
 
     // Parse request data
     const body = await request.json()
-    const { financialData } = body
+    const { text } = body
 
-    if (!financialData) {
+    if (!text) {
       return NextResponse.json(
-        { error: 'Financiële gegevens zijn vereist' },
+        { error: 'Tekst is vereist' },
         { status: 400 }
       )
     }
 
     // Input validation
-    if (typeof financialData !== 'string' || financialData.length > 15000) {
+    if (typeof text !== 'string' || text.length > 15000) {
       return NextResponse.json(
-        { error: 'Financiële gegevens moeten een string zijn van maximaal 15.000 karakters' },
+        { error: 'Tekst moet een string zijn van maximaal 15.000 karakters' },
         { status: 400 }
       )
     }
 
-    if (financialData.trim().length < 50) {
+    if (text.trim().length < 50) {
       return NextResponse.json(
-        { error: 'Voer minimaal 50 karakters aan financiële gegevens in voor zinvolle feedback' },
+        { error: 'Voer minimaal 50 karakters aan financiële tekst in voor zinvolle feedback' },
         { status: 400 }
       )
     }
@@ -92,7 +92,7 @@ FOCUS OP:
     const prompt = `${systemPrompt}
 
 FINANCIËLE ANALYSE VAN DE STUDENT:
-"${financialData}"
+"${text}"
 
 Geef feedback volgens dit format:
 
