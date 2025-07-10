@@ -7,16 +7,23 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
 export async function POST(request: NextRequest) {
   try {
     // Check API key
+    console.log('🔍 Checking API key configuration...')
+    console.log('Environment variables available:', Object.keys(process.env).filter(key => key.includes('GEMINI')))
+    
     if (!process.env.GEMINI_API_KEY) {
-      console.error('GEMINI_API_KEY not found in environment variables')
+      console.error('❌ GEMINI_API_KEY not found in environment variables')
+      console.log('Available env vars:', Object.keys(process.env).slice(0, 5))
       return NextResponse.json(
         { 
-          error: 'API configuratie ontbreekt. Check Environment Variables.',
-          hint: 'Voeg GEMINI_API_KEY toe aan je environment variables'
+          error: 'Gemini API key niet gevonden. Configureer je .env.local bestand.',
+          hint: 'Maak een .env.local bestand aan met GEMINI_API_KEY=your_key_here',
+          debug: 'GEMINI_API_KEY environment variable is not set'
         }, 
         { status: 500 }
       )
     }
+    
+    console.log('✅ API key found, length:', process.env.GEMINI_API_KEY.length)
 
     // Parse request data
     const body = await request.json()
