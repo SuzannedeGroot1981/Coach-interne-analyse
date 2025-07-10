@@ -43,13 +43,24 @@ export default function WordExport() {
     })
     
     // Collect financial feedback
-    const financialFeedbackElement = document.querySelector('#financial-feedback .coach-feedback-content')
+    const financialFeedbackElement = document.querySelector('.coach-feedback-content')
     if (financialFeedbackElement) {
       const tempDiv = document.createElement('div')
       tempDiv.innerHTML = financialFeedbackElement.innerHTML
       feedback['financial'] = tempDiv.textContent || tempDiv.innerText || ''
     }
 
+    // Debug: Log what we're finding
+    console.log('Export data collection debug:', {
+      financialTextarea: !!document.getElementById('financial-analysis'),
+      financialValue: (document.getElementById('financial-analysis') as HTMLTextAreaElement)?.value?.length || 0,
+      sectionsFound: sectionOrder.map(id => ({
+        section: id,
+        element: !!document.querySelector(`[data-section="${id}"] textarea`),
+        value: (document.querySelector(`[data-section="${id}"] textarea`) as HTMLTextAreaElement)?.value?.length || 0
+      })),
+      feedbackFound: Object.keys(feedback).length
+    })
     return {
       financialAnalysis: (document.getElementById('financial-analysis') as HTMLTextAreaElement)?.value || '',
       sections: {
@@ -586,16 +597,7 @@ export default function WordExport() {
           }))
         })
         
-        // More helpful error message
-        const filledSections = Object.values(formData.sections).filter(section => section.trim().length > 0).length
-        const hasFinancial = formData.financialAnalysis.trim().length > 0
-        
-        if (filledSections === 0 && !hasFinancial) {
-          alert('Er is geen inhoud om te exporteren. Vul eerst enkele secties in bij de tabs "Harde S\'en", "Zachte S\'en" of "Financiële Analyse".')
-        } else {
-          // This shouldn't happen, but if it does, continue with export
-          console.log('Content found but export was blocked. Continuing with export...')
-        }
+        alert('Er is geen inhoud om te exporteren. Vul eerst enkele secties in bij de tabs "Harde S\'en", "Zachte S\'en" of "Financiële Analyse".')
         return
       }
 
