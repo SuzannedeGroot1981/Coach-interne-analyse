@@ -56,7 +56,7 @@ export default function FinancialFeedbackButtons() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          text: financialText.trim()
+          financialData: financialText.trim()
         }),
       })
       
