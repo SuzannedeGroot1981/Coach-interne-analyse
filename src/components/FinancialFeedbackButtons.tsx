@@ -50,14 +50,13 @@ export default function FinancialFeedbackButtons() {
     setFeedback('')
 
     try {
-      const response = await fetch('/api/feedback', {
+      const response = await fetch('/api/financial-feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          text: financialText.trim(),
-          element: 'financial'
+          text: financialText.trim()
         }),
       })
       

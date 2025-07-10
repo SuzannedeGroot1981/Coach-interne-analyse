@@ -110,7 +110,7 @@ export default function TabContent({ activeTab }: TabContentProps) {
                 Financiële Analyse
               </h2>
               <p className="text-lg hl-donkerpaars-text max-w-3xl mx-auto">
-                Voer hier de financiële cijfers in over rentabiliteit, liquiditeit en solvabiliteit. De coach gebruikt deze gegevens voor een complete interne analyse.
+                Maak een financiële analyse op basis van het jaarverslag. Vergelijk minimaal twee opeenvolgende jaren en beoordeel of de organisatie financieel "in control" is.
               </p>
             </div>
 
@@ -122,13 +122,13 @@ export default function TabContent({ activeTab }: TabContentProps) {
                 Financiële Cijfers & Ratio's
               </h4>
               <p className="hl-donkerpaars-text mb-6">
-                Voer je financiële analyse in inclusief cijfers over rentabiliteit, liquiditeit en solvabiliteit.
+                Analyseer de financiële situatie op basis van jaarverslagen van minimaal 2 jaren. Beschrijf trends, ontwikkelingen en of de organisatie financieel gezond is.
               </p>
               <textarea
                 id="financial-analysis"
                 className="hl-textarea w-full"
                 rows={10}
-                placeholder="Bijvoorbeeld:&#10;&#10;RENTABILITEIT:&#10;- ROI (Return on Investment): 12,5%&#10;- ROE (Return on Equity): 18,2%&#10;- Netto winstmarge: 8,7%&#10;- Bruto winstmarge: 35,4%&#10;&#10;LIQUIDITEIT:&#10;- Current ratio: 1,8&#10;- Quick ratio: 1,2&#10;- Cash ratio: 0,4&#10;&#10;SOLVABILITEIT:&#10;- Debt-to-equity ratio: 0,6&#10;- Equity ratio: 62,5%&#10;- Interest coverage ratio: 4,2&#10;&#10;OVERIGE FINANCIËLE INDICATOREN:&#10;- Omzetgroei: +7,3% (YoY)&#10;- EBITDA marge: 15,8%"
+                placeholder="Bijvoorbeeld:&#10;&#10;MEERJARIGE VERGELIJKING (2022-2023):&#10;- Omzet: €45M (2022) → €48M (2023) = +6,7% groei&#10;- Resultaat: €2,1M (2022) → €2,8M (2023) = +33% verbetering&#10;- Eigen vermogen: €12M → €14M = versterking balans&#10;&#10;FINANCIËLE GEZONDHEID:&#10;- Current ratio: 1,8 (gezond, >1,5)&#10;- Solvabiliteit: 62% (sterk, >40%)&#10;- Rentabiliteit: 5,8% netto marge (goed voor sector)&#10;&#10;INTERVIEW FINANCIEEL ADVISEUR:&#10;Controller Jan Jansen (15-11-2024) bevestigt dat...&#10;&#10;TRENDS & TOEKOMST:&#10;- Positieve ontwikkeling door efficiency verbeteringen&#10;- Verwachting: stabiele groei komende 3 jaar&#10;- Risico's: stijgende personeelskosten&#10;&#10;CONCLUSIE:&#10;De organisatie is financieel 'in control' door..."
                 maxLength={15000}
               />
               <div className="mt-3 text-sm text-hl-gray-500 text-right">
@@ -165,8 +165,8 @@ export default function TabContent({ activeTab }: TabContentProps) {
                   <span className="material-symbols-sharp hl-icon-primary hl-icon-sm">tips_and_updates</span>
                 </span>
                 <span>
-                  <strong>Tip:</strong> Voer concrete cijfers en percentages in. Hoe specifieker je bent, hoe beter de AI-coach je kan helpen 
-                  de financiële begrippen uit te leggen in de context van jouw organisatie.
+                  <strong>Toetsopdracht:</strong> Vergelijk minimaal 2 opeenvolgende jaren, interview een financieel adviseur, 
+                  beschrijf trends en beoordeel of de organisatie financieel "in control" is. Voeg balans en resultaatrekening toe aan bijlagen.
                 </span>
               </p>
             </div>
