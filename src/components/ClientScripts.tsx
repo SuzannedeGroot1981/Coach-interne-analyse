@@ -213,6 +213,135 @@ export default function ClientScripts() {
       feedbackButton.addEventListener('click', handleFeedbackClick)
     }
     
+    // Add chat functionality for financial feedback
+    const addFinancialChatButton = () => {
+      const feedbackDiv = document.getElementById('financial-feedback')
+      const feedbackContent = document.getElementById('financial-feedback-content')
+      
+      if (feedbackDiv && feedbackContent && !feedbackDiv.classList.contains('hidden')) {
+        // Check if chat button already exists
+        if (!feedbackDiv.querySelector('.financial-chat-button')) {
+          const chatButton = document.createElement('button')
+          chatButton.className = 'financial-chat-button mt-4 px-4 py-2 hl-lichtgroen-bg hl-donkergroen-text rounded-lg hover:opacity-80 transition-all duration-200 flex items-center space-x-2 border-2 hl-lichtgroen-border'
+          chatButton.innerHTML = '<span class="material-symbols-sharp hl-icon-sm">chat</span><span>💬 Stel een vraag over deze feedback</span>'
+          
+          chatButton.addEventListener('click', () => {
+            // Create a simple chat interface for financial feedback
+            const chatContainer = document.createElement('div')
+            chatContainer.className = 'mt-6 hl-lichtgroen-bg rounded-xl border-2 hl-lichtgroen-border overflow-hidden'
+            chatContainer.innerHTML = `
+              <div class="hl-donkergroen-bg text-white p-4 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                    <span class="material-symbols-sharp text-white hl-icon-sm">psychology</span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-lg">Chat met je Coach</h4>
+                    <p class="text-sm opacity-90">Stel vragen over je financiële analyse feedback</p>
+                  </div>
+                </div>
+                <button class="close-chat text-white hover:bg-white hover:bg-opacity-20 rounded-lg p-2 transition-colors">
+                  <span class="material-symbols-sharp hl-icon-sm">close</span>
+                </button>
+              </div>
+              <div class="p-4 bg-white">
+                <p class="hl-donkergroen-text mb-4">💬 <strong>Coach:</strong> Hallo! Ik heb feedback gegeven op je financiële analyse. Heb je vragen over specifieke punten? Stel gerust je vraag!</p>
+                <div class="flex items-end space-x-2">
+                  <textarea class="chat-input flex-1 p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" rows="2" placeholder="Stel een vraag over de feedback..." maxlength="1000"></textarea>
+                  <button class="send-chat px-4 py-3 hl-donkergroen-bg text-white rounded-lg hover:opacity-90 transition-colors">
+                    <span class="material-symbols-sharp hl-icon-white hl-icon-sm">send</span>
+                  </button>
+                </div>
+                <div class="mt-2 text-xs text-gray-600">💡 Tip: Vraag bijvoorbeeld "Kun je uitleggen wat je bedoelt met..." of "Hoe kan ik dit verbeteren?"</div>
+              </div>
+            `
+            
+            // Add event listeners
+            const closeButton = chatContainer.querySelector('.close-chat')
+            const sendButton = chatContainer.querySelector('.send-chat')
+            const chatInput = chatContainer.querySelector('.chat-input') as HTMLTextAreaElement
+            
+            closeButton?.addEventListener('click', () => {
+              chatContainer.remove()
+              chatButton.style.display = 'flex'
+            })
+            
+            const sendMessage = async () => {
+              const message = chatInput.value.trim()
+              if (!message) return
+              
+              // Add user message to chat
+              const messagesContainer = chatContainer.querySelector('.p-4.bg-white')
+              const userMessage = document.createElement('div')
+              userMessage.className = 'mt-4 text-right'
+              userMessage.innerHTML = `<div class="inline-block bg-gray-100 text-gray-800 rounded-lg p-3 max-w-[80%]"><strong>Jij:</strong> ${message}</div>`
+              messagesContainer?.appendChild(userMessage)
+              
+              chatInput.value = ''
+              
+              // Show loading
+              const loadingMessage = document.createElement('div')
+              loadingMessage.className = 'mt-4'
+              loadingMessage.innerHTML = `<div class="hl-lichtgroen-bg hl-donkergroen-text rounded-lg p-3 max-w-[80%]"><strong>Coach:</strong> <span class="animate-pulse">Denkt na...</span></div>`
+              messagesContainer?.appendChild(loadingMessage)
+              
+              try {
+                // Get financial text and feedback for context
+                const financialText = (document.getElementById('financial-analysis') as HTMLTextAreaElement)?.value || ''
+                const originalFeedback = feedbackContent.textContent || ''
+                
+                const chatContext = `
+CONTEXT: Student vraagt over feedback voor financiële analyse
+Originele tekst: "${financialText.substring(0, 1000)}"
+Gegeven feedback: "${originalFeedback.substring(0, 1000)}"
+Student vraag: ${message}
+
+Geef een korte, behulpzame reactie als HBO-docent. Max 200 woorden.`
+
+                const response = await fetch('/api/chat', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    message: chatContext,
+                    aiModel: 'smart'
+                  })
+                })
+                
+                if (response.ok) {
+                  const data = await response.json()
+                  loadingMessage.innerHTML = `<div class="hl-lichtgroen-bg hl-donkergroen-text rounded-lg p-3 max-w-[80%]"><strong>Coach:</strong> ${data.response}</div>`
+                } else {
+                  loadingMessage.innerHTML = `<div class="hl-lichtgroen-bg hl-donkergroen-text rounded-lg p-3 max-w-[80%]"><strong>Coach:</strong> Sorry, er ging iets mis. Probeer je vraag opnieuw.</div>`
+                }
+              } catch (error) {
+                loadingMessage.innerHTML = `<div class="hl-lichtgroen-bg hl-donkergroen-text rounded-lg p-3 max-w-[80%]"><strong>Coach:</strong> Sorry, er ging iets mis. Probeer je vraag opnieuw.</div>`
+              }
+              
+              // Scroll to bottom
+              messagesContainer?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+            }
+            
+            sendButton?.addEventListener('click', sendMessage)
+            chatInput?.addEventListener('keypress', (e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault()
+                sendMessage()
+              }
+            })
+            
+            // Replace chat button with chat interface
+            chatButton.style.display = 'none'
+            feedbackDiv.appendChild(chatContainer)
+          })
+          
+          feedbackDiv.appendChild(chatButton)
+        }
+      }
+    }
+    
+    // Check for feedback display every 2 seconds to add chat button
+    setInterval(addFinancialChatButton, 2000)
+    
     // Financial APA check functionality
     if (apaCheckButton && financialTextarea && apaFeedbackDiv && apaFeedbackContent) {
       const handleApaCheckClick = async () => {
