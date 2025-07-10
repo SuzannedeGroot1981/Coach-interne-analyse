@@ -248,22 +248,24 @@ export default function TabContent({ activeTab }: TabContentProps) {
                       
                       if (!button || !apaFeedbackDiv || !apaFeedbackContent) return
                       
-                      // Use the improved feedback API directly
-                      const response = await fetch('/api/feedback', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          text: financialData,
-                          element: 'financial'
-                        }),
-                      })
-                      
-                      if (!response.ok) {
-                        const errorData = await response.json()
-                        throw new Error(errorData.error || 'Er is een fout opgetreden')
-                      }
-                      
-                      const data = await response.json()
+                      try {
+                        // Use the improved feedback API directly
+                        const response = await fetch('/api/feedback', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            text: financialData,
+                            element: 'financial'
+                          }),
+                        })
+                        
+                        if (!response.ok) {
+                          const errorData = await response.json()
+                          throw new Error(errorData.error || 'Er is een fout opgetreden')
+                        }
+                        
+                        const data = await response.json()
+                      } catch (error) {
                         console.error('Financial APA check error:', error)
                         alert('Fout bij APA-controle: ' + (error as Error).message)
                       } finally {
