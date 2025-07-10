@@ -88,8 +88,8 @@ FOCUS OP:
 - Toekomstperspectief
 - Kritische analyse`
 
-    // Create the prompt with student's financial data
-    const prompt = `${systemPrompt}
+    // Create the detailed prompt with student's financial data
+    const detailedPrompt = `${systemPrompt}
 
 FINANCIËLE ANALYSE VAN DE STUDENT:
 "${text}"
@@ -112,10 +112,86 @@ Geef feedback volgens dit format:
 
 Focus op meerjarige vergelijking, financiële gezondheid, interview integratie en toekomstperspectief. Max 400 woorden.`
 
-    // Generate feedback
-    const result = await model.generateContent(prompt)
-    const response = await result.response
-    const feedback = response.text()
+    // Function to validate feedback response
+    const isValidFeedback = (feedback: string): boolean => {
+      return feedback && 
+             feedback.trim().length > 50 && 
+             !feedback.includes('I cannot') && 
+             !feedback.includes('I\'m unable') &&
+             !feedback.includes('I can\'t')
+    }
+
+    // Function to generate fallback feedback
+    const generateFallbackFeedback = (): string => {
+      return `## 👍 Sterke punten in je financiële analyse
+Je hebt een begin gemaakt met de financiële analyse. Dit is een goede eerste stap.
+
+## 📊 Wat ontbreekt voor HBO-niveau
+Voor een volledige HBO-niveau analyse zijn er nog enkele belangrijke elementen nodig:
+- Meerjarige vergelijking (minimaal 2 opeenvolgende jaren)
+- Diepere analyse van financiële gezondheid
+- Integratie van interview met financieel adviseur
+- Toekomstperspectief en trends
+
+## 🎯 Concrete verbeteracties
+1. **Voeg meerjarige data toe** - Vergelijk cijfers van minimaal 2 opeenvolgende jaren
+2. **Analyseer financiële ratio's** - Bereken en interpreteer liquiditeit, solvabiliteit en rentabiliteit
+3. **Integreer interview** - Bespreek je bevindingen met een financieel adviseur
+
+## 💡 Tips voor financiële analyse
+Focus op de ontwikkeling over tijd, niet alleen op absolute cijfers. Zoek naar patronen en trends die iets zeggen over de financiële stabiliteit van de organisatie.`
+    }
+
+    let feedback = ''
+
+    try {
+      // First attempt with detailed prompt
+      console.log('Attempting detailed financial feedback generation...')
+      const result = await model.generateContent(detailedPrompt)
+      const response = await result.response
+      feedback = response.text()
+
+      // Validate the response
+      if (!isValidFeedback(feedback)) {
+        console.log('First attempt produced invalid feedback, trying simplified prompt...')
+        
+        // Second attempt with simplified prompt
+        const simplifiedPrompt = `Als HBO-docent financieel management, geef korte feedback op deze financiële analyse:
+
+"${text}"
+
+Geef feedback in dit format:
+## Sterke punten
+[Wat is goed]
+
+## Verbeterpunten  
+[Wat kan beter]
+
+## Concrete tips
+[3 praktische tips]
+
+Houd het kort en constructief.`
+
+        const retryResult = await model.generateContent(simplifiedPrompt)
+        const retryResponse = await retryResult.response
+        const retryFeedback = retryResponse.text()
+
+        if (isValidFeedback(retryFeedback)) {
+          feedback = retryFeedback
+        } else {
+          console.log('Second attempt also failed, using fallback feedback')
+          feedback = generateFallbackFeedback()
+        }
+      }
+    } catch (generationError) {
+      console.error('Error during feedback generation:', generationError)
+      feedback = generateFallbackFeedback()
+    }
+
+    // Final validation - ensure we always have feedback
+    if (!feedback || feedback.trim().length < 20) {
+      feedback = generateFallbackFeedback()
+    }
 
     return NextResponse.json({ 
       feedback,
@@ -128,13 +204,27 @@ Focus op meerjarige vergelijking, financiële gezondheid, interview integratie e
     
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     
+    // Even in error cases, provide fallback feedback instead of just error
+    const fallbackFeedback = `## Feedback niet beschikbaar
+Er is een technische fout opgetreden bij het genereren van feedback. 
+
+## Algemene tips voor financiële analyse
+- Vergelijk minimaal 2 opeenvolgende jaren
+- Analyseer trends en ontwikkelingen
+- Interview een financieel adviseur
+- Focus op financiële gezondheid van de organisatie
+
+Probeer het later opnieuw of neem contact op met je docent.`
+    
     return NextResponse.json(
       { 
+        feedback: fallbackFeedback,
+        success: false,
         error: 'Er is een fout opgetreden bij het genereren van feedback',
         details: errorMessage,
         timestamp: new Date().toISOString()
       },
-      { status: 500 }
+      { status: 200 } // Return 200 instead of 500 so frontend gets the fallback feedback
     )
   }
 }
