@@ -2,6 +2,7 @@
 
 import FeedbackSection from './FeedbackSection'
 import WordExport from './WordExport'
+import FinancialFeedbackButtons from './FinancialFeedbackButtons'
 
 interface TabContentProps {
   activeTab: string
@@ -136,64 +137,7 @@ export default function TabContent({ activeTab }: TabContentProps) {
               
               <div className="mt-8">
                 <div className="flex items-center flex-wrap gap-4">
-                  <button
-                    id="financial-feedback-button"
-                    className="hl-button-primary flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <span className="material-symbols-sharp hl-icon-white hl-icon-sm">forum</span>
-                    <span>Vraag feedback aan de coach</span>
-                  </button>
-                  
-                  <button
-                    id="financial-apa-button"
-                    className="hl-button-secondary flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <span className="material-symbols-sharp hl-icon-white hl-icon-sm">menu_book</span>
-                    <span>Self-check APA</span>
-                  </button>
-                </div>
-              </div>
-              
-              {/* Feedback displays */}
-              <div id="financial-feedback" className="hidden mt-8 hl-info rounded-xl p-8">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 hl-donkerpaars-bg text-white rounded-full flex items-center justify-center mr-6">
-                    <span className="material-symbols-sharp hl-icon-white hl-icon-md">school</span>
-                  </div>
-                  <h5 className="text-xl font-bold hl-donkerpaars-text">
-                    Feedback van je Coach
-                  </h5>
-                </div>
-                <div id="financial-feedback-content" className="prose prose-lg max-w-none hl-donkergroen-text">
-                </div>
-                <div className="mt-6 pt-6 border-t hl-donkerpaars-border">
-                  <p className="text-sm hl-donkerpaars-text flex items-center">
-                    <span className="w-6 h-6 hl-lichtgroen-bg rounded-full flex items-center justify-center mr-3">
-                      <span className="hl-donkergroen-text text-sm">✓</span>
-                    </span>
-                    Feedback gegenereerd door AI-coach • Gebaseerd op HBO-beoordelingscriteria
-                  </p>
-                </div>
-              </div>
-              
-              <div id="financial-apa-feedback" className="hidden mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl border-2 border-purple-200 p-8">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center mr-6">
-                    <span className="material-symbols-sharp hl-icon-white hl-icon-md">library_books</span>
-                  </div>
-                  <h5 className="text-xl font-bold text-purple-800">
-                    APA-stijl Controle - Financiële Analyse
-                  </h5>
-                </div>
-                <div id="financial-apa-feedback-content" className="prose prose-lg max-w-none text-purple-700">
-                </div>
-                <div className="mt-6 pt-6 border-t border-purple-200">
-                  <p className="text-sm text-purple-600 flex items-center">
-                    <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-3">
-                      <span className="text-purple-600 text-sm">📚</span>
-                    </span>
-                    APA-controle door AI • Gebaseerd op APA 7e editie richtlijnen
-                  </p>
+                  <FinancialFeedbackButtons />
                 </div>
               </div>
               
