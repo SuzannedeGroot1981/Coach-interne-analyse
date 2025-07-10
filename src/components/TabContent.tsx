@@ -137,91 +137,7 @@ export default function TabContent({ activeTab }: TabContentProps) {
               <div className="mt-8">
                 <div className="flex items-center flex-wrap gap-4">
                   <button
-                    onClick={async () => {
-                      const financialData = (document.getElementById('financial-analysis') as HTMLTextAreaElement)?.value?.trim()
-                      
-                      if (!financialData) {
-                        alert('Voer eerst financiële gegevens in voordat je feedback vraagt.')
-                        return
-                      }
-                      
-                      if (financialData.length < 50) {
-                        alert('Voer minimaal 50 karakters aan financiële gegevens in voor zinvolle feedback.')
-                        return
-                      }
-                      
-                      const button = document.getElementById('financial-feedback-button') as HTMLButtonElement
-                      const feedbackDiv = document.getElementById('financial-feedback')
-                      const feedbackContent = document.getElementById('financial-feedback-content')
-                      
-                      if (!button || !feedbackDiv || !feedbackContent) return
-                      
-                      // Loading state
-                      button.disabled = true
-                      button.innerHTML = '<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>Coach analyseert...'
-                      
-                      try {
-                        // Try coach API first, fallback to feedback API
-                        let response
-                        let data
-                        
-                        try {
-                          response = await fetch('/api/coach', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                              tekst: financialData,
-                              stapId: 'financial'
-                            }),
-                          })
-                          
-                          if (response.ok) {
-                            data = await response.json()
-                          } else {
-                            throw new Error('Coach API failed')
-                          }
-                        } catch (coachError) {
-                          // Fallback to feedback API
-                          response = await fetch('/api/feedback', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                              text: financialData,
-                              element: 'financial'
-                            }),
-                          })
-                          
-                          if (!response.ok) {
-                            const errorData = await response.json()
-                            throw new Error(errorData.error || 'Er is een fout opgetreden')
-                          }
-                          
-                          data = await response.json()
-                        }
-                        
-                        // Format and display feedback
-                        const formattedFeedback = data.feedback
-                          .replace(/## (.*)/g, '<h3 class="text-lg font-semibold text-gray-800 mt-4 mb-2">$1</h3>')
-                          .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
-                          .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
-                          .replace(/\n\n/g, '</p><p class="mb-2">')
-                          .replace(/\n/g, '<br />')
-                        
-                        feedbackContent.innerHTML = '<p class="mb-2">' + formattedFeedback + '</p>'
-                        feedbackDiv.classList.remove('hidden')
-                        
-                        // Scroll to feedback
-                        feedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                        
-                      } catch (error) {
-                        console.error('Financial feedback error:', error)
-                        alert('Fout bij het ophalen van feedback: ' + (error as Error).message)
-                      } finally {
-                        // Reset button
-                        button.disabled = false
-                        button.innerHTML = '<span class="material-symbols-sharp hl-icon-white hl-icon-sm">forum</span><span>Vraag feedback aan de coach</span>'
-                      }
-                    }}
+                    id="financial-feedback-button"
                     className="hl-button-primary flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <span className="material-symbols-sharp hl-icon-white hl-icon-sm">forum</span>
@@ -229,51 +145,7 @@ export default function TabContent({ activeTab }: TabContentProps) {
                   </button>
                   
                   <button
-                    onClick={async () => {
-                      const financialData = (document.getElementById('financial-analysis') as HTMLTextAreaElement)?.value?.trim()
-                      
-                      if (!financialData) {
-                        alert('Voer eerst financiële gegevens in voordat je APA-controle vraagt.')
-                        return
-                      }
-                      
-                      if (financialData.length < 20) {
-                        alert('Voer minimaal 20 karakters aan financiële gegevens in voor APA-controle.')
-                        return
-                      }
-                      
-                      const button = document.getElementById('financial-apa-button') as HTMLButtonElement
-                      const apaFeedbackDiv = document.getElementById('financial-apa-feedback')
-                      const apaFeedbackContent = document.getElementById('financial-apa-feedback-content')
-                      
-                      if (!button || !apaFeedbackDiv || !apaFeedbackContent) return
-                      
-                      try {
-                        // Use the improved feedback API directly
-                        const response = await fetch('/api/feedback', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({
-                            text: financialData,
-                            element: 'financial'
-                          }),
-                        })
-                        
-                        if (!response.ok) {
-                          const errorData = await response.json()
-                          throw new Error(errorData.error || 'Er is een fout opgetreden')
-                        }
-                        
-                        const data = await response.json()
-                      } catch (error) {
-                        console.error('Financial APA check error:', error)
-                        alert('Fout bij APA-controle: ' + (error as Error).message)
-                      } finally {
-                        // Reset button
-                        button.disabled = false
-                        button.innerHTML = '<span class="material-symbols-sharp hl-icon-white hl-icon-sm">menu_book</span><span>Self-check APA</span>'
-                      }
-                    }}
+                    id="financial-apa-button"
                     className="hl-button-secondary flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <span className="material-symbols-sharp hl-icon-white hl-icon-sm">menu_book</span>
