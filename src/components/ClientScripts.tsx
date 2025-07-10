@@ -417,8 +417,12 @@ Geef een korte, behulpzame reactie als HBO-docent. Max 200 woorden.`
       }
       
       // Add the event listener (remove any existing first)
-      apaCheckButton.onclick = null
-      apaCheckButton.addEventListener('click', handleApaCheckClick)
+      // Remove any existing event listeners
+      const newButton = apaCheckButton.cloneNode(true) as HTMLButtonElement
+      apaCheckButton.parentNode?.replaceChild(newButton, apaCheckButton)
+      
+      // Add fresh event listener
+      newButton.addEventListener('click', handleApaCheckClick)
       
       console.log('✅ APA check event listener added to financial button')
     }

@@ -267,6 +267,7 @@ export default function FeedbackSection({
           onClick={handleApaCheck}
           disabled={isApaLoading || !text.trim() || text.trim().length < 20}
           className="hl-button-secondary disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+          type="button"
         >
           {isApaLoading ? (
             <>
@@ -308,7 +309,7 @@ export default function FeedbackSection({
 
       {/* APA Feedback Display */}
       {apaFeedback && showApaFeedback && (
-        <div className="apa-feedback-display mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8 border-2 border-purple-200">
+        <div className="apa-feedback-display mt-8 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8 border-2 border-purple-200" data-section={element}>
           <div className="flex items-center mb-6">
             <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mr-6">
               <span className="material-symbols-sharp hl-icon-white hl-icon-md">library_books</span>
