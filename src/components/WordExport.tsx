@@ -43,7 +43,7 @@ export default function WordExport() {
     })
     
     // Collect financial feedback
-    const financialFeedbackElement = document.querySelector('.coach-feedback-content')
+    const financialFeedbackElement = document.querySelector('#financial-feedback .coach-feedback-content')
     if (financialFeedbackElement) {
       const tempDiv = document.createElement('div')
       tempDiv.innerHTML = financialFeedbackElement.innerHTML
@@ -572,7 +572,30 @@ export default function WordExport() {
                         Object.values(formData.sections).some(section => section.trim().length > 0)
 
       if (!hasContent) {
-        alert('Er is geen inhoud om te exporteren. Vul eerst enkele secties in.')
+        // Debug: Show what was found
+        console.log('Export data check:', {
+          financialAnalysis: formData.financialAnalysis?.length || 0,
+          sections: Object.entries(formData.sections).map(([key, value]) => ({
+            section: key,
+            length: value?.length || 0,
+            hasContent: (value?.trim().length || 0) > 0
+          })),
+          feedback: Object.entries(formData.feedback).map(([key, value]) => ({
+            section: key,
+            length: value?.length || 0
+          }))
+        })
+        
+        // More helpful error message
+        const filledSections = Object.values(formData.sections).filter(section => section.trim().length > 0).length
+        const hasFinancial = formData.financialAnalysis.trim().length > 0
+        
+        if (filledSections === 0 && !hasFinancial) {
+          alert('Er is geen inhoud om te exporteren. Vul eerst enkele secties in bij de tabs "Harde S\'en", "Zachte S\'en" of "Financiële Analyse".')
+        } else {
+          // This shouldn't happen, but if it does, continue with export
+          console.log('Content found but export was blocked. Continuing with export...')
+        }
         return
       }
 
