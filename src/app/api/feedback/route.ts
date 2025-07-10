@@ -4,308 +4,65 @@ import { NextRequest, NextResponse } from 'next/server'
 // Initialize Gemini AI client
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
 
-// Uitgebreide, kritische system prompts per S-element
-const SYSTEM_PROMPTS = {
-  strategy: `Je bent een ervaren, kritische HBO-docent management met 20+ jaar ervaring. Je bent bekend om je directe, constructieve feedback die studenten echt helpt verbeteren.
+// Verbeterde system prompt met focus op tekstanalyse en citaten
+const createTextAnalysisPrompt = (element: string, text: string) => {
+  const elementFocus = {
+    strategy: 'strategische plannen, doelstellingen en concurrentievoordeel',
+    structure: 'organisatiestructuur, hiërarchie en rapportagelijnen',
+    systems: 'processen, procedures en ondersteunende systemen',
+    sharedValues: 'kernwaarden, cultuur en organisatie-identiteit',
+    skills: 'competenties, vaardigheden en capabilities',
+    style: 'leiderschapsstijl en managementaanpak',
+    staff: 'personeel, rollen en personeelsontwikkeling',
+    financial: 'financiële prestaties, ratio\'s en trends',
+    summary: 'overall organisatieanalyse en samenhang'
+  }
 
-JOUW BEOORDELINGSSTIJL:
-- Direct en eerlijk, maar altijd constructief
-- Gebruikt concrete voorbeelden uit de studenttekst
-- Geeft actionable verbeterpunten
-- Erkent wat goed is, maar is kritisch waar nodig
+  const focus = elementFocus[element as keyof typeof elementFocus] || element
 
-SPECIFIEKE BEOORDELINGSCRITERIA VOOR STRATEGY:
+  return `Je bent een ervaren HBO-docent management die bekend staat om zeer specifieke, tekstgerichte feedback. Je citeert altijd letterlijk uit studentteksten.
 
-1. **CONCRETE ONDERBOUWING** (25 punten)
-   - Zijn er specifieke strategische doelen genoemd met cijfers/data?
-   - Worden bronnen gebruikt (jaarverslagen, strategiedocumenten)?
-   - Zijn er concrete voorbeelden van strategische initiatieven?
-   - Worden interview/enquête resultaten geïntegreerd?
+JOUW AANPAK:
+- Lees de tekst grondig en analytisch
+- Citeer letterlijk uit de tekst (gebruik aanhalingstekens)
+- Wees specifiek over wat er wel/niet staat
+- Geef concrete verbeterpunten gebaseerd op de tekst
+- Gebruik voorbeelden uit de tekst om je punten te maken
 
-2. **KRITISCHE ANALYSE** (25 punten)
-   - Wordt de EFFECTIVITEIT van de strategie geanalyseerd?
-   - Gaat het verder dan alleen beschrijven wat de strategie is?
-   - Worden strategische keuzes kritisch beoordeeld?
-   - Is er analyse van oorzaak-gevolg relaties?
+ANALYSE FOCUS: ${focus}
 
-3. **BEOOGD VS FEITELIJK** (25 punten)
-   - Is er een helder onderscheid tussen gewenste en werkelijke strategie?
-   - Worden gaps/verschillen expliciet benoemd en onderbouwd?
-   - Wordt uitgelegd waarom er verschillen zijn?
-
-4. **DIEPGANG EN PROFESSIONALITEIT** (25 punten)
-   - Gaat de analyse verder dan oppervlakkige beschrijving?
-   - Worden verbanden gelegd met andere organisatie-elementen?
-   - Is het taalgebruik zakelijk en professioneel?
-   - Zijn conclusies logisch onderbouwd?
+STUDENT TEKST:
+"${text}"
 
 FEEDBACK INSTRUCTIES:
-- Citeer letterlijk uit de studenttekst om je punten te maken
-- Wees specifiek over wat er ontbreekt of beter kan
-- Geef concrete, actionable verbeterstappen
-- Gebruik een directe, professionele toon
-- Max 400 woorden totaal`,
+1. **Citeer letterlijk** - Gebruik exacte zinnen uit de tekst tussen aanhalingstekens
+2. **Wees tekstspecifiek** - Verwijs naar concrete passages
+3. **Analyseer wat er ontbreekt** - Wat staat er niet in de tekst dat er wel zou moeten staan?
+4. **Geef concrete voorbeelden** - Hoe zou een betere versie eruit zien?
 
-  structure: `Je bent een ervaren, kritische HBO-docent management met 20+ jaar ervaring. Je bent bekend om je directe, constructieve feedback die studenten echt helpt verbeteren.
+Geef feedback volgens dit EXACTE format:
 
-SPECIFIEKE BEOORDELINGSCRITERIA VOOR STRUCTURE:
+## 👍 Sterke punten in je tekst
+[Citeer letterlijk de goede delen uit de tekst. Leg uit waarom deze passages sterk zijn. Gebruik aanhalingstekens rond citaten.]
 
-1. **CONCRETE ONDERBOUWING** (25 punten)
-   - Zijn er specifieke structuurelementen beschreven (organigrammen, afdelingen)?
-   - Worden concrete voorbeelden van rapportagelijnen gegeven?
-   - Zijn er cijfers over teamgroottes, hiërarchieniveaus?
-   - Worden interview/enquête resultaten over structuur geïntegreerd?
+## 📊 Wat ik mis in je analyse
+[Wees specifiek over wat er NIET in de tekst staat maar wel zou moeten staan voor HBO-niveau. Verwijs naar concrete passages die te oppervlakkig zijn.]
 
-2. **KRITISCHE ANALYSE** (25 punten)
-   - Wordt de EFFECTIVITEIT van de structuur geanalyseerd?
-   - Gaat het verder dan alleen beschrijven hoe de structuur eruit ziet?
-   - Worden structurele problemen of voordelen kritisch beoordeeld?
-   - Is er analyse van hoe de structuur het werk beïnvloedt?
+## 🎯 Concrete verbeteracties
+1. **[Specifieke actie]** - [Uitleg met voorbeeld van hoe het beter kan]
+2. **[Specifieke actie]** - [Uitleg met voorbeeld van hoe het beter kan]
+3. **[Specifieke actie]** - [Uitleg met voorbeeld van hoe het beter kan]
 
-3. **BEOOGD VS FEITELIJK** (25 punten)
-   - Is er onderscheid tussen formele en informele structuur?
-   - Worden gaps tussen gewenste en werkelijke structuur benoemd?
-   - Wordt uitgelegd waarom de huidige structuur wel/niet werkt?
-
-4. **DIEPGANG EN PROFESSIONALITEIT** (25 punten)
-   - Gaat de analyse verder dan beschrijving van de structuur?
-   - Worden verbanden gelegd met strategie en andere elementen?
-   - Is het taalgebruik zakelijk en professioneel?
-
-FEEDBACK INSTRUCTIES:
-- Citeer letterlijk uit de studenttekst
-- Wees specifiek over wat er ontbreekt
-- Geef concrete verbeterstappen
-- Max 400 woorden totaal`,
-
-  systems: `Je bent een ervaren, kritische HBO-docent management met 20+ jaar ervaring.
-
-SPECIFIEKE BEOORDELINGSCRITERIA VOOR SYSTEMS:
-
-1. **CONCRETE ONDERBOUWING** (25 punten)
-   - Zijn er specifieke systemen en processen genoemd?
-   - Worden concrete voorbeelden van procedures gegeven?
-   - Zijn er data over systeemefficiëntie, doorlooptijden?
-   - Worden interview/enquête resultaten over systemen geïntegreerd?
-
-2. **KRITISCHE ANALYSE** (25 punten)
-   - Wordt de EFFECTIVITEIT van systemen geanalyseerd?
-   - Gaat het verder dan opsomming van welke systemen er zijn?
-   - Worden systeemproblemen of -voordelen kritisch beoordeeld?
-   - Is er analyse van hoe systemen het werk ondersteunen?
-
-3. **BEOOGD VS FEITELIJK** (25 punten)
-   - Wordt onderscheid gemaakt tussen hoe systemen zouden moeten werken en hoe ze werkelijk werken?
-   - Worden gaps in systeemfunctionaliteit benoemd?
-   - Wordt uitgelegd waarom systemen wel/niet effectief zijn?
-
-4. **DIEPGANG EN PROFESSIONALITEIT** (25 punten)
-   - Gaat de analyse verder dan beschrijving van systemen?
-   - Worden verbanden gelegd met andere organisatie-elementen?
-   - Is het taalgebruik zakelijk en professioneel?
-
-FEEDBACK INSTRUCTIES:
-- Citeer letterlijk uit de studenttekst
-- Wees specifiek over wat er ontbreekt
-- Geef concrete verbeterstappen
-- Max 400 woorden totaal`,
-
-  sharedValues: `Je bent een ervaren, kritische HBO-docent management met 20+ jaar ervaring.
-
-SPECIFIEKE BEOORDELINGSCRITERIA VOOR SHARED VALUES:
-
-1. **CONCRETE ONDERBOUWING** (25 punten)
-   - Zijn er specifieke waarden en normen genoemd?
-   - Worden concrete voorbeelden van waardenbeleving gegeven?
-   - Zijn er citaten uit interviews over cultuur?
-   - Worden enquête resultaten over waarden geïntegreerd?
-
-2. **KRITISCHE ANALYSE** (25 punten)
-   - Wordt het verschil tussen uitgesproken en geleefde waarden geanalyseerd?
-   - Gaat het verder dan herhaling van missie/visie teksten?
-   - Worden culturele problemen of sterke punten kritisch beoordeeld?
-   - Is er analyse van hoe waarden het gedrag beïnvloeden?
-
-3. **BEOOGD VS FEITELIJK** (25 punten)
-   - Wordt onderscheid gemaakt tussen gewenste en werkelijke cultuur?
-   - Worden gaps tussen uitgesproken en geleefde waarden benoemd?
-   - Wordt uitgelegd waarom bepaalde waarden wel/niet geleefd worden?
-
-4. **DIEPGANG EN PROFESSIONALITEIT** (25 punten)
-   - Gaat de analyse verder dan beschrijving van waarden?
-   - Worden verbanden gelegd met gedrag en prestaties?
-   - Is het taalgebruik zakelijk en professioneel?
-
-FEEDBACK INSTRUCTIES:
-- Citeer letterlijk uit de studenttekst
-- Wees specifiek over wat er ontbreekt
-- Geef concrete verbeterstappen
-- Max 400 woorden totaal`,
-
-  skills: `Je bent een ervaren, kritische HBO-docent management met 20+ jaar ervaring.
-
-SPECIFIEKE BEOORDELINGSCRITERIA VOOR SKILLS:
-
-1. **CONCRETE ONDERBOUWING** (25 punten)
-   - Zijn er specifieke competenties en vaardigheden genoemd?
-   - Worden concrete voorbeelden van vaardighedenniveaus gegeven?
-   - Zijn er data uit competentie-assessments of evaluaties?
-   - Worden interview/enquête resultaten over vaardigheden geïntegreerd?
-
-2. **KRITISCHE ANALYSE** (25 punten)
-   - Wordt de match tussen benodigde en aanwezige skills geanalyseerd?
-   - Gaat het verder dan opsomming van welke vaardigheden er zijn?
-   - Worden skill gaps of sterke punten kritisch beoordeeld?
-   - Is er analyse van hoe vaardigheden de prestaties beïnvloeden?
-
-3. **BEOOGD VS FEITELIJK** (25 punten)
-   - Wordt onderscheid gemaakt tussen gewenste en werkelijke competentieniveaus?
-   - Worden skill gaps expliciet benoemd en onderbouwd?
-   - Wordt uitgelegd waarom bepaalde vaardigheden wel/niet aanwezig zijn?
-
-4. **DIEPGANG EN PROFESSIONALITEIT** (25 punten)
-   - Gaat de analyse verder dan beschrijving van vaardigheden?
-   - Worden verbanden gelegd met strategische doelen?
-   - Is het taalgebruik zakelijk en professioneel?
-
-FEEDBACK INSTRUCTIES:
-- Citeer letterlijk uit de studenttekst
-- Wees specifiek over wat er ontbreekt
-- Geef concrete verbeterstappen
-- Max 400 woorden totaal`,
-
-  style: `Je bent een ervaren, kritische HBO-docent management met 20+ jaar ervaring.
-
-SPECIFIEKE BEOORDELINGSCRITERIA VOOR STYLE:
-
-1. **CONCRETE ONDERBOUWING** (25 punten)
-   - Zijn er specifieke voorbeelden van leiderschapsgedrag genoemd?
-   - Worden concrete situaties beschreven waar de stijl zichtbaar wordt?
-   - Zijn er citaten uit interviews over leiderschapsstijl?
-   - Worden enquête resultaten over management geïntegreerd?
-
-2. **KRITISCHE ANALYSE** (25 punten)
-   - Wordt de EFFECTIVITEIT van de leiderschapsstijl geanalyseerd?
-   - Gaat het verder dan beschrijving van hoe leiders zich gedragen?
-   - Worden sterke en zwakke punten van de stijl kritisch beoordeeld?
-   - Is er analyse van hoe de stijl de organisatie beïnvloedt?
-
-3. **BEOOGD VS FEITELIJK** (25 punten)
-   - Wordt onderscheid gemaakt tussen gewenste en werkelijke leiderschapsstijl?
-   - Worden gaps in leiderschapseffectiviteit benoemd?
-   - Wordt uitgelegd waarom de huidige stijl wel/niet effectief is?
-
-4. **DIEPGANG EN PROFESSIONALITEIT** (25 punten)
-   - Gaat de analyse verder dan beschrijving van leiderschapsstijl?
-   - Worden verbanden gelegd met organisatieprestaties?
-   - Is het taalgebruik zakelijk en professioneel?
-
-FEEDBACK INSTRUCTIES:
-- Citeer letterlijk uit de studenttekst
-- Wees specifiek over wat er ontbreekt
-- Geef concrete verbeterstappen
-- Max 400 woorden totaal`,
-
-  staff: `Je bent een ervaren, kritische HBO-docent management met 20+ jaar ervaring.
-
-SPECIFIEKE BEOORDELINGSCRITERIA VOOR STAFF:
-
-1. **CONCRETE ONDERBOUWING** (25 punten)
-   - Zijn er specifieke HR-cijfers en personeelsdata genoemd?
-   - Worden concrete voorbeelden van rollen en functies gegeven?
-   - Zijn er data over personeelstevredenheid, verloop, competenties?
-   - Worden interview/enquête resultaten over personeel geïntegreerd?
-
-2. **KRITISCHE ANALYSE** (25 punten)
-   - Wordt de match tussen benodigde en aanwezige mensen geanalyseerd?
-   - Gaat het verder dan beschrijving van personeelssamenstelling?
-   - Worden personeelsproblemen of sterke punten kritisch beoordeeld?
-   - Is er analyse van hoe personeel de doelen ondersteunt?
-
-3. **BEOOGD VS FEITELIJK** (25 punten)
-   - Wordt onderscheid gemaakt tussen gewenste en werkelijke personeelssituatie?
-   - Worden gaps in bemensing of competenties benoemd?
-   - Wordt uitgelegd waarom de huidige personeelssituatie wel/niet optimaal is?
-
-4. **DIEPGANG EN PROFESSIONALITEIT** (25 punten)
-   - Gaat de analyse verder dan beschrijving van personeelssamenstelling?
-   - Worden verbanden gelegd met strategische doelen?
-   - Is het taalgebruik zakelijk en professioneel?
-
-FEEDBACK INSTRUCTIES:
-- Citeer letterlijk uit de studenttekst
-- Wees specifiek over wat er ontbreekt
-- Geef concrete verbeterstappen
-- Max 400 woorden totaal`,
-
-  financial: `Je bent een ervaren, kritische HBO-docent financieel management met 20+ jaar ervaring.
-
-SPECIFIEKE BEOORDELINGSCRITERIA VOOR FINANCIËLE ANALYSE:
-
-1. **CONCRETE ONDERBOUWING** (25 punten)
-   - Zijn er specifieke financiële ratio's en cijfers genoemd?
-   - Worden concrete voorbeelden van financiële prestaties gegeven?
-   - Zijn er trends over meerdere jaren geanalyseerd?
-   - Worden betrouwbare financiële bronnen gebruikt?
-
-2. **KRITISCHE ANALYSE** (25 punten)
-   - Wordt de financiële PRESTATIE geanalyseerd, niet alleen beschreven?
-   - Gaat het verder dan opsomming van cijfers?
-   - Worden financiële sterke en zwakke punten kritisch beoordeeld?
-   - Is er analyse van oorzaken van financiële resultaten?
-
-3. **BEOOGD VS FEITELIJK** (25 punten)
-   - Wordt onderscheid gemaakt tussen financiële doelen en werkelijke prestaties?
-   - Worden gaps in financiële prestaties benoemd?
-   - Wordt uitgelegd waarom financiële doelen wel/niet behaald worden?
-
-4. **DIEPGANG EN PROFESSIONALITEIT** (25 punten)
-   - Gaat de analyse verder dan beschrijving van cijfers?
-   - Worden verbanden gelegd met strategische doelen?
-   - Is het taalgebruik zakelijk en professioneel?
-
-FEEDBACK INSTRUCTIES:
-- Citeer letterlijk uit de studenttekst
-- Wees specifiek over wat er ontbreekt
-- Geef concrete verbeterstappen
-- Max 400 woorden totaal`,
-
-  summary: `Je bent een ervaren, kritische HBO-docent management met 20+ jaar ervaring.
-
-SPECIFIEKE BEOORDELINGSCRITERIA VOOR SAMENVATTING/CONCLUSIE:
-
-1. **CONCRETE ONDERBOUWING** (25 punten)
-   - Worden bevindingen uit alle 7S-elementen geïntegreerd?
-   - Zijn er concrete voorbeelden van organisatiesterke en -zwakke punten?
-   - Worden de belangrijkste onderzoeksresultaten samengevat?
-   - Zijn conclusies gebaseerd op de eerdere analyse?
-
-2. **KRITISCHE ANALYSE** (25 punten)
-   - Worden verbanden tussen de 7S-elementen geanalyseerd?
-   - Gaat het verder dan herhaling van eerdere secties?
-   - Worden overall organisatiesterke en -zwakke punten kritisch beoordeeld?
-   - Is er analyse van de onderlinge samenhang?
-
-3. **BEOOGD VS FEITELIJK** (25 punten)
-   - Wordt een overall beeld gegeven van gewenste vs werkelijke organisatiesituatie?
-   - Worden de belangrijkste gaps samengevat?
-   - Wordt uitgelegd wat de grootste uitdagingen zijn?
-
-4. **DIEPGANG EN PROFESSIONALITEIT** (25 punten)
-   - Gaat de samenvatting verder dan herhaling?
-   - Worden concrete aanbevelingen gedaan?
-   - Is het taalgebruik zakelijk en professioneel?
-
-FEEDBACK INSTRUCTIES:
-- Citeer letterlijk uit de studenttekst
-- Wees specifiek over wat er ontbreekt
-- Geef concrete verbeterstappen
+VEREISTEN:
+- Gebruik letterlijke citaten uit de tekst tussen aanhalingstekens
+- Wees specifiek over wat er ontbreekt in DEZE tekst
+- Geef actionable verbeterpunten met voorbeelden
 - Max 400 woorden totaal`
 }
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('🔄 Verbeterde Feedback API called at:', new Date().toISOString())
+    console.log('🔄 Verbeterde Tekstanalyse API called at:', new Date().toISOString())
     
     // Check API key
     if (!process.env.GEMINI_API_KEY) {
@@ -363,55 +120,21 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Get system prompt for this element
-    const systemPrompt = SYSTEM_PROMPTS[element as keyof typeof SYSTEM_PROMPTS]
-    console.log('📋 Using improved system prompt for element:', element)
-
-    // Initialize Gemini model with lower temperature for more consistent, critical feedback
+    // Initialize Gemini model with settings optimized for text analysis
     const model = genAI.getGenerativeModel({ 
       model: 'gemini-2.5-flash',
       generationConfig: {
-        temperature: 0.1, // Very low for consistent critical analysis
-        topP: 0.8,
+        temperature: 0.2, // Low for consistent analysis
+        topP: 0.9,
         topK: 40,
-        maxOutputTokens: 1000,
+        maxOutputTokens: 1200,
       }
     })
 
-    // Create the improved, text-specific feedback prompt
-    const prompt = `${systemPrompt}
+    // Create the text-analysis focused prompt
+    const prompt = createTextAnalysisPrompt(element, text)
 
-STUDENT TEKST VOOR KRITISCHE ANALYSE:
-"${text}"
-
-INSTRUCTIES VOOR TEKSTSPECIFIEKE FEEDBACK:
-1. Lees de tekst grondig en analytisch
-2. Citeer letterlijk uit de tekst om je punten te maken
-3. Wees specifiek over wat er wel/niet in de tekst staat
-4. Geef concrete verbeterpunten gebaseerd op wat je leest
-5. Gebruik de 4 beoordelingscriteria als leidraad
-
-Geef feedback volgens dit EXACTE format:
-
-## ✅ Wat gaat goed
-[Benoem specifiek wat goed is in deze tekst. Citeer letterlijk uit de tekst. Wees selectief - alleen wat echt goed is.]
-
-## ❌ Wat moet beter
-[Wees kritisch en specifiek. Citeer uit de tekst wat er ontbreekt of te oppervlakkig is. Leg uit waarom het beter moet volgens HBO-criteria.]
-
-## 🎯 Concrete verbeteracties
-1. [Specifieke actie gebaseerd op wat er in de tekst ontbreekt]
-2. [Specifieke actie gebaseerd op wat er in de tekst ontbreekt]  
-3. [Specifieke actie gebaseerd op wat er in de tekst ontbreekt]
-
-VEREISTEN:
-- Gebruik letterlijke citaten uit de studenttekst
-- Wees specifiek over wat er ontbreekt in DEZE tekst
-- Geef actionable verbeterpunten
-- Max 400 woorden totaal
-- Geen algemene opmerkingen - alles moet tekstspecifiek zijn`
-
-    console.log('🤖 Sending text-specific request to Gemini API...')
+    console.log('🤖 Sending text-analysis request to Gemini API...')
     
     // Generate feedback with error handling
     let result, response, feedback
@@ -422,30 +145,30 @@ VEREISTEN:
       
       response = await result.response
       feedback = response.text()
-      console.log('📄 Text-specific feedback generated:', {
+      console.log('📄 Text-analysis feedback generated:', {
         feedbackLength: feedback?.length || 0
       })
     } catch (apiError) {
       console.error('❌ Gemini API call failed:', apiError)
       
-      // Fallback with simplified but still text-specific prompt
-      const fallbackPrompt = `Je bent kritische HBO-docent. Analyseer deze ${element} tekst en geef specifieke feedback:
+      // Fallback with simplified but still text-focused prompt
+      const fallbackPrompt = `Analyseer deze ${element} tekst en geef specifieke feedback met citaten:
 
-"${text}"
+TEKST: "${text}"
 
 Format:
-## ✅ Wat gaat goed
-[Citeer uit de tekst wat goed is]
+## 👍 Sterke punten
+[Citeer letterlijk goede delen: "..." - leg uit waarom goed]
 
-## ❌ Wat moet beter  
-[Citeer uit de tekst wat ontbreekt of te oppervlakkig is]
+## 📊 Wat ontbreekt
+[Specifiek wat er niet in de tekst staat maar wel zou moeten]
 
 ## 🎯 Verbeteracties
-1. [Specifieke actie voor deze tekst]
-2. [Specifieke actie voor deze tekst]
-3. [Specifieke actie voor deze tekst]
+1. [Concrete actie met voorbeeld]
+2. [Concrete actie met voorbeeld]
+3. [Concrete actie met voorbeeld]
 
-Max 350 woorden, gebruik letterlijke citaten uit de tekst.`
+Gebruik letterlijke citaten tussen aanhalingstekens. Max 350 woorden.`
 
       try {
         result = await model.generateContent(fallbackPrompt)
@@ -458,43 +181,36 @@ Max 350 woorden, gebruik letterlijke citaten uit de tekst.`
       }
     }
     
-    console.log('✅ Final text-specific feedback generated:', {
+    console.log('✅ Final text-analysis feedback generated:', {
       feedbackLength: feedback?.length || 0,
       element: element,
       success: true
     })
 
-    // Validate meaningful feedback
-    if (!feedback || feedback.trim().length < 100) {
-      console.warn('⚠️ Short feedback received, creating text-specific fallback...')
+    // Enhanced fallback for short responses with text-specific content
+    if (!feedback || feedback.trim().length < 150) {
+      console.warn('⚠️ Short feedback received, creating enhanced text-specific fallback...')
       
-      const elementTitles = {
-        strategy: 'Strategy (Strategie)',
-        structure: 'Structure (Structuur)',
-        systems: 'Systems (Systemen)',
-        sharedValues: 'Shared Values (Gedeelde Waarden)',
-        skills: 'Skills (Vaardigheden)',
-        style: 'Style (Stijl)',
-        staff: 'Staff (Personeel)',
-        financial: 'Financiële Analyse',
-        summary: 'Samenvatting'
-      }
+      // Analyze the actual text to create better fallback
+      const textWords = text.split(' ').length
+      const hasNumbers = /\d/.test(text)
+      const hasCitations = text.includes('(') && text.includes(')')
+      const hasExamples = text.toLowerCase().includes('bijvoorbeeld') || text.toLowerCase().includes('zoals')
       
-      const elementTitle = elementTitles[element as keyof typeof elementTitles] || element
+      // Extract a meaningful quote from the text
+      const sentences = text.split('.').filter(s => s.trim().length > 20)
+      const firstMeaningfulSentence = sentences[0]?.trim() + '.' || text.substring(0, 100) + '...'
       
-      // Create text-specific fallback based on actual content
-      const textPreview = text.substring(0, 100) + (text.length > 100 ? '...' : '')
-      
-      feedback = `## ✅ Wat gaat goed
-Je hebt een start gemaakt met de ${elementTitle} analyse. De tekst begint met "${textPreview}" wat laat zien dat je het onderwerp begrijpt.
+      feedback = `## 👍 Sterke punten in je tekst
+Je schrijft: "${firstMeaningfulSentence}" Dit toont dat je het onderwerp begrijpt en een duidelijke start hebt gemaakt. ${hasCitations ? 'Je gebruikt bronverwijzingen, wat goed is voor de onderbouwing.' : ''} ${hasExamples ? 'Je geeft voorbeelden, wat de tekst concreter maakt.' : ''}
 
-## ❌ Wat moet beter
-Je analyse blijft te oppervlakkig voor HBO-niveau. In je tekst beschrijf je wel enkele aspecten, maar je onderbouwt deze niet met concrete voorbeelden, cijfers of onderzoeksgegevens. Er ontbreekt een kritische beoordeling van de effectiviteit. Je maakt geen duidelijk onderscheid tussen de beoogde en feitelijke situatie.
+## 📊 Wat ik mis in je analyse
+Je tekst van ${textWords} woorden blijft te beschrijvend voor HBO-niveau. ${!hasNumbers ? 'Er staan geen concrete cijfers of data in je tekst om je punten te onderbouwen.' : ''} Je maakt geen duidelijk onderscheid tussen de beoogde en feitelijke situatie. De analyse mist kritische beoordeling - je beschrijft wel wat er is, maar analyseert niet of het goed of slecht werkt en waarom.
 
 ## 🎯 Concrete verbeteracties
-1. **Voeg concrete bewijzen toe** - Gebruik specifieke cijfers, data en citaten uit interviews om de punten in je tekst te onderbouwen
-2. **Analyseer effectiviteit** - Ga verder dan beschrijven: beoordeel kritisch of wat je beschrijft goed of slecht werkt en leg uit waarom
-3. **Vergelijk beoogd vs feitelijk** - Beschrijf expliciet het verschil tussen wat de organisatie wil bereiken en wat er werkelijk gebeurt in de praktijk`
+1. **Voeg concrete bewijzen toe** - Vervang algemene uitspraken door specifieke voorbeelden: "Uit interviews met 5 teamleiders blijkt dat..." of "De cijfers van Q3 tonen een daling van 15%..."
+2. **Analyseer effectiviteit** - Na elke beschrijving, voeg toe: "Dit werkt goed/slecht omdat..." en leg de oorzaken uit
+3. **Vergelijk beoogd vs werkelijk** - Beschrijf expliciet: "De organisatie wil X bereiken, maar in de praktijk gebeurt Y, omdat..."`
     }
     
     return NextResponse.json({ 
@@ -505,7 +221,7 @@ Je analyse blijft te oppervlakkig voor HBO-niveau. In je tekst beschrijf je wel 
     })
 
   } catch (error) {
-    console.error('❌ Text-specific Feedback API error:', {
+    console.error('❌ Text-analysis Feedback API error:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
       timestamp: new Date().toISOString()
